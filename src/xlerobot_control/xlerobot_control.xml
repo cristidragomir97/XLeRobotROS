@@ -1,0 +1,5 @@
+<library path="xlerobot_sim_system">
+  <class name="xlerobot_control/SimulatorSystem" type="xlerobot_control::SimulatorSystem" base_class_type="hardware_interface::SystemInterface">
+    <description>Shared-memory joint I/O for the single XLeRobot MuJoCo physics owner.</description>
+  </class>
+</library>

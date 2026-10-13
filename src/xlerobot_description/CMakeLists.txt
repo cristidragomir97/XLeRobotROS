@@ -1,0 +1,12 @@
+cmake_minimum_required(VERSION 3.8)
+project(xlerobot_description)
+find_package(ament_cmake REQUIRED)
+set(XLEROBOT_MESH_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../upstream/simulation/mujoco/assets")
+if(NOT EXISTS "${XLEROBOT_MESH_DIR}/Base.stl")
+  message(FATAL_ERROR "Initialize the pinned upstream submodule before building")
+endif()
+install(DIRECTORY urdf cart_meshes DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY "${XLEROBOT_MESH_DIR}/" DESTINATION share/${PROJECT_NAME}/meshes)
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../../upstream/simulation/Maniskill/assets/xlerobot/meshes/"
+        DESTINATION share/${PROJECT_NAME}/full_meshes)
+ament_package()

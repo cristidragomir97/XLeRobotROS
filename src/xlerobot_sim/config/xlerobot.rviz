@@ -1,0 +1,43 @@
+Panels:
+  - Class: rviz_common/Displays
+  - Class: rviz_common/Views
+Visualization Manager:
+  Global Options:
+    Fixed Frame: odom
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Ground
+      Enabled: true
+    - Class: rviz_default_plugins/RobotModel
+      Name: XLeRobot
+      Enabled: true
+      Description Source: Topic
+      Description Topic:
+        Value: /robot_description
+    - Class: rviz_default_plugins/TF
+      Name: Frames
+      Enabled: false
+    - Class: rviz_default_plugins/PointCloud2
+      Name: RGB-D cloud
+      Enabled: true
+      Topic:
+        Value: /camera/points
+        Reliability Policy: Best Effort
+      Size (m): 0.02
+      Color Transformer: RGB8
+    - Class: rviz_default_plugins/Map
+      Name: Depth SLAM map
+      Enabled: true
+      Topic:
+        Value: /map
+        Durability Policy: Transient Local
+    - Class: rviz_default_plugins/Image
+      Name: Head RGB
+      Enabled: true
+      Topic:
+        Value: /camera/color/image_raw
+        Reliability Policy: Best Effort
+  Tools:
+    - Class: rviz_default_plugins/Interact
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: nav2_rviz_plugins/GoalTool

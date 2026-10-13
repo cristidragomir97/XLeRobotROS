@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>xlerobot_control</name><version>0.1.0</version>
+  <description>ROS 2 control adapter for the owned XLeRobot MuJoCo simulator.</description>
+  <maintainer email="dev@robocore.ai">Robocore</maintainer><license>Apache-2.0</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <depend>hardware_interface</depend><depend>pluginlib</depend><depend>rclcpp</depend>
+  <depend>rclcpp_lifecycle</depend><exec_depend>controller_manager</exec_depend>
+  <exec_depend>joint_state_broadcaster</exec_depend><exec_depend>joint_trajectory_controller</exec_depend>
+  <exec_depend>omni_wheel_drive_controller</exec_depend><exec_depend>lekiwi_control</exec_depend>
+  <exec_depend>sts_hardware_interface</exec_depend>
+  <export><build_type>ament_cmake</build_type></export>
+</package>

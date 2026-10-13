@@ -1,0 +1,86 @@
+<mujoco model="handy101_robocasa_home">
+  <asset>
+    <texture name="home_wood" type="2d" builtin="checker" width="256" height="256" rgb1=".36 .22 .12" rgb2=".42 .28 .17" />
+    <material name="home_wood" texture="home_wood" texrepeat="4 1" texuniform="true" />
+    <texture name="home_tiles" type="2d" builtin="checker" width="256" height="256" rgb1=".72 .73 .70" rgb2=".82 .82 .79" />
+    <material name="home_tiles" texture="home_tiles" texrepeat="4 4" texuniform="true" />
+    <material name="home_wall" rgba=".84 .82 .75 1" />
+    <material name="home_metal" rgba=".19 .21 .23 1" specular=".65" />
+    <material name="home_fabric" rgba=".16 .33 .40 1" />
+    <material name="home_counter" rgba=".82 .82 .79 1" />
+  </asset>
+  <default>
+    <default class="home_solid">
+      <geom contype="2" conaffinity="3" friction=".9 .005 .0001" condim="4" />
+    </default>
+    <default class="home_visual">
+      <geom contype="0" conaffinity="0" group="2" />
+    </default>
+  </default>
+  <!-- Empty 12 x 12 m test room centred on spawn; furnished rooms to east/north.
+       Interior bounds x/y = -6..6 m, with 1.6 m connecting doors. -->
+  <worldbody>
+    <light name="home_kitchen_light" pos="0 0 3.5" diffuse=".9 .85 .75" />
+    <light name="home_dining_light" pos="8 0 3.5" diffuse=".8 .85 .9" />
+    <light name="home_living_light" pos="2 8 3.5" diffuse=".85 .82 .8" />
+    <geom name="test_floor" type="box" pos="0 0 -.035" size="6 6 .035" material="home_tiles" class="home_solid" />
+    <geom name="dining_floor" type="box" pos="8 0 -.035" size="2 6 .035" material="home_wood" class="home_solid" />
+    <geom name="living_floor" type="box" pos="2 8 -.035" size="8 2 .035" material="home_wood" class="home_solid" />
+    <geom name="wall_west" type="box" pos="-6.1 2 1.2" size=".1 8.1 1.2" material="home_wall" class="home_solid" />
+    <geom name="wall_east" type="box" pos="10.1 2 1.2" size=".1 8.1 1.2" material="home_wall" class="home_solid" />
+    <geom name="wall_south" type="box" pos="2 -6.1 1.2" size="8 .1 1.2" material="home_wall" class="home_solid" />
+    <geom name="wall_north" type="box" pos="2 10.1 1.2" size="8 .1 1.2" material="home_wall" class="home_solid" />
+    <geom name="kitchen_dining_wall_a" type="box" pos="6 -3.4 1.2" size=".08 2.6 1.2" material="home_wall" class="home_solid" />
+    <geom name="kitchen_dining_wall_b" type="box" pos="6 3.4 1.2" size=".08 2.6 1.2" material="home_wall" class="home_solid" />
+    <geom name="living_wall_a" type="box" pos="-3.4 6 1.2" size="2.6 .08 1.2" material="home_wall" class="home_solid" />
+    <geom name="living_wall_b" type="box" pos="4 6 1.2" size="3.2 .08 1.2" material="home_wall" class="home_solid" />
+    <geom name="living_wall_c" type="box" pos="9.4 6 1.2" size=".6 .08 1.2" material="home_wall" class="home_solid" />
+    <body name="home_prep_table" pos="8.25 2.45 0">
+      <geom type="box" pos="0 0 .64" size=".45 .3 .03" material="home_wood" class="home_solid" />
+      <geom type="box" pos="-.35 -.2 .305" size=".025 .025 .305" material="home_metal" class="home_solid" />
+      <geom type="box" pos=".35 -.2 .305" size=".025 .025 .305" material="home_metal" class="home_solid" />
+      <geom type="box" pos="-.35 .2 .305" size=".025 .025 .305" material="home_metal" class="home_solid" />
+      <geom type="box" pos=".35 .2 .305" size=".025 .025 .305" material="home_metal" class="home_solid" />
+    </body>
+    <body name="home_counter" pos="6.9 4.6 0">
+      <geom type="box" pos="0 0 .38" size=".6 .32 .38" material="home_wood" class="home_solid" />
+      <geom type="box" pos="0 0 .79" size=".64 .35 .03" material="home_counter" class="home_solid" />
+      <geom type="box" pos="-.28 -.33 .45" size=".25 .015 .28" rgba=".7 .72 .69 1" class="home_visual" />
+      <geom type="box" pos=".28 -.33 .45" size=".25 .015 .28" rgba=".7 .72 .69 1" class="home_visual" />
+      <geom type="capsule" fromto="-.1 -.37 .38 -.1 -.37 .52" size=".012" material="home_metal" class="home_visual" />
+      <geom type="capsule" fromto=".1 -.37 .38 .1 -.37 .52" size=".012" material="home_metal" class="home_visual" />
+    </body>
+    <body name="home_dining_table" pos="8 -.8 0">
+      <geom type="box" pos="0 0 .69" size=".85 .48 .03" material="home_wood" class="home_solid" />
+      <geom type="box" pos="-.7 -.35 .33" size=".035 .035 .33" material="home_metal" class="home_solid" />
+      <geom type="box" pos=".7 -.35 .33" size=".035 .035 .33" material="home_metal" class="home_solid" />
+      <geom type="box" pos="-.7 .35 .33" size=".035 .035 .33" material="home_metal" class="home_solid" />
+      <geom type="box" pos=".7 .35 .33" size=".035 .035 .33" material="home_metal" class="home_solid" />
+    </body>
+    <body name="home_sofa" pos="1.5 9.35 0">
+      <geom type="box" pos="0 0 .23" size="1.05 .4 .23" rgba=".10 .17 .21 1" class="home_solid" />
+      <geom type="box" pos="-.52 0 .5" size=".5 .37 .1" material="home_fabric" class="home_solid" />
+      <geom type="box" pos=".52 0 .5" size=".5 .37 .1" material="home_fabric" class="home_solid" />
+      <geom type="box" pos="0 .35 .76" size="1.05 .12 .35" material="home_fabric" class="home_solid" />
+      <geom type="box" pos="-1.12 0 .65" size=".12 .45 .3" material="home_fabric" class="home_solid" />
+      <geom type="box" pos="1.12 0 .65" size=".12 .45 .3" material="home_fabric" class="home_solid" />
+    </body>
+    <body name="home_coffee_table" pos="1.5 7.85 0">
+      <geom type="box" pos="0 0 .44" size=".6 .32 .03" material="home_wood" class="home_solid" />
+      <geom type="box" pos="-.5 -.24 .205" size=".025 .025 .205" material="home_metal" class="home_solid" />
+      <geom type="box" pos=".5 -.24 .205" size=".025 .025 .205" material="home_metal" class="home_solid" />
+      <geom type="box" pos="-.5 .24 .205" size=".025 .025 .205" material="home_metal" class="home_solid" />
+      <geom type="box" pos=".5 .24 .205" size=".025 .025 .205" material="home_metal" class="home_solid" />
+    </body>
+    <body name="home_bookshelf" pos="6.45 9.4 0">
+      <geom type="box" pos="-.45 0 .9" size=".035 .28 .9" material="home_wood" class="home_solid" />
+      <geom type="box" pos=".45 0 .9" size=".035 .28 .9" material="home_wood" class="home_solid" />
+      <geom type="box" pos="0 .25 .9" size=".45 .03 .9" material="home_wood" class="home_solid" />
+      <geom type="box" pos="0 0 .15" size=".45 .28 .03" material="home_wood" class="home_solid" />
+      <geom type="box" pos="0 0 .55" size=".45 .28 .03" material="home_wood" class="home_solid" />
+      <geom type="box" pos="0 0 .95" size=".45 .28 .03" material="home_wood" class="home_solid" />
+      <geom type="box" pos="0 0 1.35" size=".45 .28 .03" material="home_wood" class="home_solid" />
+      <geom type="box" pos="0 0 1.78" size=".45 .28 .03" material="home_wood" class="home_solid" />
+    </body>
+  </worldbody>
+</mujoco>

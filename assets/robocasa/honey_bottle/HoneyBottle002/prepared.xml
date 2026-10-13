@@ -1,0 +1,52 @@
+<mujoco model="model">
+  <option timestep="0.002" gravity="0.0 0.0 -9.81" />
+  <compiler angle="radian" />
+  <asset>
+    <mesh file="visual/HoneyBottle002.obj" name="HoneyBottle002_vis" scale="0.45 0.45 0.45" />
+    <mesh file="visual/Clear001.obj" name="HoneyBottle002_Clear001_vis" scale="0.45 0.45 0.45" />
+    <mesh file="visual/Clear002.obj" name="HoneyBottle002_Clear002_vis" scale="0.45 0.45 0.45" />
+    <texture file="visual/T_BC001.png" name="HoneyBottle002_Clear001_material" type="2d" />
+    <material name="HoneyBottle002_Clear001_material" rgba="1 1 1 0.20000000298023224" texture="HoneyBottle002_Clear001_material" shininess="0.5" specular="0.3103448502657381" />
+    <texture file="visual/T_BC001.png" name="HoneyBottle002_material" type="2d" />
+    <material name="HoneyBottle002_material" rgba="1 1 1 1.0" texture="HoneyBottle002_material" shininess="0.5" specular="0.3103448502657381" />
+    <texture file="visual/T_BC001.png" name="HoneyBottle002_Clear002_material" type="2d" />
+    <material name="HoneyBottle002_Clear002_material" rgba="1 1 1 0.800000011920929" texture="HoneyBottle002_Clear002_material" shininess="0.5" specular="0.3103448502657381" />
+    <mesh file="collision/collision_mesh_collision_0.obj" name="HoneyBottle002_collision_mesh_0" scale="0.45 0.45 0.45" />
+    <mesh file="collision/collision_mesh_collision_1.obj" name="HoneyBottle002_collision_mesh_1" scale="0.45 0.45 0.45" />
+  </asset>
+  <default>
+    <default class="visual">
+      <geom conaffinity="0" contype="0" group="1" type="mesh" />
+    </default>
+    <default class="collision">
+      <geom group="0" rgba="0.5 0 0 0.5" density="1.0" solref="0.004 1" solimp="0.998 0.998 0.001" />
+    </default>
+    <default class="spawn">
+      <geom group="0" rgba="1 1 1 0.5" contype="0" conaffinity="0" />
+      <site group="0" rgba="1 1 1 0.5" />
+    </default>
+    <default class="region">
+      <geom group="1" conaffinity="0" contype="0" rgba="0 1 0 0" mass="0" />
+    </default>
+  </default>
+  <worldbody>
+    <body>
+      <body name="object">
+        <geom mesh="HoneyBottle002_Clear001_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="HoneyBottle002_Clear001_material" />
+        <body name="HoneyBottle002">
+          <geom mesh="HoneyBottle002_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="HoneyBottle002_material" />
+          <inertial pos="-2.5001757300932318e-05 7.311760856323762e-05 0.024380020172038205" quat="0.5000000000000007 0.5000000000000007 -0.5000000000000007 0.5000000000000007" mass="0.006262704714236594" diaginertia="5.815989494733194e-07 3.1450265659757525e-07 3.145011294264265e-07" />
+        </body>
+        <body name="HoneyBottle002_Clear002">
+          <geom mesh="HoneyBottle002_Clear002_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="HoneyBottle002_Clear002_material" />
+          <inertial pos="-2.0001134677863604e-09 -1.234411168213941e-09 -0.005029547687382969" quat="1.0 0.0 0.0 0.0" mass="0.04984281356265115" diaginertia="1.1470151387130583e-05 1.1470152011439178e-05 9.160298716148472e-06" />
+        </body>
+        <geom class="region" name="reg_bbox" type="box" pos="-6.750000001130852e-09 6.750000001130852e-09 0.0" size="0.02256714675 0.02256714675 0.028289245499999997" />
+        <geom mesh="HoneyBottle002_collision_mesh_0" type="mesh" class="collision" />
+        <geom mesh="HoneyBottle002_collision_mesh_1" type="mesh" class="collision" />
+        <inertial pos="7.00846985532436e-09 -9.967491648618354e-10 -0.005629012340044487" quat="0.9999999999996073 -8.862120331048522e-07 0.0 0.0" mass="0.10251496755253808" diaginertia="2.453076850186749e-05 2.4530769393569794e-05 2.051733052347893e-05" />
+      </body>
+    </body>
+  </worldbody>
+  <actuator />
+</mujoco>

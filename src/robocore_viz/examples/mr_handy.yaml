@@ -1,0 +1,25 @@
+# Example profile for Mr Handy's sensors and stamped twist_mux input.
+# Set joint_groups for the selected robot assembly using its URDF joint names.
+name: Mr Handy
+id: mr-handy
+tagline: Built to lend a hand.
+cameras:
+  - {topic: /base_camera/color/image_raw, label: 'Base · RealSense'}
+  - {topic: /head_camera/color/image_raw, label: 'Head · RealSense'}
+  - {topic: /left_arm_camera/color/image_raw, label: 'Left arm · Luxonis'}
+maps:
+  - {topic: /map, label: SLAM map}
+  - {topic: /global_costmap/costmap, label: Global costmap}
+  - {topic: /local_costmap/costmap, label: Local costmap}
+  - {topic: /scan_filtered, label: Lidar scan}
+topics: {joints: /joint_states, odom: /odometry/filtered, pose: /pose, plan: /plan}
+drive: {topic: /cmd_vel_joy, type: geometry_msgs/msg/TwistStamped, linear_max: 0.5, angular_max: 1.5, omnidirectional: false}
+telemetry:
+  - {section: navigation, kind: localization, title: Localization, topic: /odometry/filtered}
+  - {section: navigation, kind: navigation, title: Navigation, topic: /navigate_to_pose/_action/status}
+  - {section: navigation, kind: plan, title: Global plan, topic: /plan}
+  - {section: navigation, kind: odometry, title: Wheel odometry, topic: /diff_drive_controller/odom}
+  - {section: hardware, kind: imu, title: IMU, topic: /sensors/imu}
+  - {section: hardware, kind: lidar, title: Lidar, topic: /scan_filtered}
+  - {section: hardware, kind: joints, title: Joint feedback, topic: /joint_states}
+  - {section: hardware, kind: compute, title: Compute, topic: _system_stats}

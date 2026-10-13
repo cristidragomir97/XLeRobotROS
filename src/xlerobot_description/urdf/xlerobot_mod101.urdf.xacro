@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!-- DESIGN LEDGER
+Source: Mod101 e0b450111f3fad7a514446c07a642c384dd5c332, reusable mod101_arm macro.
+Two instances, mod101_L_/mod101_R_, anchored to platform arm_mount_L/R with -pi/2 yaw (user-requested
+forward-facing orientation). Mount Z rises 0.0031 m: measured 3 mm tower
+mounting-plate thickness plus 0.1 mm mesh clearance. Both bases move
+forward 0.135 m in base_link +X, from X=-0.135 m to X=0 (user correction).
+Offset is transformed through each datum's source yaw 1.5708 rad; Y is preserved.
+The authored forward offset is provisional; mesh checks cover the resulting fit.
+Shorter 100/82 mm shoulder rails do not eliminate inward-yaw tower collisions;
+140/140 mm rails are retained. Arbitrary joint trajectories are not certified.
+Each uses arm_dof=7 (six arm axes plus gripper), both extrusion lengths 0.140 m,
+small shoulder/elbow mounts, pggripper, wrist_camera=true and base_housing=true.
+Frames, axes, visual scales, inertials and limits remain source-macro values.
+No Gazebo/mock hardware plugin: one owned SimulatorSystem drives base, head,
+and fourteen arm/tool joints. PG sliders mimic joint 6; MuJoCo equality constraints
+implement their radian-to-metre rack relation. Geometry and COM/inertia retain
+source estimates. Physical Mod101-to-cart bracket design remains unverified.
+The head depth camera, IMU, white cart and seven-wheel contact backend are shared.
+-->
+<robot name="xlerobot_mod101" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find xlerobot_description)/urdf/xlerobot_platform.urdf"/>
+  <xacro:include filename="$(find mod101_description)/urdf/materials.xacro"/>
+  <xacro:include filename="$(find mod101_description)/urdf/mod101_macro.xacro"/>
+  <xacro:property name="pg_limits" value="${xacro.load_yaml('$(find mod101_tool_pggripper)/config/measurements.json')}"/>
+  <xacro:property name="arm_forward_offset" value="0.135"/>
+  <xacro:property name="arm_mount_rise" value="0.0031"/>
+  <xacro:macro name="host_arm" params="side">
+    <xacro:mod101_arm prefix="mod101_${side}_" parent="arm_mount_${side}" xyz="${arm_forward_offset*cos(1.5708)} ${-arm_forward_offset*sin(1.5708)} ${arm_mount_rise}" rpy="0 0 ${-pi/2}"
+      arm_dof="7" shoulder_ext_length="0.140" elbow_ext_length="0.140"
+      shoulder_mount="small" elbow_mount="small" tool="pggripper"
+      wrist_camera="true" base_housing="true" with_ros2_control="false" use_sim="false"/>
+  </xacro:macro>
+  <xacro:host_arm side="L"/><xacro:host_arm side="R"/>
+  <xacro:macro name="position_interface" params="name lower upper">
+    <joint name="${name}">
+      <command_interface name="position"><param name="min">${lower}</param><param name="max">${upper}</param></command_interface>
+      <state_interface name="position"/><state_interface name="velocity"/>
+    </joint>
+  </xacro:macro>
+  <xacro:macro name="wheel_interface" params="name">
+    <joint name="${name}"><command_interface name="velocity"><param name="min">-20</param><param name="max">20</param></command_interface>
+      <state_interface name="position"/><state_interface name="velocity"/></joint>
+  </xacro:macro>
+  <xacro:macro name="arm_interfaces" params="side">
+    <xacro:position_interface name="mod101_${side}_joint_base" lower="-1.570796" upper="1.570796"/>
+    <xacro:position_interface name="mod101_${side}_joint_shoulder" lower="-0.001" upper="3.141593"/>
+    <xacro:position_interface name="mod101_${side}_joint_elbow" lower="-0.001" upper="3.141593"/>
+    <xacro:position_interface name="mod101_${side}_joint_wrist_yaw" lower="-1.570796326795" upper="1.570796326795"/>
+    <xacro:position_interface name="mod101_${side}_joint_wrist_tilt" lower="-1.23" upper="1.54"/>
+    <xacro:position_interface name="mod101_${side}_joint_wrist_roll" lower="0" upper="3.141593"/>
+    <xacro:position_interface name="mod101_${side}_6" lower="0" upper="${pg_limits['max_angle_rad']}"/>
+  </xacro:macro>
+  <ros2_control name="XLeRobotSimulation" type="system">
+    <hardware><plugin>xlerobot_control/SimulatorSystem</plugin><param name="state_file">/workspace/xlerobot/.runtime/control.bin</param></hardware>
+    <xacro:wheel_interface name="ST3215_Servo_Motor-v1-2_Hub---Servo"/>
+    <xacro:wheel_interface name="ST3215_Servo_Motor-v1-1_Hub-2---Servo"/>
+    <xacro:wheel_interface name="ST3215_Servo_Motor-v1_Revolute-40"/>
+    <xacro:arm_interfaces side="L"/><xacro:arm_interfaces side="R"/>
+    <xacro:position_interface name="head_pan_joint" lower="-1.57" upper="1.57"/>
+    <xacro:position_interface name="head_tilt_joint" lower="-0.76" upper="1.45"/>
+  </ros2_control>
+</robot>

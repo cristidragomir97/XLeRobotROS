@@ -1,0 +1,1871 @@
+{
+  "sources": {
+    "xlerobot": "b017b5e6354bd9f61f4247a920c72622ca0aade0",
+    "mod101": "e0b450111f3fad7a514446c07a642c384dd5c332"
+  },
+  "measurement": "initial neutral housing intersects tower mounting plate by 3 mm",
+  "chosen_mount_rise_m": 0.0031,
+  "plate_thickness_m": 0.003,
+  "mesh_clearance_m": 0.0001,
+  "chosen_shoulder_forearm_m": [
+    0.14,
+    0.14
+  ],
+  "limitations": [
+    "FCL checks mesh triangles and rail boxes; finite samples do not certify continuous paths.",
+    "Arm/arm and cart collisions are outside this tower check.",
+    "Simulation self-collisions remain disabled; ROS trajectory controllers are not collision-aware."
+  ],
+  "previous_mount_comparison": {
+    "140": {
+      "configuration": "mod101",
+      "geometry": "compiled visual triangles and rail boxes",
+      "joint_pose": "zero arm/head joints",
+      "study_shoulder_length_m": null,
+      "study_mount_rise_m": null,
+      "neutral": {
+        "L": [
+          {
+            "arm_link": "mod101_L_base_link",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 9.999499675396072e-05
+          },
+          {
+            "arm_link": "mod101_L_shoulder_rotation_link_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.0100206682711112
+          },
+          {
+            "arm_link": "mod101_L_servo_base_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.015499999936045856
+          },
+          {
+            "arm_link": "mod101_L_base_cover_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.019599997714763107
+          },
+          {
+            "arm_link": "mod101_L_servo_shoulder_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.04435495172311504
+          },
+          {
+            "arm_link": "mod101_L_shoulder_adapter_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.04811127649728318
+          },
+          {
+            "arm_link": "mod101_L_elbow_link_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.051592401363171364
+          },
+          {
+            "arm_link": "mod101_L_arm_extrusion_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.06343851347499908
+          },
+          {
+            "arm_link": "mod101_L_elbow_adapter_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.06525438507681011
+          },
+          {
+            "arm_link": "mod101_L_wrist_yaw_link_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.0685955575199749
+          },
+          {
+            "arm_link": "mod101_L_wrist_roll_adapter_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.06926029648578003
+          },
+          {
+            "arm_link": "mod101_L_servo_elbow_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.07190331642183627
+          },
+          {
+            "arm_link": "mod101_L_servo_wrist_tilt_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.07274373659640743
+          },
+          {
+            "arm_link": "mod101_L_wrist_servo_adapter_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.0727846326234821
+          },
+          {
+            "arm_link": "mod101_L_forearm_extrusion_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.07687735785780178
+          },
+          {
+            "arm_link": "mod101_L_servo_wrist_rotation_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.07994843717542564
+          },
+          {
+            "arm_link": "mod101_L_servo_wrist_yaw_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.09837950533347642
+          },
+          {
+            "arm_link": "mod101_L_camera_adapter_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.11974919772720159
+          }
+        ],
+        "R": [
+          {
+            "arm_link": "mod101_R_base_link",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 9.99956939279846e-05
+          },
+          {
+            "arm_link": "mod101_R_shoulder_rotation_link_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.010020668481648365
+          },
+          {
+            "arm_link": "mod101_R_servo_base_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.015500000738906282
+          },
+          {
+            "arm_link": "mod101_R_base_cover_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.019599998220463315
+          },
+          {
+            "arm_link": "mod101_R_servo_shoulder_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.0443549507757227
+          },
+          {
+            "arm_link": "mod101_R_shoulder_adapter_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.052444100014455354
+          },
+          {
+            "arm_link": "mod101_R_elbow_link_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.05571429182548607
+          },
+          {
+            "arm_link": "mod101_R_arm_extrusion_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.06673361990941486
+          },
+          {
+            "arm_link": "mod101_R_elbow_adapter_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.06882711772137769
+          },
+          {
+            "arm_link": "mod101_R_wrist_yaw_link_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.07279287757650758
+          },
+          {
+            "arm_link": "mod101_R_wrist_roll_adapter_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.0738825014893455
+          },
+          {
+            "arm_link": "mod101_R_servo_wrist_tilt_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.07694784555699441
+          },
+          {
+            "arm_link": "mod101_R_servo_elbow_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.07700673807150017
+          },
+          {
+            "arm_link": "mod101_R_wrist_servo_adapter_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.07717238253829158
+          },
+          {
+            "arm_link": "mod101_R_forearm_extrusion_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.08122309231653535
+          },
+          {
+            "arm_link": "mod101_R_servo_wrist_rotation_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.08493312505141375
+          },
+          {
+            "arm_link": "mod101_R_servo_wrist_yaw_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.10231464030872146
+          },
+          {
+            "arm_link": "mod101_R_camera_adapter_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.12342739850335982
+          }
+        ]
+      },
+      "sweep": {
+        "L": {
+          "sampled_poses": 545,
+          "colliding_poses": 129,
+          "phases": {
+            "base_shoulder_elbow_grid": {
+              "sampled_poses": 245,
+              "colliding_poses": 73
+            },
+            "whole_arm_and_head_random": {
+              "sampled_poses": 300,
+              "colliding_poses": 56
+            }
+          },
+          "collisions_per_link": {
+            "mod101_L_elbow_link_1": 34,
+            "mod101_L_wrist_yaw_link_1": 58,
+            "mod101_L_servo_wrist_tilt_1": 35,
+            "mod101_L_wrist_roll_adapter_1": 64,
+            "mod101_L_servo_wrist_rotation_1": 47,
+            "mod101_L_pggripper_body": 62,
+            "mod101_L_pggripper_servo": 47,
+            "mod101_L_forearm_extrusion_1": 38,
+            "mod101_L_wrist_servo_adapter_1": 49,
+            "mod101_L_servo_wrist_yaw_1": 45,
+            "mod101_L_pggripper_drive": 18,
+            "mod101_L_pggripper_left_jaw": 32,
+            "mod101_L_pggripper_right_jaw": 36,
+            "mod101_L_camera_adapter_1": 33,
+            "mod101_L_camera_wing_1": 41,
+            "mod101_L_wrist_camera_v1_1": 21,
+            "mod101_L_arm_extrusion_1": 7,
+            "mod101_L_servo_elbow_1": 17,
+            "mod101_L_elbow_adapter_1": 19,
+            "mod101_L_shoulder_adapter_1": 5
+          },
+          "first_collision_joint_positions_rad": {
+            "mod101_L_elbow_link_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 0.0
+            },
+            "mod101_L_wrist_yaw_link_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 1.5707963267948966
+            },
+            "mod101_L_servo_wrist_tilt_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 1.5707963267948966
+            },
+            "mod101_L_wrist_roll_adapter_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 1.5707963267948966
+            },
+            "mod101_L_servo_wrist_rotation_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 1.5707963267948966
+            },
+            "mod101_L_pggripper_body": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 1.5707963267948966
+            },
+            "mod101_L_pggripper_servo": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 1.5707963267948966
+            },
+            "mod101_L_forearm_extrusion_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.5235987755982988,
+              "mod101_L_joint_elbow": 2.356194490192345
+            },
+            "mod101_L_wrist_servo_adapter_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.5235987755982988,
+              "mod101_L_joint_elbow": 2.356194490192345
+            },
+            "mod101_L_servo_wrist_yaw_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 1.0471975511965976,
+              "mod101_L_joint_elbow": 3.141592653589793
+            },
+            "mod101_L_pggripper_drive": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 2.0943951023931953,
+              "mod101_L_joint_elbow": 0.0
+            },
+            "mod101_L_pggripper_left_jaw": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 2.0943951023931953,
+              "mod101_L_joint_elbow": 0.0
+            },
+            "mod101_L_pggripper_right_jaw": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 2.0943951023931953,
+              "mod101_L_joint_elbow": 0.0
+            },
+            "mod101_L_camera_adapter_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 2.0943951023931953,
+              "mod101_L_joint_elbow": 0.0
+            },
+            "mod101_L_camera_wing_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 2.617993877991494,
+              "mod101_L_joint_elbow": 0.0
+            },
+            "mod101_L_wrist_camera_v1_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 2.617993877991494,
+              "mod101_L_joint_elbow": 0.0
+            },
+            "mod101_L_arm_extrusion_1": {
+              "mod101_L_joint_base": -1.0466666666666669,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 0.0
+            },
+            "mod101_L_servo_elbow_1": {
+              "mod101_L_joint_base": -1.0466666666666669,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 0.0
+            },
+            "mod101_L_elbow_adapter_1": {
+              "mod101_L_joint_base": -1.0466666666666669,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 0.0
+            },
+            "mod101_L_shoulder_adapter_1": {
+              "mod101_L_joint_base": 1.57,
+              "mod101_L_joint_shoulder": 3.141592653589793,
+              "mod101_L_joint_elbow": 0.0
+            }
+          }
+        },
+        "R": {
+          "sampled_poses": 545,
+          "colliding_poses": 123,
+          "phases": {
+            "base_shoulder_elbow_grid": {
+              "sampled_poses": 245,
+              "colliding_poses": 68
+            },
+            "whole_arm_and_head_random": {
+              "sampled_poses": 300,
+              "colliding_poses": 55
+            }
+          },
+          "collisions_per_link": {
+            "mod101_R_wrist_roll_adapter_1": 64,
+            "mod101_R_pggripper_body": 52,
+            "mod101_R_pggripper_drive": 12,
+            "mod101_R_pggripper_left_jaw": 22,
+            "mod101_R_pggripper_right_jaw": 23,
+            "mod101_R_servo_wrist_tilt_1": 43,
+            "mod101_R_servo_wrist_rotation_1": 53,
+            "mod101_R_pggripper_servo": 40,
+            "mod101_R_camera_adapter_1": 32,
+            "mod101_R_camera_wing_1": 37,
+            "mod101_R_wrist_camera_v1_1": 24,
+            "mod101_R_wrist_yaw_link_1": 63,
+            "mod101_R_forearm_extrusion_1": 45,
+            "mod101_R_wrist_servo_adapter_1": 53,
+            "mod101_R_servo_wrist_yaw_1": 52,
+            "mod101_R_shoulder_adapter_1": 5,
+            "mod101_R_arm_extrusion_1": 6,
+            "mod101_R_elbow_link_1": 32,
+            "mod101_R_servo_elbow_1": 23,
+            "mod101_R_elbow_adapter_1": 19
+          },
+          "first_collision_joint_positions_rad": {
+            "mod101_R_wrist_roll_adapter_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.0,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_pggripper_body": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.0,
+              "mod101_R_joint_elbow": 0.7853981633974483
+            },
+            "mod101_R_pggripper_drive": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.0,
+              "mod101_R_joint_elbow": 0.7853981633974483
+            },
+            "mod101_R_pggripper_left_jaw": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.0,
+              "mod101_R_joint_elbow": 0.7853981633974483
+            },
+            "mod101_R_pggripper_right_jaw": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.0,
+              "mod101_R_joint_elbow": 0.7853981633974483
+            },
+            "mod101_R_servo_wrist_tilt_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.5235987755982988,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_servo_wrist_rotation_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.5235987755982988,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_pggripper_servo": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.5235987755982988,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_camera_adapter_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.5235987755982988,
+              "mod101_R_joint_elbow": 0.7853981633974483
+            },
+            "mod101_R_camera_wing_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.5235987755982988,
+              "mod101_R_joint_elbow": 0.7853981633974483
+            },
+            "mod101_R_wrist_camera_v1_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.5235987755982988,
+              "mod101_R_joint_elbow": 0.7853981633974483
+            },
+            "mod101_R_wrist_yaw_link_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 1.0471975511965976,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_forearm_extrusion_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 1.0471975511965976,
+              "mod101_R_joint_elbow": 1.5707963267948966
+            },
+            "mod101_R_wrist_servo_adapter_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 1.0471975511965976,
+              "mod101_R_joint_elbow": 1.5707963267948966
+            },
+            "mod101_R_servo_wrist_yaw_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 1.0471975511965976,
+              "mod101_R_joint_elbow": 1.5707963267948966
+            },
+            "mod101_R_shoulder_adapter_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 3.141592653589793,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_arm_extrusion_1": {
+              "mod101_R_joint_base": 1.0466666666666666,
+              "mod101_R_joint_shoulder": 0.0,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_elbow_link_1": {
+              "mod101_R_joint_base": 1.0466666666666666,
+              "mod101_R_joint_shoulder": 0.0,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_servo_elbow_1": {
+              "mod101_R_joint_base": 1.0466666666666666,
+              "mod101_R_joint_shoulder": 0.0,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_elbow_adapter_1": {
+              "mod101_R_joint_base": 1.0466666666666666,
+              "mod101_R_joint_shoulder": 0.0,
+              "mod101_R_joint_elbow": 0.0
+            }
+          }
+        }
+      }
+    },
+    "100": {
+      "configuration": "mod101",
+      "geometry": "compiled visual triangles and rail boxes",
+      "joint_pose": "zero arm/head joints",
+      "study_shoulder_length_m": 0.1,
+      "study_mount_rise_m": null,
+      "neutral": {
+        "L": [
+          {
+            "arm_link": "mod101_L_base_link",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 9.999499675396072e-05
+          },
+          {
+            "arm_link": "mod101_L_shoulder_rotation_link_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.0100206682711112
+          },
+          {
+            "arm_link": "mod101_L_servo_base_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.015499999936045856
+          },
+          {
+            "arm_link": "mod101_L_base_cover_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.019599997714763107
+          },
+          {
+            "arm_link": "mod101_L_servo_shoulder_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.04435495172311504
+          },
+          {
+            "arm_link": "mod101_L_elbow_link_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.047880764711953516
+          },
+          {
+            "arm_link": "mod101_L_shoulder_adapter_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.04811127649728318
+          },
+          {
+            "arm_link": "mod101_L_servo_elbow_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.05971423119485552
+          },
+          {
+            "arm_link": "mod101_L_elbow_adapter_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.06317317422551666
+          },
+          {
+            "arm_link": "mod101_L_arm_extrusion_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.06343851347499908
+          },
+          {
+            "arm_link": "mod101_L_wrist_yaw_link_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.07214964719854523
+          },
+          {
+            "arm_link": "mod101_L_wrist_servo_adapter_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.07278452025108142
+          },
+          {
+            "arm_link": "mod101_L_forearm_extrusion_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.0768773578578018
+          },
+          {
+            "arm_link": "mod101_L_servo_wrist_tilt_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.07849637109631746
+          },
+          {
+            "arm_link": "mod101_L_wrist_roll_adapter_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.08692910387734035
+          },
+          {
+            "arm_link": "mod101_L_servo_wrist_yaw_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.09837953232640557
+          }
+        ],
+        "R": [
+          {
+            "arm_link": "mod101_R_base_link",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 9.99956939279846e-05
+          },
+          {
+            "arm_link": "mod101_R_shoulder_rotation_link_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.010020668481648365
+          },
+          {
+            "arm_link": "mod101_R_servo_base_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.015500000738906282
+          },
+          {
+            "arm_link": "mod101_R_base_cover_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.019599998220463315
+          },
+          {
+            "arm_link": "mod101_R_servo_shoulder_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.0443549507757227
+          },
+          {
+            "arm_link": "mod101_R_elbow_link_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.05223234795295235
+          },
+          {
+            "arm_link": "mod101_R_shoulder_adapter_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.052444100014455354
+          },
+          {
+            "arm_link": "mod101_R_servo_elbow_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.06388674428800546
+          },
+          {
+            "arm_link": "mod101_R_arm_extrusion_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.0667336654348673
+          },
+          {
+            "arm_link": "mod101_R_elbow_adapter_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.06685716208007109
+          },
+          {
+            "arm_link": "mod101_R_wrist_yaw_link_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.07615153191754102
+          },
+          {
+            "arm_link": "mod101_R_wrist_servo_adapter_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.07717249921764764
+          },
+          {
+            "arm_link": "mod101_R_forearm_extrusion_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.08122313021671743
+          },
+          {
+            "arm_link": "mod101_R_servo_wrist_tilt_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.0817224375936177
+          },
+          {
+            "arm_link": "mod101_R_wrist_roll_adapter_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.09075651797014682
+          },
+          {
+            "arm_link": "mod101_R_servo_wrist_yaw_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.10233261278041024
+          }
+        ]
+      },
+      "sweep": {
+        "L": {
+          "sampled_poses": 545,
+          "colliding_poses": 130,
+          "phases": {
+            "base_shoulder_elbow_grid": {
+              "sampled_poses": 245,
+              "colliding_poses": 72
+            },
+            "whole_arm_and_head_random": {
+              "sampled_poses": 300,
+              "colliding_poses": 58
+            }
+          },
+          "collisions_per_link": {
+            "mod101_L_elbow_link_1": 17,
+            "mod101_L_servo_wrist_yaw_1": 53,
+            "mod101_L_wrist_yaw_link_1": 83,
+            "mod101_L_servo_wrist_tilt_1": 66,
+            "mod101_L_wrist_roll_adapter_1": 84,
+            "mod101_L_servo_wrist_rotation_1": 63,
+            "mod101_L_pggripper_body": 58,
+            "mod101_L_pggripper_servo": 29,
+            "mod101_L_camera_adapter_1": 50,
+            "mod101_L_camera_wing_1": 32,
+            "mod101_L_forearm_extrusion_1": 48,
+            "mod101_L_wrist_servo_adapter_1": 67,
+            "mod101_L_pggripper_left_jaw": 21,
+            "mod101_L_pggripper_right_jaw": 21,
+            "mod101_L_servo_elbow_1": 17,
+            "mod101_L_elbow_adapter_1": 20,
+            "mod101_L_wrist_camera_v1_1": 12,
+            "mod101_L_pggripper_drive": 12,
+            "mod101_L_shoulder_adapter_1": 5
+          },
+          "first_collision_joint_positions_rad": {
+            "mod101_L_elbow_link_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 0.0
+            },
+            "mod101_L_servo_wrist_yaw_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 1.5707963267948966
+            },
+            "mod101_L_wrist_yaw_link_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 1.5707963267948966
+            },
+            "mod101_L_servo_wrist_tilt_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 1.5707963267948966
+            },
+            "mod101_L_wrist_roll_adapter_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 1.5707963267948966
+            },
+            "mod101_L_servo_wrist_rotation_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 1.5707963267948966
+            },
+            "mod101_L_pggripper_body": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 1.5707963267948966
+            },
+            "mod101_L_pggripper_servo": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 1.5707963267948966
+            },
+            "mod101_L_camera_adapter_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 1.5707963267948966
+            },
+            "mod101_L_camera_wing_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 1.5707963267948966
+            },
+            "mod101_L_forearm_extrusion_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.5235987755982988,
+              "mod101_L_joint_elbow": 2.356194490192345
+            },
+            "mod101_L_wrist_servo_adapter_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.5235987755982988,
+              "mod101_L_joint_elbow": 2.356194490192345
+            },
+            "mod101_L_pggripper_left_jaw": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 2.617993877991494,
+              "mod101_L_joint_elbow": 0.0
+            },
+            "mod101_L_pggripper_right_jaw": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 2.617993877991494,
+              "mod101_L_joint_elbow": 0.0
+            },
+            "mod101_L_servo_elbow_1": {
+              "mod101_L_joint_base": -1.0466666666666669,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 0.0
+            },
+            "mod101_L_elbow_adapter_1": {
+              "mod101_L_joint_base": -1.0466666666666669,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 0.0
+            },
+            "mod101_L_wrist_camera_v1_1": {
+              "mod101_L_joint_base": -1.0466666666666669,
+              "mod101_L_joint_shoulder": 3.141592653589793,
+              "mod101_L_joint_elbow": 0.0
+            },
+            "mod101_L_pggripper_drive": {
+              "mod101_L_joint_base": 1.57,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 0.7853981633974483
+            },
+            "mod101_L_shoulder_adapter_1": {
+              "mod101_L_joint_base": 1.57,
+              "mod101_L_joint_shoulder": 3.141592653589793,
+              "mod101_L_joint_elbow": 0.0
+            }
+          }
+        },
+        "R": {
+          "sampled_poses": 545,
+          "colliding_poses": 133,
+          "phases": {
+            "base_shoulder_elbow_grid": {
+              "sampled_poses": 245,
+              "colliding_poses": 72
+            },
+            "whole_arm_and_head_random": {
+              "sampled_poses": 300,
+              "colliding_poses": 61
+            }
+          },
+          "collisions_per_link": {
+            "mod101_R_wrist_roll_adapter_1": 89,
+            "mod101_R_servo_wrist_rotation_1": 64,
+            "mod101_R_pggripper_body": 53,
+            "mod101_R_pggripper_servo": 22,
+            "mod101_R_pggripper_drive": 8,
+            "mod101_R_pggripper_left_jaw": 17,
+            "mod101_R_pggripper_right_jaw": 14,
+            "mod101_R_wrist_yaw_link_1": 89,
+            "mod101_R_servo_wrist_tilt_1": 68,
+            "mod101_R_wrist_servo_adapter_1": 72,
+            "mod101_R_servo_wrist_yaw_1": 62,
+            "mod101_R_camera_adapter_1": 42,
+            "mod101_R_camera_wing_1": 26,
+            "mod101_R_forearm_extrusion_1": 47,
+            "mod101_R_wrist_camera_v1_1": 8,
+            "mod101_R_shoulder_adapter_1": 5,
+            "mod101_R_elbow_link_1": 16,
+            "mod101_R_servo_elbow_1": 11,
+            "mod101_R_elbow_adapter_1": 14
+          },
+          "first_collision_joint_positions_rad": {
+            "mod101_R_wrist_roll_adapter_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.0,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_servo_wrist_rotation_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.0,
+              "mod101_R_joint_elbow": 0.7853981633974483
+            },
+            "mod101_R_pggripper_body": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.0,
+              "mod101_R_joint_elbow": 0.7853981633974483
+            },
+            "mod101_R_pggripper_servo": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.0,
+              "mod101_R_joint_elbow": 0.7853981633974483
+            },
+            "mod101_R_pggripper_drive": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.0,
+              "mod101_R_joint_elbow": 0.7853981633974483
+            },
+            "mod101_R_pggripper_left_jaw": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.0,
+              "mod101_R_joint_elbow": 0.7853981633974483
+            },
+            "mod101_R_pggripper_right_jaw": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.0,
+              "mod101_R_joint_elbow": 0.7853981633974483
+            },
+            "mod101_R_wrist_yaw_link_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.5235987755982988,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_servo_wrist_tilt_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.5235987755982988,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_wrist_servo_adapter_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 1.0471975511965976,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_servo_wrist_yaw_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 1.0471975511965976,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_camera_adapter_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 1.0471975511965976,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_camera_wing_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 1.0471975511965976,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_forearm_extrusion_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 1.0471975511965976,
+              "mod101_R_joint_elbow": 1.5707963267948966
+            },
+            "mod101_R_wrist_camera_v1_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 2.0943951023931953,
+              "mod101_R_joint_elbow": 0.7853981633974483
+            },
+            "mod101_R_shoulder_adapter_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 3.141592653589793,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_elbow_link_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 3.141592653589793,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_servo_elbow_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 3.141592653589793,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_elbow_adapter_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 3.141592653589793,
+              "mod101_R_joint_elbow": 0.0
+            }
+          }
+        }
+      }
+    },
+    "82": {
+      "configuration": "mod101",
+      "geometry": "compiled visual triangles and rail boxes",
+      "joint_pose": "zero arm/head joints",
+      "study_shoulder_length_m": 0.082,
+      "study_mount_rise_m": null,
+      "neutral": {
+        "L": [
+          {
+            "arm_link": "mod101_L_base_link",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 9.999499675396072e-05
+          },
+          {
+            "arm_link": "mod101_L_shoulder_rotation_link_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.0100206682711112
+          },
+          {
+            "arm_link": "mod101_L_servo_base_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.015499999936045856
+          },
+          {
+            "arm_link": "mod101_L_base_cover_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.019599997714763107
+          },
+          {
+            "arm_link": "mod101_L_servo_shoulder_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.04435495172311504
+          },
+          {
+            "arm_link": "mod101_L_elbow_link_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.04788004069153229
+          },
+          {
+            "arm_link": "mod101_L_shoulder_adapter_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.04811127649728318
+          },
+          {
+            "arm_link": "mod101_L_servo_elbow_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.059708473458904864
+          },
+          {
+            "arm_link": "mod101_L_elbow_adapter_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.06302156581773972
+          },
+          {
+            "arm_link": "mod101_L_arm_extrusion_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.06343851347499908
+          },
+          {
+            "arm_link": "mod101_L_wrist_servo_adapter_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.07278448780184996
+          },
+          {
+            "arm_link": "mod101_L_forearm_extrusion_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.07687735785780177
+          },
+          {
+            "arm_link": "mod101_L_wrist_yaw_link_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.07917610567337587
+          },
+          {
+            "arm_link": "mod101_L_servo_wrist_tilt_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.08626160930000508
+          },
+          {
+            "arm_link": "mod101_L_servo_wrist_yaw_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.09872957391836591
+          },
+          {
+            "arm_link": "mod101_L_wrist_roll_adapter_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.09878373881451988
+          }
+        ],
+        "R": [
+          {
+            "arm_link": "mod101_R_base_link",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 9.99956939279846e-05
+          },
+          {
+            "arm_link": "mod101_R_shoulder_rotation_link_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.010020668481648365
+          },
+          {
+            "arm_link": "mod101_R_servo_base_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.015500000738906282
+          },
+          {
+            "arm_link": "mod101_R_base_cover_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.019599998220463315
+          },
+          {
+            "arm_link": "mod101_R_servo_shoulder_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.0443549507757227
+          },
+          {
+            "arm_link": "mod101_R_elbow_link_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.05223110301028184
+          },
+          {
+            "arm_link": "mod101_R_shoulder_adapter_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.052444100014455354
+          },
+          {
+            "arm_link": "mod101_R_servo_elbow_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.0637240353228691
+          },
+          {
+            "arm_link": "mod101_R_elbow_adapter_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.06671375842739344
+          },
+          {
+            "arm_link": "mod101_R_arm_extrusion_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.06673372945525949
+          },
+          {
+            "arm_link": "mod101_R_wrist_servo_adapter_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.07717255172339144
+          },
+          {
+            "arm_link": "mod101_R_forearm_extrusion_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.08122318351405532
+          },
+          {
+            "arm_link": "mod101_R_wrist_yaw_link_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.08283934910069632
+          },
+          {
+            "arm_link": "mod101_R_servo_wrist_tilt_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.08929392250636516
+          },
+          {
+            "arm_link": "mod101_R_wrist_roll_adapter_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.10220272624748909
+          },
+          {
+            "arm_link": "mod101_R_servo_wrist_yaw_1",
+            "tower_mesh": "full_topbase1",
+            "collision": false,
+            "clearance_m": 0.10266975935627735
+          }
+        ]
+      },
+      "sweep": {
+        "L": {
+          "sampled_poses": 545,
+          "colliding_poses": 134,
+          "phases": {
+            "base_shoulder_elbow_grid": {
+              "sampled_poses": 245,
+              "colliding_poses": 72
+            },
+            "whole_arm_and_head_random": {
+              "sampled_poses": 300,
+              "colliding_poses": 62
+            }
+          },
+          "collisions_per_link": {
+            "mod101_L_elbow_link_1": 17,
+            "mod101_L_servo_wrist_yaw_1": 57,
+            "mod101_L_wrist_yaw_link_1": 90,
+            "mod101_L_pggripper_body": 45,
+            "mod101_L_pggripper_servo": 27,
+            "mod101_L_camera_adapter_1": 43,
+            "mod101_L_camera_wing_1": 35,
+            "mod101_L_wrist_servo_adapter_1": 75,
+            "mod101_L_servo_wrist_tilt_1": 72,
+            "mod101_L_wrist_roll_adapter_1": 90,
+            "mod101_L_servo_wrist_rotation_1": 68,
+            "mod101_L_pggripper_left_jaw": 18,
+            "mod101_L_pggripper_right_jaw": 18,
+            "mod101_L_forearm_extrusion_1": 54,
+            "mod101_L_elbow_adapter_1": 17,
+            "mod101_L_pggripper_drive": 12,
+            "mod101_L_wrist_camera_v1_1": 10,
+            "mod101_L_servo_elbow_1": 13,
+            "mod101_L_shoulder_adapter_1": 5
+          },
+          "first_collision_joint_positions_rad": {
+            "mod101_L_elbow_link_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 0.0
+            },
+            "mod101_L_servo_wrist_yaw_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 1.5707963267948966
+            },
+            "mod101_L_wrist_yaw_link_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 1.5707963267948966
+            },
+            "mod101_L_pggripper_body": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 1.5707963267948966
+            },
+            "mod101_L_pggripper_servo": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 1.5707963267948966
+            },
+            "mod101_L_camera_adapter_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 1.5707963267948966
+            },
+            "mod101_L_camera_wing_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 1.5707963267948966
+            },
+            "mod101_L_wrist_servo_adapter_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.5235987755982988,
+              "mod101_L_joint_elbow": 2.356194490192345
+            },
+            "mod101_L_servo_wrist_tilt_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.5235987755982988,
+              "mod101_L_joint_elbow": 2.356194490192345
+            },
+            "mod101_L_wrist_roll_adapter_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.5235987755982988,
+              "mod101_L_joint_elbow": 2.356194490192345
+            },
+            "mod101_L_servo_wrist_rotation_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 0.5235987755982988,
+              "mod101_L_joint_elbow": 2.356194490192345
+            },
+            "mod101_L_pggripper_left_jaw": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 2.617993877991494,
+              "mod101_L_joint_elbow": 0.0
+            },
+            "mod101_L_pggripper_right_jaw": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 2.617993877991494,
+              "mod101_L_joint_elbow": 0.0
+            },
+            "mod101_L_forearm_extrusion_1": {
+              "mod101_L_joint_base": -1.57,
+              "mod101_L_joint_shoulder": 3.141592653589793,
+              "mod101_L_joint_elbow": 0.7853981633974483
+            },
+            "mod101_L_elbow_adapter_1": {
+              "mod101_L_joint_base": -1.0466666666666669,
+              "mod101_L_joint_shoulder": 0.0,
+              "mod101_L_joint_elbow": 2.356194490192345
+            },
+            "mod101_L_pggripper_drive": {
+              "mod101_L_joint_base": -1.0466666666666669,
+              "mod101_L_joint_shoulder": 3.141592653589793,
+              "mod101_L_joint_elbow": 0.0
+            },
+            "mod101_L_wrist_camera_v1_1": {
+              "mod101_L_joint_base": 1.0466666666666666,
+              "mod101_L_joint_shoulder": 1.5707963267948966,
+              "mod101_L_joint_elbow": 0.0
+            },
+            "mod101_L_servo_elbow_1": {
+              "mod101_L_joint_base": 1.0466666666666666,
+              "mod101_L_joint_shoulder": 3.141592653589793,
+              "mod101_L_joint_elbow": 0.0
+            },
+            "mod101_L_shoulder_adapter_1": {
+              "mod101_L_joint_base": 1.57,
+              "mod101_L_joint_shoulder": 3.141592653589793,
+              "mod101_L_joint_elbow": 0.0
+            }
+          }
+        },
+        "R": {
+          "sampled_poses": 545,
+          "colliding_poses": 133,
+          "phases": {
+            "base_shoulder_elbow_grid": {
+              "sampled_poses": 245,
+              "colliding_poses": 73
+            },
+            "whole_arm_and_head_random": {
+              "sampled_poses": 300,
+              "colliding_poses": 60
+            }
+          },
+          "collisions_per_link": {
+            "mod101_R_wrist_roll_adapter_1": 94,
+            "mod101_R_servo_wrist_rotation_1": 64,
+            "mod101_R_pggripper_body": 43,
+            "mod101_R_pggripper_servo": 32,
+            "mod101_R_pggripper_drive": 8,
+            "mod101_R_pggripper_left_jaw": 13,
+            "mod101_R_pggripper_right_jaw": 14,
+            "mod101_R_wrist_yaw_link_1": 91,
+            "mod101_R_servo_wrist_tilt_1": 66,
+            "mod101_R_forearm_extrusion_1": 49,
+            "mod101_R_wrist_servo_adapter_1": 77,
+            "mod101_R_servo_wrist_yaw_1": 64,
+            "mod101_R_camera_adapter_1": 40,
+            "mod101_R_camera_wing_1": 26,
+            "mod101_R_wrist_camera_v1_1": 8,
+            "mod101_R_elbow_adapter_1": 11,
+            "mod101_R_shoulder_adapter_1": 5,
+            "mod101_R_elbow_link_1": 15,
+            "mod101_R_servo_elbow_1": 11
+          },
+          "first_collision_joint_positions_rad": {
+            "mod101_R_wrist_roll_adapter_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.0,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_servo_wrist_rotation_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.0,
+              "mod101_R_joint_elbow": 0.7853981633974483
+            },
+            "mod101_R_pggripper_body": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.0,
+              "mod101_R_joint_elbow": 0.7853981633974483
+            },
+            "mod101_R_pggripper_servo": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.0,
+              "mod101_R_joint_elbow": 0.7853981633974483
+            },
+            "mod101_R_pggripper_drive": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.0,
+              "mod101_R_joint_elbow": 0.7853981633974483
+            },
+            "mod101_R_pggripper_left_jaw": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.0,
+              "mod101_R_joint_elbow": 0.7853981633974483
+            },
+            "mod101_R_pggripper_right_jaw": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.0,
+              "mod101_R_joint_elbow": 0.7853981633974483
+            },
+            "mod101_R_wrist_yaw_link_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.5235987755982988,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_servo_wrist_tilt_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 0.5235987755982988,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_forearm_extrusion_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 1.0471975511965976,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_wrist_servo_adapter_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 1.0471975511965976,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_servo_wrist_yaw_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 1.0471975511965976,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_camera_adapter_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 1.0471975511965976,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_camera_wing_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 1.0471975511965976,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_wrist_camera_v1_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 2.0943951023931953,
+              "mod101_R_joint_elbow": 0.7853981633974483
+            },
+            "mod101_R_elbow_adapter_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 2.617993877991494,
+              "mod101_R_joint_elbow": 0.7853981633974483
+            },
+            "mod101_R_shoulder_adapter_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 3.141592653589793,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_elbow_link_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 3.141592653589793,
+              "mod101_R_joint_elbow": 0.0
+            },
+            "mod101_R_servo_elbow_1": {
+              "mod101_R_joint_base": -1.57,
+              "mod101_R_joint_shoulder": 3.141592653589793,
+              "mod101_R_joint_elbow": 0.0
+            }
+          }
+        }
+      }
+    }
+  },
+  "arm_forward_offset_m": 0.135,
+  "current_mount_report": {
+    "configuration": "mod101",
+    "geometry": "compiled visual triangles and rail boxes",
+    "joint_pose": "zero arm/head joints",
+    "study_shoulder_length_m": null,
+    "study_mount_rise_m": null,
+    "neutral": {
+      "L": [
+        {
+          "arm_link": "mod101_L_base_link",
+          "tower_mesh": "full_topbase1",
+          "collision": false,
+          "clearance_m": 0.004003261024217991
+        },
+        {
+          "arm_link": "mod101_L_base_cover_1",
+          "tower_mesh": "full_topbase1",
+          "collision": false,
+          "clearance_m": 0.01965706433600976
+        },
+        {
+          "arm_link": "mod101_L_servo_base_1",
+          "tower_mesh": "full_topbase1",
+          "collision": false,
+          "clearance_m": 0.028530751785557695
+        },
+        {
+          "arm_link": "mod101_L_shoulder_rotation_link_1",
+          "tower_mesh": "full_topbase1",
+          "collision": false,
+          "clearance_m": 0.043871951025360185
+        },
+        {
+          "arm_link": "mod101_L_elbow_link_1",
+          "tower_mesh": "full_topbase1",
+          "collision": false,
+          "clearance_m": 0.047880246188108405
+        },
+        {
+          "arm_link": "mod101_L_servo_elbow_1",
+          "tower_mesh": "full_topbase1",
+          "collision": false,
+          "clearance_m": 0.05970849084210076
+        },
+        {
+          "arm_link": "mod101_L_elbow_adapter_1",
+          "tower_mesh": "full_topbase1",
+          "collision": false,
+          "clearance_m": 0.06338845578158683
+        },
+        {
+          "arm_link": "mod101_L_arm_extrusion_1",
+          "tower_mesh": "full_topbase1",
+          "collision": false,
+          "clearance_m": 0.06343880051806759
+        },
+        {
+          "arm_link": "mod101_L_forearm_extrusion_1",
+          "tower_mesh": "full_topbase1",
+          "collision": false,
+          "clearance_m": 0.07708110242719639
+        },
+        {
+          "arm_link": "mod101_L_shoulder_adapter_1",
+          "tower_mesh": "full_topbase1",
+          "collision": false,
+          "clearance_m": 0.08490200004181758
+        },
+        {
+          "arm_link": "mod101_L_wrist_servo_adapter_1",
+          "tower_mesh": "full_topbase1",
+          "collision": false,
+          "clearance_m": 0.09241036959897436
+        },
+        {
+          "arm_link": "mod101_L_servo_shoulder_1",
+          "tower_mesh": "full_topbase1",
+          "collision": false,
+          "clearance_m": 0.103355654783988
+        }
+      ],
+      "R": [
+        {
+          "arm_link": "mod101_R_base_link",
+          "tower_mesh": "full_topbase1",
+          "collision": false,
+          "clearance_m": 0.004003843530571873
+        },
+        {
+          "arm_link": "mod101_R_base_cover_1",
+          "tower_mesh": "full_topbase1",
+          "collision": false,
+          "clearance_m": 0.01965706468514436
+        },
+        {
+          "arm_link": "mod101_R_servo_base_1",
+          "tower_mesh": "full_topbase1",
+          "collision": false,
+          "clearance_m": 0.02853075161875353
+        },
+        {
+          "arm_link": "mod101_R_shoulder_rotation_link_1",
+          "tower_mesh": "full_topbase1",
+          "collision": false,
+          "clearance_m": 0.043871951297869055
+        },
+        {
+          "arm_link": "mod101_R_elbow_link_1",
+          "tower_mesh": "full_topbase1",
+          "collision": false,
+          "clearance_m": 0.052230896246495156
+        },
+        {
+          "arm_link": "mod101_R_servo_elbow_1",
+          "tower_mesh": "full_topbase1",
+          "collision": false,
+          "clearance_m": 0.06372378893714405
+        },
+        {
+          "arm_link": "mod101_R_arm_extrusion_1",
+          "tower_mesh": "full_topbase1",
+          "collision": false,
+          "clearance_m": 0.06673352253478061
+        },
+        {
+          "arm_link": "mod101_R_elbow_adapter_1",
+          "tower_mesh": "full_topbase1",
+          "collision": false,
+          "clearance_m": 0.06706007423883435
+        },
+        {
+          "arm_link": "mod101_R_forearm_extrusion_1",
+          "tower_mesh": "full_topbase1",
+          "collision": false,
+          "clearance_m": 0.08122301099580011
+        },
+        {
+          "arm_link": "mod101_R_shoulder_adapter_1",
+          "tower_mesh": "full_topbase1",
+          "collision": false,
+          "clearance_m": 0.0875990314578033
+        },
+        {
+          "arm_link": "mod101_R_wrist_servo_adapter_1",
+          "tower_mesh": "full_topbase1",
+          "collision": false,
+          "clearance_m": 0.09590437480684423
+        },
+        {
+          "arm_link": "mod101_R_servo_shoulder_1",
+          "tower_mesh": "full_topbase1",
+          "collision": false,
+          "clearance_m": 0.10335565521131859
+        }
+      ]
+    },
+    "sweep": {
+      "L": {
+        "sampled_poses": 545,
+        "colliding_poses": 30,
+        "phases": {
+          "base_shoulder_elbow_grid": {
+            "sampled_poses": 245,
+            "colliding_poses": 16
+          },
+          "whole_arm_and_head_random": {
+            "sampled_poses": 300,
+            "colliding_poses": 14
+          }
+        },
+        "collisions_per_link": {
+          "mod101_L_camera_adapter_1": 10,
+          "mod101_L_pggripper_body": 17,
+          "mod101_L_pggripper_left_jaw": 12,
+          "mod101_L_pggripper_right_jaw": 14,
+          "mod101_L_pggripper_servo": 9,
+          "mod101_L_pggripper_drive": 7,
+          "mod101_L_wrist_yaw_link_1": 14,
+          "mod101_L_camera_wing_1": 9,
+          "mod101_L_forearm_extrusion_1": 5,
+          "mod101_L_wrist_servo_adapter_1": 6,
+          "mod101_L_servo_wrist_yaw_1": 9,
+          "mod101_L_servo_wrist_tilt_1": 8,
+          "mod101_L_wrist_roll_adapter_1": 9,
+          "mod101_L_wrist_camera_v1_1": 3,
+          "mod101_L_servo_wrist_rotation_1": 7
+        },
+        "first_collision_joint_positions_rad": {
+          "mod101_L_camera_adapter_1": {
+            "mod101_L_joint_base": -1.0466666666666669,
+            "mod101_L_joint_shoulder": 0.5235987755982988,
+            "mod101_L_joint_elbow": 2.356194490192345
+          },
+          "mod101_L_pggripper_body": {
+            "mod101_L_joint_base": -1.0466666666666669,
+            "mod101_L_joint_shoulder": 2.617993877991494,
+            "mod101_L_joint_elbow": 0.0
+          },
+          "mod101_L_pggripper_left_jaw": {
+            "mod101_L_joint_base": -1.0466666666666669,
+            "mod101_L_joint_shoulder": 2.617993877991494,
+            "mod101_L_joint_elbow": 0.0
+          },
+          "mod101_L_pggripper_right_jaw": {
+            "mod101_L_joint_base": -1.0466666666666669,
+            "mod101_L_joint_shoulder": 2.617993877991494,
+            "mod101_L_joint_elbow": 0.0
+          },
+          "mod101_L_pggripper_servo": {
+            "mod101_L_joint_base": -1.0466666666666669,
+            "mod101_L_joint_shoulder": 3.141592653589793,
+            "mod101_L_joint_elbow": 0.0
+          },
+          "mod101_L_pggripper_drive": {
+            "mod101_L_joint_base": -1.0466666666666669,
+            "mod101_L_joint_shoulder": 3.141592653589793,
+            "mod101_L_joint_elbow": 0.0
+          },
+          "mod101_L_wrist_yaw_link_1": {
+            "mod101_L_joint_base": -0.5233333333333334,
+            "mod101_L_joint_shoulder": 0.0,
+            "mod101_L_joint_elbow": 1.5707963267948966
+          },
+          "mod101_L_camera_wing_1": {
+            "mod101_L_joint_base": -0.5233333333333334,
+            "mod101_L_joint_shoulder": 0.0,
+            "mod101_L_joint_elbow": 1.5707963267948966
+          },
+          "mod101_L_forearm_extrusion_1": {
+            "mod101_L_joint_base": -0.5233333333333334,
+            "mod101_L_joint_shoulder": 0.0,
+            "mod101_L_joint_elbow": 2.356194490192345
+          },
+          "mod101_L_wrist_servo_adapter_1": {
+            "mod101_L_joint_base": -0.5233333333333334,
+            "mod101_L_joint_shoulder": 0.0,
+            "mod101_L_joint_elbow": 2.356194490192345
+          },
+          "mod101_L_servo_wrist_yaw_1": {
+            "mod101_L_joint_base": -0.5233333333333334,
+            "mod101_L_joint_shoulder": 0.5235987755982988,
+            "mod101_L_joint_elbow": 2.356194490192345
+          },
+          "mod101_L_servo_wrist_tilt_1": {
+            "mod101_L_joint_base": -0.5233333333333334,
+            "mod101_L_joint_shoulder": 0.5235987755982988,
+            "mod101_L_joint_elbow": 2.356194490192345
+          },
+          "mod101_L_wrist_roll_adapter_1": {
+            "mod101_L_joint_base": -0.5233333333333334,
+            "mod101_L_joint_shoulder": 0.5235987755982988,
+            "mod101_L_joint_elbow": 2.356194490192345
+          },
+          "mod101_L_wrist_camera_v1_1": {
+            "mod101_L_joint_base": -0.8769125473309779,
+            "mod101_L_joint_shoulder": 0.3827239431213893,
+            "mod101_L_joint_elbow": 2.3887995639253314,
+            "mod101_L_joint_wrist_yaw": 1.2802786169792117,
+            "mod101_L_joint_wrist_tilt": 1.534297466524774,
+            "mod101_L_joint_wrist_roll": 2.0945298294351264,
+            "mod101_L_6": 0.9243957542356852,
+            "head_pan_joint": -1.3169525752240645,
+            "head_tilt_joint": 0.528055791691771
+          },
+          "mod101_L_servo_wrist_rotation_1": {
+            "mod101_L_joint_base": -0.47573939943730736,
+            "mod101_L_joint_shoulder": 0.5386410087913878,
+            "mod101_L_joint_elbow": 2.4641202824319453,
+            "mod101_L_joint_wrist_yaw": 0.670036173641201,
+            "mod101_L_joint_wrist_tilt": 0.9411679923682761,
+            "mod101_L_joint_wrist_roll": 1.5572080165988336,
+            "mod101_L_6": 0.9849155408766016,
+            "head_pan_joint": -0.6403624122511771,
+            "head_tilt_joint": -0.4337718111937458
+          }
+        }
+      },
+      "R": {
+        "sampled_poses": 545,
+        "colliding_poses": 30,
+        "phases": {
+          "base_shoulder_elbow_grid": {
+            "sampled_poses": 245,
+            "colliding_poses": 15
+          },
+          "whole_arm_and_head_random": {
+            "sampled_poses": 300,
+            "colliding_poses": 15
+          }
+        },
+        "collisions_per_link": {
+          "mod101_R_pggripper_body": 23,
+          "mod101_R_pggripper_servo": 14,
+          "mod101_R_pggripper_drive": 6,
+          "mod101_R_pggripper_left_jaw": 13,
+          "mod101_R_pggripper_right_jaw": 10,
+          "mod101_R_camera_adapter_1": 15,
+          "mod101_R_wrist_yaw_link_1": 11,
+          "mod101_R_forearm_extrusion_1": 3,
+          "mod101_R_wrist_servo_adapter_1": 4,
+          "mod101_R_servo_wrist_yaw_1": 5,
+          "mod101_R_servo_wrist_tilt_1": 5,
+          "mod101_R_wrist_roll_adapter_1": 13,
+          "mod101_R_camera_wing_1": 4,
+          "mod101_R_servo_wrist_rotation_1": 7,
+          "mod101_R_wrist_camera_v1_1": 2
+        },
+        "first_collision_joint_positions_rad": {
+          "mod101_R_pggripper_body": {
+            "mod101_R_joint_base": -0.5233333333333334,
+            "mod101_R_joint_shoulder": 2.617993877991494,
+            "mod101_R_joint_elbow": 0.0
+          },
+          "mod101_R_pggripper_servo": {
+            "mod101_R_joint_base": -0.5233333333333334,
+            "mod101_R_joint_shoulder": 2.617993877991494,
+            "mod101_R_joint_elbow": 0.0
+          },
+          "mod101_R_pggripper_drive": {
+            "mod101_R_joint_base": -0.5233333333333334,
+            "mod101_R_joint_shoulder": 2.617993877991494,
+            "mod101_R_joint_elbow": 0.0
+          },
+          "mod101_R_pggripper_left_jaw": {
+            "mod101_R_joint_base": -0.5233333333333334,
+            "mod101_R_joint_shoulder": 2.617993877991494,
+            "mod101_R_joint_elbow": 0.0
+          },
+          "mod101_R_pggripper_right_jaw": {
+            "mod101_R_joint_base": -0.5233333333333334,
+            "mod101_R_joint_shoulder": 2.617993877991494,
+            "mod101_R_joint_elbow": 0.0
+          },
+          "mod101_R_camera_adapter_1": {
+            "mod101_R_joint_base": -0.5233333333333334,
+            "mod101_R_joint_shoulder": 3.141592653589793,
+            "mod101_R_joint_elbow": 0.0
+          },
+          "mod101_R_wrist_yaw_link_1": {
+            "mod101_R_joint_base": 0.5233333333333332,
+            "mod101_R_joint_shoulder": 0.0,
+            "mod101_R_joint_elbow": 1.5707963267948966
+          },
+          "mod101_R_forearm_extrusion_1": {
+            "mod101_R_joint_base": 0.5233333333333332,
+            "mod101_R_joint_shoulder": 0.0,
+            "mod101_R_joint_elbow": 2.356194490192345
+          },
+          "mod101_R_wrist_servo_adapter_1": {
+            "mod101_R_joint_base": 0.5233333333333332,
+            "mod101_R_joint_shoulder": 0.0,
+            "mod101_R_joint_elbow": 2.356194490192345
+          },
+          "mod101_R_servo_wrist_yaw_1": {
+            "mod101_R_joint_base": 0.5233333333333332,
+            "mod101_R_joint_shoulder": 0.5235987755982988,
+            "mod101_R_joint_elbow": 2.356194490192345
+          },
+          "mod101_R_servo_wrist_tilt_1": {
+            "mod101_R_joint_base": 0.5233333333333332,
+            "mod101_R_joint_shoulder": 0.5235987755982988,
+            "mod101_R_joint_elbow": 2.356194490192345
+          },
+          "mod101_R_wrist_roll_adapter_1": {
+            "mod101_R_joint_base": 0.5233333333333332,
+            "mod101_R_joint_shoulder": 0.5235987755982988,
+            "mod101_R_joint_elbow": 2.356194490192345
+          },
+          "mod101_R_camera_wing_1": {
+            "mod101_R_joint_base": 0.5233333333333332,
+            "mod101_R_joint_shoulder": 3.141592653589793,
+            "mod101_R_joint_elbow": 0.0
+          },
+          "mod101_R_servo_wrist_rotation_1": {
+            "mod101_R_joint_base": 1.1121455175460864,
+            "mod101_R_joint_shoulder": 0.27140721026135806,
+            "mod101_R_joint_elbow": 1.8128216069804088,
+            "mod101_R_joint_wrist_yaw": 1.4163665529575007,
+            "mod101_R_joint_wrist_tilt": 1.015351655238237,
+            "mod101_R_joint_wrist_roll": 0.15640813488449734,
+            "mod101_R_6": 1.6808881061471026,
+            "head_pan_joint": 0.8811516467836757,
+            "head_tilt_joint": 1.2338417838265754
+          },
+          "mod101_R_wrist_camera_v1_1": {
+            "mod101_R_joint_base": -1.409493186506098,
+            "mod101_R_joint_shoulder": 1.792047047808176,
+            "mod101_R_joint_elbow": 0.38545102265258907,
+            "mod101_R_joint_wrist_yaw": -1.0008889966243197,
+            "mod101_R_joint_wrist_tilt": -0.5705246895253473,
+            "mod101_R_joint_wrist_roll": 1.5134750056276463,
+            "mod101_R_6": 0.48783366325476607,
+            "head_pan_joint": -0.30004026206001133,
+            "head_tilt_joint": 1.2404534577510653
+          }
+        }
+      }
+    }
+  },
+  "neutral_cart_check": "no arm visual triangle/box intersections with full_raskogbody on either side"
+}

@@ -1,0 +1,11 @@
+# Contact-driven omni base: 4-inch wheel diameter from the original wheel mesh.
+# Radius is the mean of the three compiled wheel-center distances in XLeRobot.
+wheel_radius: 0.0508
+robot_radius: 0.12851666666666667
+wheel_offset: 3.141592653589793
+linear_max: 0.4
+angular_max: 0.8
+wheel_velocity_max: 20.0
+# Simulation actuator estimates, not identified hardware gains.
+wheel_gain: 5.0
+wheel_torque: 2.942

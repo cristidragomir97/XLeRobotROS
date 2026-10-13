@@ -1,0 +1,68 @@
+<mujoco model="model">
+  <option timestep="0.002" gravity="0.0 0.0 -9.81" />
+  <compiler angle="radian" />
+  <asset>
+    <mesh file="visual/Clear.obj" name="GlassCup008_Clear_vis" scale="0.45 0.45 0.45" />
+    <texture file="visual/T_BC001.png" name="GlassCup008_Clear_material" type="2d" />
+    <material name="GlassCup008_Clear_material" rgba="1 1 1 0.20000000298023224" texture="GlassCup008_Clear_material" shininess="0.4472135901451111" specular="0.3103448502657381" />
+    <mesh file="collision/collision_mesh_collision_0.obj" name="GlassCup008_collision_mesh_0" scale="0.45 0.45 0.45" />
+    <mesh file="collision/collision_mesh_collision_1.obj" name="GlassCup008_collision_mesh_1" scale="0.45 0.45 0.45" />
+    <mesh file="collision/collision_mesh_collision_2.obj" name="GlassCup008_collision_mesh_2" scale="0.45 0.45 0.45" />
+    <mesh file="collision/collision_mesh_collision_3.obj" name="GlassCup008_collision_mesh_3" scale="0.45 0.45 0.45" />
+    <mesh file="collision/collision_mesh_collision_4.obj" name="GlassCup008_collision_mesh_4" scale="0.45 0.45 0.45" />
+    <mesh file="collision/collision_mesh_collision_5.obj" name="GlassCup008_collision_mesh_5" scale="0.45 0.45 0.45" />
+    <mesh file="collision/collision_mesh_collision_6.obj" name="GlassCup008_collision_mesh_6" scale="0.45 0.45 0.45" />
+    <mesh file="collision/collision_mesh_collision_7.obj" name="GlassCup008_collision_mesh_7" scale="0.45 0.45 0.45" />
+    <mesh file="collision/collision_mesh_collision_8.obj" name="GlassCup008_collision_mesh_8" scale="0.45 0.45 0.45" />
+    <mesh file="collision/collision_mesh_collision_9.obj" name="GlassCup008_collision_mesh_9" scale="0.45 0.45 0.45" />
+    <mesh file="collision/collision_mesh_collision_10.obj" name="GlassCup008_collision_mesh_10" scale="0.45 0.45 0.45" />
+    <mesh file="collision/collision_mesh_collision_11.obj" name="GlassCup008_collision_mesh_11" scale="0.45 0.45 0.45" />
+    <mesh file="collision/collision_mesh_collision_12.obj" name="GlassCup008_collision_mesh_12" scale="0.45 0.45 0.45" />
+    <mesh file="collision/collision_mesh_collision_13.obj" name="GlassCup008_collision_mesh_13" scale="0.45 0.45 0.45" />
+    <mesh file="collision/collision_mesh_collision_14.obj" name="GlassCup008_collision_mesh_14" scale="0.45 0.45 0.45" />
+    <mesh file="collision/collision_mesh_collision_15.obj" name="GlassCup008_collision_mesh_15" scale="0.45 0.45 0.45" />
+  </asset>
+  <default>
+    <default class="visual">
+      <geom conaffinity="0" contype="0" group="1" type="mesh" />
+    </default>
+    <default class="collision">
+      <geom group="0" rgba="0.5 0 0 0.5" density="1000.0" />
+    </default>
+    <default class="spawn">
+      <geom group="0" rgba="1 1 1 0.5" contype="0" conaffinity="0" />
+      <site group="0" rgba="1 1 1 0.5" />
+    </default>
+    <default class="region">
+      <geom group="1" conaffinity="0" contype="0" rgba="0 1 0 0" mass="0" />
+    </default>
+  </default>
+  <worldbody>
+    <body>
+      <body name="object">
+        <geom mesh="GlassCup008_Clear_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="GlassCup008_Clear_material" />
+        <geom mesh="GlassCup008_collision_mesh_0" type="mesh" class="collision" />
+        <geom mesh="GlassCup008_collision_mesh_1" type="mesh" class="collision" />
+        <geom mesh="GlassCup008_collision_mesh_2" type="mesh" class="collision" />
+        <geom mesh="GlassCup008_collision_mesh_3" type="mesh" class="collision" />
+        <geom mesh="GlassCup008_collision_mesh_4" type="mesh" class="collision" />
+        <geom mesh="GlassCup008_collision_mesh_5" type="mesh" class="collision" />
+        <geom mesh="GlassCup008_collision_mesh_6" type="mesh" class="collision" />
+        <geom mesh="GlassCup008_collision_mesh_7" type="mesh" class="collision" />
+        <geom mesh="GlassCup008_collision_mesh_8" type="mesh" class="collision" />
+        <geom mesh="GlassCup008_collision_mesh_9" type="mesh" class="collision" />
+        <geom mesh="GlassCup008_collision_mesh_10" type="mesh" class="collision" />
+        <geom mesh="GlassCup008_collision_mesh_11" type="mesh" class="collision" />
+        <geom mesh="GlassCup008_collision_mesh_12" type="mesh" class="collision" />
+        <geom mesh="GlassCup008_collision_mesh_13" type="mesh" class="collision" />
+        <geom mesh="GlassCup008_collision_mesh_14" type="mesh" class="collision" />
+        <geom mesh="GlassCup008_collision_mesh_15" type="mesh" class="collision" />
+        <geom class="region" name="reg_bbox" type="box" pos="-1.1767500000004275e-06 2.542500000004416e-07 -5.400000000014768e-07" size="0.02405492325 0.02405584575 0.02323026" />
+        <geom class="region" name="liquid" type="cylinder" rgba="0 0 0 0" size="0.021150000000000002 0.015750000000000004" pos="9e-07 0.0 -0.004725" />
+        <geom class="region" name="reg_int" type="cylinder" rgba="0 0 0 0" size="0.018000000000000002 0.022500000000000003" pos="9e-07 0.0 0.0027" />
+        <inertial pos="-6.4137991165035e-06 -6.822464548273959e-06 -0.004065279003375742" quat="-0.26296643030901 0.6394603845622397 0.23576740217308362 0.6829002893385014" mass="0.13596026009871737" diaginertia="3.9550587224970146e-05 3.9150399344221465e-05 3.907291504970002e-05" />
+      </body>
+    </body>
+  </worldbody>
+  <actuator />
+</mujoco>

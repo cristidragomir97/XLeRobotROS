@@ -1,0 +1,31 @@
+name: xlerobot
+services:
+  ros-dev:
+    image: xlerobot:jazzy
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    init: true
+    tty: true
+    stdin_open: true
+    ports:
+      - "127.0.0.1:${XLEROBOT_VIEWER_PORT:-8082}:8080"
+      - "127.0.0.1:${XLEROBOT_DASHBOARD_PORT:-8889}:8888"
+    environment:
+      ROS_DOMAIN_ID: ${XLEROBOT_ROS_DOMAIN_ID:-185}
+      RMW_IMPLEMENTATION: rmw_cyclonedds_cpp
+      MUJOCO_GL: egl
+      DISPLAY: ${DISPLAY:-:0}
+      XAUTHORITY: /tmp/xlerobot-xauthority
+      QT_X11_NO_MITSHM: "1"
+    volumes:
+      - .:/workspace/xlerobot
+      - xlerobot-build:/workspace/xlerobot/build
+      - xlerobot-install:/workspace/xlerobot/install
+      - xlerobot-log:/workspace/xlerobot/log
+      - /tmp/.X11-unix:/tmp/.X11-unix:ro
+      - ${XAUTHORITY:-/dev/null}:/tmp/xlerobot-xauthority:ro
+volumes:
+  xlerobot-build:
+  xlerobot-install:
+  xlerobot-log:

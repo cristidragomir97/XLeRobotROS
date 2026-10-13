@@ -1,0 +1,49 @@
+XLeRobot ROS integration
+
+Robot source and mesh geometry derive from Vector-Wangel/XLeRobot, maintained
+by Victor Wang and contributors, pinned in the upstream Git submodule at
+b017b5e6354bd9f61f4247a920c72622ca0aade0. Upstream's Apache-2.0 license remains
+with its files. The ROS URDF preserves upstream geometry and kinematic facts
+with separately documented simulated camera and IMU mounts.
+
+Docker and operator-script organization follows the local mr_handy and
+grove-g1 projects. Nav2 parameters adapt ROS 2 Jazzy nav2_bringup defaults
+(Open Navigation and contributors). RTAB-Map integration follows the
+introlab/rtabmap_ros RGB-D and IMU examples (Mathieu Labbe and contributors).
+
+Ekumen's LeKiwi omni-base modeling article by Franco Cipollone is credited
+as a design reference. This stack adapts its roller contact topology from
+Aditya Kamath's pinned lekiwi_mujoco implementation. The adapted runtime model
+uses a floating chassis, three driven wheel joints and 48 passive rollers;
+XLeRobot's original planar chassis actuators are removed. Added contact geometry
+and the 8 kg cart mass are documented simulation assumptions. Four passive
+cart casters and their vertical compliance model support the cart. Caster
+visuals are split from the original ManiSkill meshes; mounting connectors
+derive from upstream hardware/XLeRobot 0-3-0 new wheel connector.stl.
+Cart alignment and connector height fits are recorded in cart_mount.yaml.
+
+Complete cart, arm-mount, head and wrist-camera visuals are restored from
+the pinned upstream simulation/Maniskill/assets/xlerobot URDF and meshes.
+The furnished home layout and preparation helpers are adapted from mr_handy.
+RoboCasa-compatible Lightwheel assets are attributed to NVIDIA / Lightwheel,
+licensed CC-BY-4.0; selected source/prepared files, license and pinned provenance
+are retained under assets/robocasa.
+
+Robocore Viz browser dashboard and bridge are vendored from the Mr Handy
+package, originally based on Dheera Venkatraman's ROSboard and Robocore's
+base101 fork. Its BSD license, third-party notices and extraction provenance
+are retained in src/robocore_viz/LICENSE and PROVENANCE.md.
+
+LeKiwi ROS 2 and sts_hardware_interface by Aditya Kamath (Kamath Robotics)
+are retained as pinned Git submodules under dependencies/lekiwi_ros2. Their
+Apache-2.0 licenses and attribution remain in the respective repositories.
+The XLeRobot wrapper uses their control defaults, command switch, kinematics,
+passive omniwheel roller topology and installed STS hardware driver; XLeRobot-specific adapters live in src/.
+
+The optional Mod101 arm configuration uses Robocore Labs' mod101 repository,
+pinned at e0b450111f3fad7a514446c07a642c384dd5c332 under dependencies/mod101.
+The reusable arm macro supplies meshes, rail geometry, inertias and joint limits.
+Its PG gripper adapts NormaCore's Parallel Jaw Gripper; the original Apache-2.0
+license, source STEP and attribution remain in mod101_tool_pggripper.
+Arm attachment poses and MuJoCo servo/contact settings are local simulation
+assumptions, not a validated hardware mounting or motor calibration.

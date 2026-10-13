@@ -1,0 +1,44 @@
+name: XLeRobot
+id: xlerobot
+tagline: RGB-D mapping · Dual arms · Omni base
+cameras:
+  - {topic: /camera/color/image_raw, label: 'Head · RGB'}
+  - {topic: /camera/aligned_depth_to_color/image_raw, label: 'Head · Depth'}
+  - {topic: /camera/depth_filtered/image_raw, label: 'Head · Filtered depth'}
+maps:
+  - {topic: /map, label: RTAB-Map}
+  - {topic: /global_costmap/costmap, label: Global costmap}
+  - {topic: /local_costmap/costmap, label: Local costmap}
+topics:
+  joints: /joint_states
+  odom: /odom
+  tracking: /odom_info_lite
+  pose: /localization_pose
+  plan: /plan
+drive:
+  topic: /cmd_vel
+  type: geometry_msgs/msg/Twist
+  linear_max: 0.4
+  angular_max: 0.8
+  omnidirectional: true
+telemetry:
+  - {section: navigation, kind: localization, title: Visual odometry, topic: /odom}
+  - {section: navigation, kind: navigation, title: Navigation, topic: /navigate_to_pose/_action/status}
+  - {section: navigation, kind: plan, title: Global plan, topic: /plan}
+  - {section: navigation, kind: odometry, title: 'Base motion (diagnostic)', topic: /ground_truth/odom}
+  - {section: hardware, kind: imu, title: Base IMU, topic: /imu/data}
+  - {section: hardware, kind: joints, title: Joint feedback, topic: /joint_states}
+  - {section: hardware, kind: compute, title: Compute, topic: _system_stats}
+joint_groups:
+  - title: Left arm
+    topic: /left_arm_controller/follow_joint_trajectory
+    type: control_msgs/action/FollowJointTrajectory
+    joints: [Rotation_L, Pitch_L, Elbow_L, Wrist_Pitch_L, Wrist_Roll_L, Jaw_L]
+  - title: Right arm
+    topic: /right_arm_controller/follow_joint_trajectory
+    type: control_msgs/action/FollowJointTrajectory
+    joints: [Rotation_R, Pitch_R, Elbow_R, Wrist_Pitch_R, Wrist_Roll_R, Jaw_R]
+  - title: Head
+    topic: /head_controller/follow_joint_trajectory
+    type: control_msgs/action/FollowJointTrajectory
+    joints: [head_pan_joint, head_tilt_joint]

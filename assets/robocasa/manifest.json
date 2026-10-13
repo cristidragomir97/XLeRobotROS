@@ -1,0 +1,100 @@
+{
+  "dataset": "nvidia/PhysicalAI-Robotics-Manipulation-Objects-Kitchen-MJCF",
+  "revision": "420a04af939c34873e6839a586b70844baf28aab",
+  "license": "CC-BY-4.0",
+  "source_url": "https://huggingface.co/datasets/nvidia/PhysicalAI-Robotics-Manipulation-Objects-Kitchen-MJCF",
+  "assets": [
+    {
+      "id": "Refrigerator040",
+      "category": "fridges",
+      "scale": 1.0,
+      "xml": "fridges/Refrigerator040/prepared.xml",
+      "archive_sha256": "10accb5fff37dc2a70d12822d729ff885364fefb932826a89e04dbc6b5c77715",
+      "model_sha256": "952ea2ee82fcf00fa6ebfc48c5e21ca12315bb6cdc2c4ee3d791dec374f16c96",
+      "bounds_m": [
+        [
+          -0.4304639997526897,
+          -0.4680779890833734,
+          -0.9323200185008387
+        ],
+        [
+          0.43046400132431556,
+          0.4680779911696882,
+          0.9323200109456475
+        ]
+      ],
+      "bbox_half_size": null
+    },
+    {
+      "id": "Stove066",
+      "category": "stoves",
+      "scale": 1.0,
+      "xml": "stoves/Stove066/prepared.xml",
+      "archive_sha256": "7f71b03a067ea8ed01e4d8e3686020eb1945116058cf8ebffe231d981ed1814a",
+      "model_sha256": "9b2494da4f5eb87fc0c802490d6bdfe092123361363a2e06961893b3f0fad82a",
+      "bounds_m": [
+        [
+          -0.3716640021682165,
+          -0.33766699098657316,
+          -0.4496300215870227
+        ],
+        [
+          0.3716640020486487,
+          0.3376670030930107,
+          0.4496299970062442
+        ]
+      ],
+      "bbox_half_size": null
+    },
+    {
+      "id": "GlassCup008",
+      "category": "glass_cup",
+      "scale": 0.45,
+      "xml": "glass_cup/GlassCup008/prepared.xml",
+      "archive_sha256": "66d8a9eb70966352f75f3e782b7ec1b534d760479b243264090e5f8db23c9cb6",
+      "model_sha256": "685986d412a1dd6f80953794e1fbe08b345378196504a0eb61a475b2d895a373",
+      "bounds_m": [
+        [
+          -0.024056099838251414,
+          -0.024056100885905506,
+          -0.023230800320280555
+        ],
+        [
+          0.02405610073483545,
+          0.024056101549826507,
+          0.023230800490008953
+        ]
+      ],
+      "bbox_half_size": [
+        0.02405492325,
+        0.02405584575,
+        0.02323026
+      ]
+    },
+    {
+      "id": "HoneyBottle002",
+      "category": "honey_bottle",
+      "scale": 0.45,
+      "xml": "honey_bottle/HoneyBottle002/prepared.xml",
+      "archive_sha256": "bb50dea67be048ec266adbcb855a5141abdd5ac6440ad54a0f275d0d61fc1f66",
+      "model_sha256": "9c6b2043c96b720c2cb87e4811a6bb945fcababe7e2b2abc7dd94a0d2bef6bfc",
+      "bounds_m": [
+        [
+          -0.02228490037297334,
+          -0.02228490048202189,
+          -0.027981450408879734
+        ],
+        [
+          0.022284901166209323,
+          0.022284901057160772,
+          0.027981449923181075
+        ]
+      ],
+      "bbox_half_size": [
+        0.02256714675,
+        0.02256714675,
+        0.028289245499999997
+      ]
+    }
+  ]
+}

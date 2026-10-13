@@ -1,0 +1,1 @@
+from xlerobot_sim.bringup import generate_launch_description

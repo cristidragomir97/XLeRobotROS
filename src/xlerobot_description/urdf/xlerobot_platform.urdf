@@ -1,0 +1,628 @@
+<?xml version="1.0"?>
+<!-- DESIGN LEDGER
+XLeRobot platform for alternate arms: controller_manager, MuJoCo, RSP, RViz.
+Units m, kg, s, rad; REP-103 +X forward +Y left +Z up. Root base_footprint;
+base_link is the chassis, nominal height 0.035 m, initial world heading removed
+by the odometry bridge. Body, wheel/head joint frames, mesh scales, limits,
+inertias and white cart finish copied from the canonical standard xlerobot.urdf.
+Source XLeRobot b017b5e6354bd9f61f4247a920c72622ca0aade0; source robot assets
+retained via meshes/ and full_meshes/. No SO arm subtrees or SO base-holder visuals.
+arm_mount_L/R are frame-only mounting datums inherited from the corrected
+cart assembly; Mod101 mount brackets/bolt alignment need hardware verification.
+Cart/head assembly Z correction -0.0359257260090011 m follows source caster
+bounds and omniwheel radius. The 8 kg cart box estimate and computed inertia
+include caster mass redistributed in MuJoCo. Internal caster and roller joints
+are omitted from ROS; caster visuals retain nominal pose. Connector meshes
+from pinned upstream hardware, with mesh-derived Z fit, XY motor-mount fit.
+Visual-only fixed frames omit inertials. MJCF owns platform collision geometry.
+Head RGB-D pinhole/optical frames and provisional bottom IMU copied unchanged.
+This explicit platform URDF is included by the Mod101 Xacro configuration;
+that profile adds arms and the single SimulatorSystem ros2_control block.
+-->
+<robot name="xlerobot">
+  <link name="base_footprint" />
+  <link name="base_link">
+    <inertial>
+      <origin xyz="-0.03 0 0.4040742739909989" rpy="0 0 0" />
+      <mass value="8" />
+      <inertia ixx="0.4917333333333334" iyy="0.4917333333333334" izz="0.2133333333333334" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="base_link_visual_1">
+      <origin xyz="-0.01668 0.502 0.8590742739909989" rpy="1.5708 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/full_meshes/raskogbody.stl" scale="0.0009 0.001 0.0009" />
+      </geometry>
+      <material name="base_link_mat_1">
+        <color rgba="0.95 0.95 0.95 1" />
+      </material>
+    </visual>
+    <visual name="base_link_visual_2">
+      <origin xyz="-0.01668 0.502 0.8590742739909989" rpy="1.5708 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/full_meshes/raskogwheel1.stl" scale="0.0009 0.001 0.0009" />
+      </geometry>
+      <material name="base_link_mat_2">
+        <color rgba="0.6 0.6 0.6 1" />
+      </material>
+    </visual>
+    <visual name="base_link_visual_3">
+      <origin xyz="-0.01668 0.502 0.8590742739909989" rpy="1.5708 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/full_meshes/raskogwheel2.stl" scale="0.0009 0.001 0.0009" />
+      </geometry>
+      <material name="base_link_mat_3">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="base_plate_layer1-v5-1">
+    <inertial>
+      <origin xyz="-4.73068766068e-15 -2.71555373778e-05 -0.0035" rpy="1.57079632679 -1.57079632679 0" />
+      <mass value="1.94686243483" />
+      <inertia ixx="0.0112496514690387" iyy="0.005637109888809055" izz="0.005628440956780792" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="base_plate_layer1-v5-1_visual_0">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/meshes/base_plate_layer1-v5-1.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="base_plate_layer1-v5-1_mat_0">
+        <color rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="drive_motor_mount-v4-3">
+    <inertial>
+      <origin xyz="0.000179001819772 -0.000691448615462 0.000434818744964" rpy="1.33267885306 -1.53318847046 1.82868540942" />
+      <mass value="0.0358840171914" />
+      <inertia ixx="6.895012244323653e-06" iyy="3.897590469217182e-06" izz="3.22295761756969e-06" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="drive_motor_mount-v4-3_visual_0">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/meshes/drive_motor_mount-v4-3.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="drive_motor_mount-v4-3_mat_0">
+        <color rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="ST3215_Servo_Motor-v1-2">
+    <inertial>
+      <origin xyz="-0.0146642570207 -0.00872281665634 1.21918530534e-06" rpy="0.695737581641 -1.57049554417 2.41282182542" />
+      <mass value="0.0658962961902" />
+      <inertia ixx="1.8215749563864642e-05" iyy="1.3917640925369588e-05" izz="1.0296958536422064e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="ST3215_Servo_Motor-v1-2_visual_0">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/meshes/ST3215_Servo_Motor-v1-2.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="ST3215_Servo_Motor-v1-2_mat_0">
+        <color rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="3_8-Hex-Bore-Plastic-VersaHub-217-5828-v2-2">
+    <inertial>
+      <origin xyz="8.50877658557e-09 7.35894501461e-09 0.00396861664249" rpy="1.37758465424 -1.57079632679 0" />
+      <mass value="0.0866549610975" />
+      <inertia ixx="2.2911778015411222e-05" iyy="1.2296292386099878e-05" izz="1.2296275448662767e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="3_8-Hex-Bore-Plastic-VersaHub-217-5828-v2-2_visual_0">
+      <origin xyz="4.4408920985e-18 3.46944695195e-18 0.0015875" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/meshes/3_8-Hex-Bore-Plastic-VersaHub-217-5828-v2-2.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="3_8-Hex-Bore-Plastic-VersaHub-217-5828-v2-2_mat_0">
+        <color rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="4-Omni-Directional-Wheel_Single_Body-v1-2">
+    <inertial>
+      <origin xyz="-7.10520789566e-08 -1.13699179473e-07 -1.2090586079e-08" rpy="1.14509426996 -1.57079632679 0" />
+      <mass value="1.35428540823" />
+      <inertia ixx="0.0018798127501507855" iyy="0.0010936224157465256" izz="0.001093608469727632" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="4-Omni-Directional-Wheel_Single_Body-v1-2_visual_0">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/meshes/simplify_4-Omni-Directional-Wheel_Single_Body-v1-2.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="4-Omni-Directional-Wheel_Single_Body-v1-2_mat_0">
+        <color rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="drive_motor_mount-v4-2">
+    <inertial>
+      <origin xyz="0.000179001819772 -0.000691448615462 0.000434818744964" rpy="1.33267885306 -1.53318847046 1.82868540942" />
+      <mass value="0.0358840171914" />
+      <inertia ixx="6.895012244323668e-06" iyy="3.897590469217222e-06" izz="3.222957617569707e-06" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="drive_motor_mount-v4-2_visual_0">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/meshes/drive_motor_mount-v4-2.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="drive_motor_mount-v4-2_mat_0">
+        <color rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="ST3215_Servo_Motor-v1-1">
+    <inertial>
+      <origin xyz="-0.0146642570207 -0.00872281665634 1.21918530536e-06" rpy="0.695737581641 -1.57049554417 2.41282182542" />
+      <mass value="0.0658962961902" />
+      <inertia ixx="1.8215749563864236e-05" iyy="1.3917640925369832e-05" izz="1.0296958536421656e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="ST3215_Servo_Motor-v1-1_visual_0">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/meshes/ST3215_Servo_Motor-v1-1.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="ST3215_Servo_Motor-v1-1_mat_0">
+        <color rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="3_8-Hex-Bore-Plastic-VersaHub-217-5828-v2-1">
+    <inertial>
+      <origin xyz="-9.42830793435e-08 7.35894500442e-09 0.00396843860177" rpy="1.37758464944 -1.57079632679 0" />
+      <mass value="0.0866549610975" />
+      <inertia ixx="2.2911778015411093e-05" iyy="1.229629238609998e-05" izz="1.2296275448663169e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="3_8-Hex-Bore-Plastic-VersaHub-217-5828-v2-1_visual_0">
+      <origin xyz="-1.02791855923e-07 -6.85076995133e-18 0.00158732195928" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/meshes/3_8-Hex-Bore-Plastic-VersaHub-217-5828-v2-1.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="3_8-Hex-Bore-Plastic-VersaHub-217-5828-v2-1_mat_0">
+        <color rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="4-Omni-Directional-Wheel_Single_Body-v1-1">
+    <inertial>
+      <origin xyz="-7.10520789652e-08 -1.1369917949e-07 -1.20905861041e-08" rpy="1.1450942699 -1.57079632679 0" />
+      <mass value="1.35428540823" />
+      <inertia ixx="0.0018798127501507892" iyy="0.0010936224157465115" izz="0.0010936084697276175" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="4-Omni-Directional-Wheel_Single_Body-v1-1_visual_0">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/meshes/simplify_4-Omni-Directional-Wheel_Single_Body-v1-1.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="4-Omni-Directional-Wheel_Single_Body-v1-1_mat_0">
+        <color rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="drive_motor_mount-v4-1">
+    <inertial>
+      <origin xyz="0.000179001819772 -0.000691448615462 0.000434818744964" rpy="1.33267885306 -1.53318847046 1.82868540942" />
+      <mass value="0.0358840171914" />
+      <inertia ixx="6.895012244323558e-06" iyy="3.897590469217194e-06" izz="3.222957617569697e-06" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="drive_motor_mount-v4-1_visual_0">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/meshes/drive_motor_mount-v4-1.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="drive_motor_mount-v4-1_mat_0">
+        <color rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="ST3215_Servo_Motor-v1">
+    <inertial>
+      <origin xyz="-0.0146642570207 -0.00872281665634 1.21918530535e-06" rpy="0.695737581641 -1.57049554417 2.41282182542" />
+      <mass value="0.0658962961902" />
+      <inertia ixx="1.821574956386444e-05" iyy="1.391764092536956e-05" izz="1.0296958536421988e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="ST3215_Servo_Motor-v1_visual_0">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/meshes/ST3215_Servo_Motor-v1.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="ST3215_Servo_Motor-v1_mat_0">
+        <color rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="3_8-Hex-Bore-Plastic-VersaHub-217-5828-v2">
+    <inertial>
+      <origin xyz="8.50877655505e-09 -5.59442467243e-09 0.0039685942066" rpy="1.37758464763 -1.57079632679 0" />
+      <mass value="0.0866549610975" />
+      <inertia ixx="2.291177801541124e-05" iyy="1.2296292386099673e-05" izz="1.2296275448663121e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="3_8-Hex-Bore-Plastic-VersaHub-217-5828-v2_visual_0">
+      <origin xyz="-2.79613430435e-17 -1.2953369687e-08 0.00158747756411" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/meshes/3_8-Hex-Bore-Plastic-VersaHub-217-5828-v2.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="3_8-Hex-Bore-Plastic-VersaHub-217-5828-v2_mat_0">
+        <color rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="4-Omni-Directional-Wheel_Single_Body-v1">
+    <inertial>
+      <origin xyz="-7.10520789577e-08 -1.13699179472e-07 -1.20905861014e-08" rpy="1.14509427005 -1.57079632679 0" />
+      <mass value="1.35428540823" />
+      <inertia ixx="0.0018798127501507833" iyy="0.0010936224157465147" izz="0.00109360846972762" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="4-Omni-Directional-Wheel_Single_Body-v1_visual_0">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/meshes/simplify_4-Omni-Directional-Wheel_Single_Body-v1.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="4-Omni-Directional-Wheel_Single_Body-v1_mat_0">
+        <color rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="servo_controller_mount-v1">
+    <inertial>
+      <origin xyz="-3.67691320649e-14 0 -0.00120905154918" rpy="3.14159265359 -1.57079632679 0" />
+      <mass value="0.0617558941143" />
+      <inertia ixx="2.9413765100515303e-05" iyy="1.8890192778258753e-05" izz="1.0761471541836937e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="servo_controller_mount-v1_visual_0">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/meshes/servo_controller_mount-v1.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="servo_controller_mount-v1_mat_0">
+        <color rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="lipo_battery_mount-v1">
+    <inertial>
+      <origin xyz="-4.00237700711e-16 -0.00303440875895 0.00348111170528" rpy="0 -1.54695051067 1.57079632679" />
+      <mass value="0.165351857307" />
+      <inertia ixx="0.00016969258948396697" iyy="9.882008372625315e-05" izz="7.473752062209069e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="lipo_battery_mount-v1_visual_0">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/meshes/lipo_battery_mount-v1.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="lipo_battery_mount-v1_mat_0">
+        <color rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="Battery---Battery-5.2-Ah-DC5521-Plug-v2">
+    <inertial>
+      <origin xyz="0.02 -8.30064630073e-05 -0.0349220242317" rpy="0.0170538134012 0 0" />
+      <mass value="1.22154699882" />
+      <inertia ixx="0.0008162228074590442" iyy="0.0006598124478702281" izz="0.000475924736835028" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="Battery---Battery-5.2-Ah-DC5521-Plug-v2_visual_0">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/meshes/Battery---Battery-5.2-Ah-DC5521-Plug-v2.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="Battery---Battery-5.2-Ah-DC5521-Plug-v2_mat_0">
+        <color rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="94868A713_NO-THREADS_Female-Threaded-Hex-Standoff">
+    <inertial>
+      <origin xyz="2.18643990785e-14 -1.20102874237e-09 -6.69702013845e-09" rpy="0 0 0" />
+      <mass value="0.00615007086341" />
+      <inertia ixx="1.0965196650850464e-06" iyy="1.096519654894581e-06" izz="1.837396493115053e-08" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="94868A713_NO-THREADS_Female-Threaded-Hex-Standoff_visual_0">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/meshes/94868A713_NO-THREADS_Female-Threaded-Hex-Standoff.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="94868A713_NO-THREADS_Female-Threaded-Hex-Standoff_mat_0">
+        <color rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="base_plate_layer2-v1">
+    <inertial>
+      <origin xyz="-4.73068766068e-15 -2.71555373778e-05 -0.0035" rpy="1.57079632679 -1.57079632679 0" />
+      <mass value="1.94686243483" />
+      <inertia ixx="0.0112496514690387" iyy="0.0056371098888090545" izz="0.005628440956780792" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="base_plate_layer2-v1_visual_0">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/meshes/base_plate_layer2-v1.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="base_plate_layer2-v1_mat_0">
+        <color rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="arm_mount_L">
+    </link>
+  <link name="arm_mount_R">
+    </link>
+  <link name="top_base_link">
+    <visual name="top_base_link_visual_0">
+      <origin xyz="0.016 -0.006 -0.727" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/full_meshes/topbase1.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="top_base_link_mat_0">
+        <color rgba="0.3 0.3 0.3 1" />
+      </material>
+    </visual>
+    <visual name="top_base_link_visual_1">
+      <origin xyz="0.016 -0.006 -0.727" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/full_meshes/topbase2.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="top_base_link_mat_1">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="head_pan_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="1.60834910163 -1.44604378074 0.0222484244127" />
+      <mass value="2.2556" />
+      <inertia ixx="0.0184878" iyy="0.0128242" izz="0.00948808" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="head_pan_link_visual_0">
+      <origin xyz="0.194 -0.006 -0.73" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/full_meshes/tophead3.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="head_pan_link_mat_0">
+        <color rgba="0.3 0.3 0.3 1" />
+      </material>
+    </visual>
+    <visual name="head_pan_link_visual_1">
+      <origin xyz="0.194 -0.006 -0.73" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/full_meshes/tophead4.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="head_pan_link_mat_1">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="head_tilt_link">
+    <inertial>
+      <origin xyz="0.0081 0.0025 0.0113" rpy="1.6009995042 -0.787843442843 -0.0205054811689" />
+      <mass value="0.9087" />
+      <inertia ixx="0.00630102" iyy="0.00590111" izz="0.00139787" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="head_tilt_link_visual_0">
+      <origin xyz="0.16265 -0.006 -1.16815" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/full_meshes/tophead5.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="head_tilt_link_mat_0">
+        <color rgba="0.3 0.3 0.3 1" />
+      </material>
+    </visual>
+    <visual name="head_tilt_link_visual_1">
+      <origin xyz="0.16265 -0.006 -1.16815" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/full_meshes/tophead6.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="head_tilt_link_mat_1">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="head_camera_link" />
+  <link name="imu_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.005" />
+      <inertia ixx="3.333333333333334e-07" iyy="3.333333333333334e-07" izz="3.333333333333334e-07" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual name="imu_link_visual_0">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.02 0.02 0.02" />
+      </geometry>
+      <material name="imu_link_mat_0">
+        <color rgba="0.1 0.8 0.4 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="head_camera_rgb_optical_frame" />
+  <link name="cart_connector_0">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/cart_meshes/cart_connector.stl" scale="1 1 0.7696101564597276" />
+      </geometry>
+      <material name="cart_connector_0_material">
+        <color rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="cart_connector_1">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/cart_meshes/cart_connector.stl" scale="1 1 0.7696029341907922" />
+      </geometry>
+      <material name="cart_connector_1_material">
+        <color rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="cart_connector_2">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://xlerobot_description/cart_meshes/cart_connector.stl" scale="1 1 0.7696133966682999" />
+      </geometry>
+      <material name="cart_connector_2_material">
+        <color rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="base_link_fixed" type="fixed">
+    <parent link="base_footprint" />
+    <child link="base_link" />
+    <origin xyz="0 0 0.035" rpy="0 0 0" />
+  </joint>
+  <joint name="base_plate_layer1-v5-1_fixed" type="fixed">
+    <parent link="base_link" />
+    <child link="base_plate_layer1-v5-1" />
+    <origin xyz="0 0 0" rpy="0 0 -1.5708" />
+  </joint>
+  <joint name="drive_motor_mount-v4-3_fixed" type="fixed">
+    <parent link="base_plate_layer1-v5-1" />
+    <child link="drive_motor_mount-v4-3" />
+    <origin xyz="-0.0206100000075 -0.09 0.002" rpy="0 0 -1.57079632679" />
+  </joint>
+  <joint name="ST3215_Servo_Motor-v1-2_fixed" type="fixed">
+    <parent link="drive_motor_mount-v4-3" />
+    <child link="ST3215_Servo_Motor-v1-2" />
+    <origin xyz="0.0096 -0.00488999999255 0.01436" rpy="0 0 -1.57079632679" />
+  </joint>
+  <joint name="ST3215_Servo_Motor-v1-2_Hub---Servo" type="continuous">
+    <parent link="ST3215_Servo_Motor-v1-2" />
+    <child link="3_8-Hex-Bore-Plastic-VersaHub-217-5828-v2-2" />
+    <origin xyz="-0.0255 0.0096 -1.60149671302e-18" rpy="1.57079632679 0 3.14159265359" />
+    <axis xyz="6.88753506498e-49 -3.74939945665e-33 1" />
+  </joint>
+  <joint name="4-Omni-Directional-Wheel_Single_Body-v1-2_fixed" type="fixed">
+    <parent link="3_8-Hex-Bore-Plastic-VersaHub-217-5828-v2-2" />
+    <child link="4-Omni-Directional-Wheel_Single_Body-v1-2" />
+    <origin xyz="1.98762263181e-18 3.46944695195e-18 0.01905" rpy="-3.14159265359 0 0.261799387799" />
+  </joint>
+  <joint name="drive_motor_mount-v4-2_fixed" type="fixed">
+    <parent link="base_plate_layer1-v5-1" />
+    <child link="drive_motor_mount-v4-2" />
+    <origin xyz="0.0882472863443 0.0271512164216 0.002" rpy="0 0 0.523598775598" />
+  </joint>
+  <joint name="ST3215_Servo_Motor-v1-1_fixed" type="fixed">
+    <parent link="drive_motor_mount-v4-2" />
+    <child link="ST3215_Servo_Motor-v1-1" />
+    <origin xyz="0.0104 -0.00488999999255 0.01436" rpy="7.77156117238e-16 0 -1.57079632679" />
+  </joint>
+  <joint name="ST3215_Servo_Motor-v1-1_Hub-2---Servo" type="continuous">
+    <parent link="ST3215_Servo_Motor-v1-1" />
+    <child link="3_8-Hex-Bore-Plastic-VersaHub-217-5828-v2-1" />
+    <origin xyz="-0.0254998972081 0.00960017804072 -7.20324269765e-18" rpy="-1.57079632679 2.22044604925e-16 -1.11022302463e-16" />
+    <axis xyz="-2.01892290042e-07 5.55111706428e-17 1" />
+  </joint>
+  <joint name="4-Omni-Directional-Wheel_Single_Body-v1-1_fixed" type="fixed">
+    <parent link="3_8-Hex-Bore-Plastic-VersaHub-217-5828-v2-1" />
+    <child link="4-Omni-Directional-Wheel_Single_Body-v1-1" />
+    <origin xyz="-1.02791855931e-07 2.64559207874e-17 0.0190498219593" rpy="-3.14159265359 0 -1.83259571459" />
+  </joint>
+  <joint name="drive_motor_mount-v4-1_fixed" type="fixed">
+    <parent link="base_plate_layer1-v5-1" />
+    <child link="drive_motor_mount-v4-1" />
+    <origin xyz="-0.0676372863369 0.0628487835784 0.002" rpy="0 2.22044604925e-16 2.61799387799" />
+  </joint>
+  <joint name="ST3215_Servo_Motor-v1_fixed" type="fixed">
+    <parent link="drive_motor_mount-v4-1" />
+    <child link="ST3215_Servo_Motor-v1" />
+    <origin xyz="0.0096 -0.00488999999255 0.01436" rpy="1.11022302463e-16 2.22044604925e-16 -1.57079632679" />
+  </joint>
+  <joint name="ST3215_Servo_Motor-v1_Revolute-40" type="continuous">
+    <parent link="ST3215_Servo_Motor-v1" />
+    <child link="3_8-Hex-Bore-Plastic-VersaHub-217-5828-v2" />
+    <origin xyz="-0.0255000129534 0.00960002243589 -3.6931242038e-17" rpy="-1.57079632679 1.57079632679 0" />
+    <axis xyz="-1.29615114003e-16 -2.01892289598e-07 1" />
+  </joint>
+  <joint name="4-Omni-Directional-Wheel_Single_Body-v1_fixed" type="fixed">
+    <parent link="3_8-Hex-Bore-Plastic-VersaHub-217-5828-v2" />
+    <child link="4-Omni-Directional-Wheel_Single_Body-v1" />
+    <origin xyz="-3.01817890927e-17 -1.2953369758e-08 0.0190499775641" rpy="-3.14159265359 0 0.261799387799" />
+  </joint>
+  <joint name="servo_controller_mount-v1_fixed" type="fixed">
+    <parent link="base_plate_layer1-v5-1" />
+    <child link="servo_controller_mount-v1" />
+    <origin xyz="0 0.06 0.003" rpy="0 0 0" />
+  </joint>
+  <joint name="lipo_battery_mount-v1_fixed" type="fixed">
+    <parent link="base_plate_layer1-v5-1" />
+    <child link="lipo_battery_mount-v1" />
+    <origin xyz="-0.05 -0.02 0" rpy="0 0 1.57079632679" />
+  </joint>
+  <joint name="Battery---Battery-5.2-Ah-DC5521-Plug-v2_fixed" type="fixed">
+    <parent link="lipo_battery_mount-v1" />
+    <child link="Battery---Battery-5.2-Ah-DC5521-Plug-v2" />
+    <origin xyz="2.22044604925e-18 0.0365 0.003" rpy="-1.57079632679 -1.57079632679 0" />
+  </joint>
+  <joint name="94868A713_NO-THREADS_Female-Threaded-Hex-Standoff_fixed" type="fixed">
+    <parent link="base_plate_layer1-v5-1" />
+    <child link="94868A713_NO-THREADS_Female-Threaded-Hex-Standoff" />
+    <origin xyz="0 1.30104260698e-18 0.025" rpy="0 0 0" />
+  </joint>
+  <joint name="base_plate_layer2-v1_fixed" type="fixed">
+    <parent link="base_plate_layer1-v5-1" />
+    <child link="base_plate_layer2-v1" />
+    <origin xyz="0 -6.43084186664e-19 0.057" rpy="0 0 0" />
+  </joint>
+  <joint name="arm_mount_L_fixed" type="fixed">
+    <parent link="base_link" />
+    <child link="arm_mount_L" />
+    <origin xyz="-0.135 -0.133 0.7240742739909989" rpy="0 0 1.5708" />
+  </joint>
+  <joint name="arm_mount_R_fixed" type="fixed">
+    <parent link="base_link" />
+    <child link="arm_mount_R" />
+    <origin xyz="-0.135 0.133 0.7240742739909989" rpy="0 0 1.5708" />
+  </joint>
+  <joint name="top_base_link_fixed" type="fixed">
+    <parent link="base_link" />
+    <child link="top_base_link" />
+    <origin xyz="0 0 0.6940742739909989" rpy="0 0 0" />
+  </joint>
+  <joint name="head_pan_joint" type="revolute">
+    <parent link="top_base_link" />
+    <child link="head_pan_link" />
+    <origin xyz="-0.178 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit lower="-1.57" upper="1.57" effort="35" velocity="1.5" />
+  </joint>
+  <joint name="head_tilt_joint" type="revolute">
+    <parent link="head_pan_link" />
+    <child link="head_tilt_link" />
+    <origin xyz="0.031 0 0.43815" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-0.76" upper="1.45" effort="35" velocity="1.5" />
+  </joint>
+  <joint name="head_camera_link_fixed" type="fixed">
+    <parent link="head_tilt_link" />
+    <child link="head_camera_link" />
+    <origin xyz="0.055 0 0.0225" rpy="0 0 0" />
+  </joint>
+  <joint name="imu_link_fixed" type="fixed">
+    <parent link="base_link" />
+    <child link="imu_link" />
+    <origin xyz="0 0 -0.015" rpy="0 0 0" />
+  </joint>
+  <joint name="head_camera_rgb_optical_frame_fixed" type="fixed">
+    <parent link="head_camera_link" />
+    <child link="head_camera_rgb_optical_frame" />
+    <origin xyz="0 0.02 0" rpy="-1.57079632679 0 -1.57079632679" />
+  </joint>
+  <joint name="cart_connector_0_fixed" type="fixed">
+    <parent link="base_link" />
+    <child link="cart_connector_0" />
+    <origin xyz="-0.08999992429463559 0.02061033059577083 0.05699999999999997" rpy="0 0 0" />
+  </joint>
+  <joint name="cart_connector_1_fixed" type="fixed">
+    <parent link="base_link" />
+    <child link="cart_connector_1" />
+    <origin xyz="0.02715089227098458 -0.08824738607571615 0.05699999999999997" rpy="0 0 0" />
+  </joint>
+  <joint name="cart_connector_2_fixed" type="fixed">
+    <parent link="base_link" />
+    <child link="cart_connector_2" />
+    <origin xyz="0.06284903202365104 0.06763705547994533 0.05699999999999997" rpy="0 0 0" />
+  </joint>
+</robot>

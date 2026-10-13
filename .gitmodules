@@ -1,0 +1,9 @@
+[submodule "upstream"]
+	path = upstream
+	url = https://github.com/Vector-Wangel/XLeRobot.git
+[submodule "dependencies/lekiwi_ros2"]
+	path = dependencies/lekiwi_ros2
+	url = https://github.com/adityakamath/lekiwi_ros2.git
+[submodule "dependencies/mod101"]
+	path = dependencies/mod101
+	url = https://github.com/robocore-labs/mod101.git
