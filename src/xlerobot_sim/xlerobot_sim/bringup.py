@@ -1,4 +1,5 @@
 """Head RGB-D + base IMU; RTAB-Map owns estimated odometry and map transforms."""
+import sys
 from pathlib import Path
 
 from ament_index_python.packages import get_package_share_directory
@@ -23,18 +24,24 @@ def setup(context):
     # I/O from the previous session; preserve every map database and asset.
     runtime = Path(value('runtime'))
     runtime.mkdir(parents=True, exist_ok=True)
-    for filename in ('control.bin', 'physics.npz', 'state.npz'):
+    for filename in ('control.bin', 'physics.npz', 'state.npz', 'viewer.npz'):
         (runtime / filename).unlink(missing_ok=True)
-    mode, odometry = value('mode'), value('odometry')
+    mode, odometry, slam = value('mode'), value('odometry'), value('slam')
     database = value('database') or str(Path(value('runtime')) / f"{value('world')}{'_mod101' if configuration == 'mod101' else ''}.db")
     if mode not in ('mapping', 'localization', 'none'):
         raise ValueError('mode must be mapping, localization, or none')
     if odometry not in ('rgbd', 'ground_truth'):
         raise ValueError('odometry must be rgbd or ground_truth')
-    if mode != 'none' and odometry != 'rgbd':
-        raise ValueError('SLAM modes require RGB-D odometry; ground_truth is a diagnostic mode only')
-    if mode == 'localization' and not Path(database).is_file():
+    if slam not in ('toolbox', 'rtabmap', 'none'):
+        raise ValueError('slam must be toolbox, rtabmap, or none')
+    if mode != 'none' and slam == 'rtabmap' and odometry != 'rgbd':
+        raise ValueError('RTAB-Map modes require RGB-D odometry')
+    if mode != 'none' and slam == 'toolbox' and odometry != 'ground_truth':
+        raise ValueError('slam_toolbox requires ground_truth odometry in this stack')
+    if mode == 'localization' and slam == 'rtabmap' and not Path(database).is_file():
         raise ValueError('Localization requires an existing RTAB-Map database from a mapping run')
+    if mode == 'localization' and slam == 'toolbox' and not value('map_file'):
+        raise ValueError('slam_toolbox localization requires map_file')
     if value('nav') == 'true' and mode == 'none':
         raise ValueError('Navigation needs mapping or localization')
     camera_remaps = [('rgb/image', '/camera/color/image_raw'),
@@ -62,13 +69,22 @@ def setup(context):
             on_exit=[EmitEvent(event=Shutdown(reason='MuJoCo simulator closed'))])),
     ]
     camera = Node(package='xlerobot_sim', executable='camera', output='screen',
-                  parameters=[{'runtime': value('runtime'), 'use_sim_time': True}])
+                  parameters=[{'runtime': value('runtime'), 'use_sim_time': True,
+                               'width': 640, 'height': 480, 'rate': float(value('camera_rate'))}])
     actions += [TimerAction(period=2., actions=[camera]),
         RegisterEventHandler(OnProcessExit(target_action=camera,
-            on_exit=[EmitEvent(event=Shutdown(reason='RGB-D camera renderer exited'))]))]
+            on_exit=[EmitEvent(event=Shutdown(reason='RGB-D camera exited'))]))]
+    manager_env = {}
+    if sys.platform == 'darwin':
+        # robostack's rosidl *_generator_py dylibs are linked into the C++
+        # controller manager's link interface but need Python symbols that a
+        # non-Python process does not provide. Preload libpython for this node.
+        libpython = Path(sys.prefix) / 'lib' / f'libpython{sys.version_info.major}.{sys.version_info.minor}.dylib'
+        if libpython.is_file():
+            manager_env['additional_env'] = {'DYLD_INSERT_LIBRARIES': str(libpython)}
     manager = Node(package='controller_manager', executable='ros2_control_node',
                    name='controller_manager', output='screen', parameters=[controller_file(configuration, wheel_tf=odometry == "rgbd"),
-                       {'use_sim_time': True}],
+                       {'use_sim_time': True}], **manager_env,
                    remappings=[('~/robot_description', '/robot_description')])
     spawner = Node(package='controller_manager', executable='spawner', output='screen',
                    arguments=['joint_state_broadcaster', 'base_controller', 'left_arm_controller',
@@ -98,11 +114,11 @@ def setup(context):
         actions.append(TimerAction(period=3., actions=[Node(
             package='xlerobot_sim', executable='viewer', output='screen',
             arguments=['--runtime', value('runtime'), '--port', value('mjviser_port')])]))
-    if odometry == 'rgbd':
+    if slam == 'rtabmap' and odometry == 'rgbd':
         actions.append(Node(package='rtabmap_odom', executable='rgbd_odometry',
                             name='rgbd_odometry', parameters=[rgbd_params],
                             remappings=camera_remaps, output='screen'))
-    if mode != 'none':
+    if mode != 'none' and slam == 'rtabmap':
         params = {'use_sim_time': True, 'frame_id': 'base_footprint',
                   'map_frame_id': 'map', 'subscribe_depth': True,
                   'subscribe_odom_info': True, 'approx_sync': False,
@@ -119,10 +135,35 @@ def setup(context):
         actions.append(Node(package='rtabmap_slam', executable='rtabmap', name='rtabmap',
                             parameters=[params], remappings=camera_remaps + [('grid_map', '/map')],
                             output='screen'))
-    actions.append(Node(package='rtabmap_util', executable='point_cloud_xyzrgb',
-                        name='depth_cloud', parameters=[{'use_sim_time': True, 'approx_sync': False,
-                        'qos': 2, 'decimation': 4, 'max_depth': 8.0, 'voxel_size': 0.03}],
-                        remappings=camera_remaps[:3]+[('cloud', '/camera/points')], output='screen'))
+    if slam == 'rtabmap' and value('depth_cloud') == 'true':
+        actions.append(Node(package='rtabmap_util', executable='point_cloud_xyzrgb',
+                            name='depth_cloud', parameters=[{'use_sim_time': True, 'approx_sync': False,
+                            'qos': 2, 'decimation': 4, 'max_depth': 8.0, 'voxel_size': 0.03}],
+                            remappings=camera_remaps[:3]+[('cloud', '/camera/points')], output='screen'))
+    if mode != 'none' and slam == 'toolbox':
+        actions.append(Node(package='depth_image_proc', executable='point_cloud_xyzrgb_node',
+                            name='depth_cloud', output='screen',
+                            parameters=[{'use_sim_time': True}],
+                            remappings=[('rgb/image_rect_color', '/camera/color/image_raw'),
+                                        ('rgb/camera_info', '/camera/color/camera_info'),
+                                        ('depth_registered/image_rect', '/camera/depth_filtered/image_raw'),
+                                        ('points', '/camera/points')]))
+        actions.append(Node(package='pointcloud_to_laserscan', executable='pointcloud_to_laserscan_node',
+                            name='pointcloud_to_laserscan', output='screen',
+                            parameters=[{'use_sim_time': True, 'target_frame': 'base_footprint',
+                                         'transform_tolerance': 0.2, 'min_height': 0.1,
+                                         'max_height': 1.5, 'angle_min': -1.5708,
+                                         'angle_max': 1.5708, 'angle_increment': 0.0087,
+                                         'scan_time': 0.1, 'range_min': 0.15,
+                                         'range_max': 8.0, 'use_inf': True,
+                                         'inf_epsilon': 1.0, 'concurrency_level': 0}],
+                            remappings=[('cloud_in', '/camera/points'), ('scan', '/scan')]))
+        toolbox_params = [str(share / 'config/slam_toolbox.yaml'),
+                          {'use_sim_time': True, 'mode': mode}]
+        if mode == 'localization':
+            toolbox_params[1]['map_file_name'] = value('map_file')
+        actions.append(Node(package='slam_toolbox', executable='async_slam_toolbox_node',
+                            name='slam_toolbox', output='screen', parameters=toolbox_params))
     if value('nav') == 'true':
         servers = [('nav2_controller', 'controller_server'),
                    ('nav2_planner', 'planner_server'), ('nav2_smoother', 'smoother_server'),
@@ -152,10 +193,12 @@ def generate_launch_description(configuration='standard'):
                 'runtime': '/workspace/xlerobot/.runtime', 'world': 'robocasa_home',
                 'world_assets': default_assets(), 'headless': 'false',
                 'mode': 'mapping', 'odometry': 'rgbd', 'mjviser': 'true',
+                'slam': 'rtabmap', 'map_file': '',
                 'viewer': 'true', 'mjviser_port': '8080',
                 'robocore_viz': 'true', 'robocore_viz_port': '8888',
                 'dashboard_config': '',
                 'camera_rate': '15.0', 'nav': 'true', 'rviz': 'false',
+                'depth_cloud': 'true',
                 'database': ''}
     # Keep the old viewer argument as an alias; mjviser is the neighboring stacks' name.
     return LaunchDescription([*[DeclareLaunchArgument(k, default_value=v)

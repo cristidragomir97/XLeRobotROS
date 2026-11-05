@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile
+      args:
+        ROS_RENDERING_IMAGE: ${XLEROBOT_RENDERING_IMAGE:-multiros:jazzy-rendering}
     init: true
     tty: true
     stdin_open: true
@@ -14,17 +16,18 @@ services:
     environment:
       ROS_DOMAIN_ID: ${XLEROBOT_ROS_DOMAIN_ID:-185}
       RMW_IMPLEMENTATION: rmw_cyclonedds_cpp
-      MUJOCO_GL: egl
-      DISPLAY: ${DISPLAY:-:0}
-      XAUTHORITY: /tmp/xlerobot-xauthority
-      QT_X11_NO_MITSHM: "1"
+      # Offscreen sensor rendering; interactive windows stay on the host.
+      MUJOCO_GL: ${XLEROBOT_MUJOCO_GL:-egl}
+      EGL_PLATFORM: surfaceless
+      # Keep generated MJCF paths resolvable from the shared runtime on the host.
+      XLEROBOT_WORLD_ASSETS: /workspace/xlerobot/assets/robocasa
+      # Bind-mounted source wins over the image copy during development.
+      PYTHONPATH: /workspace/xlerobot/src/xlerobot_sim:/opt/xlerobot-python/lib/python3.12/site-packages
     volumes:
       - .:/workspace/xlerobot
       - xlerobot-build:/workspace/xlerobot/build
       - xlerobot-install:/workspace/xlerobot/install
       - xlerobot-log:/workspace/xlerobot/log
-      - /tmp/.X11-unix:/tmp/.X11-unix:ro
-      - ${XAUTHORITY:-/dev/null}:/tmp/xlerobot-xauthority:ro
 volumes:
   xlerobot-build:
   xlerobot-install:

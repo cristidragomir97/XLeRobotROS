@@ -2,9 +2,10 @@
 """Geometry/frame, motion, stopping, inertial and RGB-D contracts without running ROS."""
 import argparse
 import os
-os.environ.setdefault('MUJOCO_GL', 'egl')
 from pathlib import Path
 import sys
+if sys.platform != 'darwin':
+    os.environ.setdefault('MUJOCO_GL', 'egl')
 import tempfile
 import xml.etree.ElementTree as ET
 
@@ -259,12 +260,12 @@ def main():
         command[:3] = robot.base_control.wheel_speeds([0., .15, 0.])
         command[3:] = [np.clip(robot.data.qpos[robot.positions[n][1]], *robot.model.actuator_ctrlrange[robot.positions[n][0]]) for n in exchange.names[3:]]
         struct.pack_into('<Q', exchange.memory, 48, 1)
-        struct.pack_into('<d', exchange.memory, 40, time.monotonic())
+        struct.pack_into('<d', exchange.memory, 40, time.time())
         struct.pack_into('<Q', exchange.memory, 24, 2)
         assert np.allclose(exchange.apply(), [0., .15, 0.])
-        struct.pack_into('<d', exchange.memory, 40, time.monotonic()-2.)
+        struct.pack_into('<d', exchange.memory, 40, time.time()-2.)
         assert np.allclose(exchange.apply(), np.zeros(3)), 'Stale controller must stop the base'
-        struct.pack_into('<d', exchange.memory, 40, time.monotonic())
+        struct.pack_into('<d', exchange.memory, 40, time.time())
         command[0] = np.nan
         assert np.allclose(exchange.apply(), np.zeros(3)), 'Nonfinite commands must stop the base'
         del command

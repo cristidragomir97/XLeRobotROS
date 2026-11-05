@@ -28,7 +28,7 @@ struct Shared {
 };
 static_assert(sizeof(Shared) == 1592);
 static double wall_time() {
-  return std::chrono::duration<double>(std::chrono::steady_clock::now().time_since_epoch()).count();
+  return std::chrono::duration<double>(std::chrono::system_clock::now().time_since_epoch()).count();
 }
 class SimulatorSystem : public hardware_interface::SystemInterface {
 public:

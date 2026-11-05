@@ -1,0 +1,17 @@
+.pixi
+.git
+build
+install
+log
+.runtime
+.env
+**/__pycache__
+**/*.pyc
+upstream/hardware
+upstream/docs
+upstream/others
+upstream/XLeVR
+upstream/software
+upstream/web_control
+upstream/simulation/Isaac_sim
+upstream/simulation/xlerobot

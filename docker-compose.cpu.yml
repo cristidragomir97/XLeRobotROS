@@ -1,0 +1,6 @@
+services:
+  ros-dev:
+    environment:
+      MUJOCO_GL: osmesa
+      PYOPENGL_PLATFORM: osmesa
+      GALLIUM_DRIVER: llvmpipe

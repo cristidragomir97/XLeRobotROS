@@ -1,12 +1,12 @@
 # syntax=docker/dockerfile:1
-FROM ros:jazzy-ros-base
+ARG ROS_RENDERING_IMAGE=multiros:jazzy-rendering
+FROM ${ROS_RENDERING_IMAGE} AS runtime
 SHELL ["/bin/bash", "-c"]
 RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-tornado python3-pil python3-psutil python3-colcon-common-extensions python3-venv python3-numpy python3-scipy python3-yaml \
     ros-jazzy-robot-state-publisher ros-jazzy-control-msgs ros-jazzy-rmw-cyclonedds-cpp \
     ros-jazzy-rtabmap-ros ros-jazzy-navigation2 ros-jazzy-nav2-rviz-plugins \
     ros-jazzy-rviz2 ros-jazzy-teleop-twist-keyboard \
-    libegl1 libegl-mesa0 libgl1-mesa-dri libglx-mesa0 libglfw3 \
     && rm -rf /var/lib/apt/lists/*
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential cmake ros-jazzy-ros2-control ros-jazzy-ros2-controllers \
@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-jazzy-xacro ros-jazzy-joy-teleop \
     && rm -rf /var/lib/apt/lists/*
 RUN python3 -m venv --system-site-packages /opt/xlerobot-python \
-    && /opt/xlerobot-python/bin/pip install --no-cache-dir numpy==1.26.4 mujoco==3.13.0 mjviser==0.0.14 python-fcl==0.7.0.11
+    && /opt/xlerobot-python/bin/pip install --no-cache-dir numpy==1.26.4 mujoco==3.13.0 python-fcl==0.7.0.11 mjviser==0.0.14
 ENV PATH=/opt/xlerobot-python/bin:$PATH
 # ament_python scripts use the ROS interpreter; expose the isolated simulator modules to it.
 ENV PYTHONPATH=/opt/xlerobot-python/lib/python3.12/site-packages
@@ -41,7 +41,7 @@ RUN source /opt/ros/jazzy/setup.bash && cd /opt/xlerobot_ws \
        --cmake-args -DPython3_EXECUTABLE=/usr/bin/python3 -DBUILD_TESTING=OFF
 COPY docker/entrypoint.sh /usr/local/bin/xlerobot-entrypoint
 RUN chmod +x /usr/local/bin/xlerobot-entrypoint
-ENV ROS_DOMAIN_ID=185 RMW_IMPLEMENTATION=rmw_cyclonedds_cpp MUJOCO_GL=egl
+ENV ROS_DOMAIN_ID=185 RMW_IMPLEMENTATION=rmw_cyclonedds_cpp MUJOCO_GL=egl EGL_PLATFORM=surfaceless
 WORKDIR /workspace/xlerobot
 ENTRYPOINT ["/usr/local/bin/xlerobot-entrypoint"]
 CMD ["sleep", "infinity"]

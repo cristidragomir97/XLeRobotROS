@@ -33,7 +33,7 @@ class ControlExchange:
             joint = model.joint(name)
             self.position[index] = data.qpos[joint.qposadr[0]]
             self.velocity[index] = data.qvel[joint.dofadr[0]]
-        struct.pack_into('<d', self.memory, 32, time.monotonic())
+        struct.pack_into('<d', self.memory, 32, time.time())
         self.sequence += 1
         struct.pack_into('<Q', self.memory, 16, self.sequence)
 
@@ -43,7 +43,7 @@ class ControlExchange:
             seq = struct.unpack_from('<Q', self.memory, 24)[0]
             if seq & 1:
                 continue
-            age = time.monotonic() - struct.unpack_from('<d', self.memory, 40)[0]
+            age = time.time() - struct.unpack_from('<d', self.memory, 40)[0]
             enabled = struct.unpack_from('<Q', self.memory, 48)[0]
             command = np.frombuffer(self.memory, dtype='<f8', count=len(self.names), offset=1080).copy()
             if seq != struct.unpack_from('<Q', self.memory, 24)[0]:

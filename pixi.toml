@@ -1,0 +1,45 @@
+[workspace]
+name = "xlerobot"
+version = "0.1.0"
+description = "Containerized ROS 2 runtime with a native MuJoCo frontend"
+channels = ["conda-forge"]
+platforms = ["osx-arm64", "osx-64", "linux-64", "linux-aarch64", "win-64"]
+
+[dependencies]
+python = "3.12.*"
+
+[tasks]
+setup = "python scripts/robot.py setup"
+doctor = "python scripts/robot.py doctor"
+images = "python scripts/robot.py images"
+up = "python scripts/robot.py up"
+down = "python scripts/robot.py down"
+restart = "python scripts/robot.py restart"
+status = "python scripts/robot.py status"
+logs = "python scripts/robot.py logs"
+build = "python scripts/robot.py build"
+exec = "python scripts/robot.py exec"
+sim = "python scripts/robot.py sim"
+sim-stop = "python scripts/robot.py sim-stop"
+view = "pixi run -e viewer view-native"
+view-native = "python scripts/robot.py view"
+test = "python scripts/robot.py test"
+teleop = "python scripts/robot.py teleop"
+dashboard = "python scripts/robot.py dashboard"
+world-assets = "python scripts/robot.py world-assets"
+check-rendering = "python scripts/robot.py check-rendering"
+check-control = "python scripts/robot.py check-control"
+check-runtime = "python scripts/robot.py check-runtime"
+check-dashboard = "python scripts/robot.py check-dashboard"
+check-tracking = "python scripts/robot.py check-tracking"
+check-clearance = "python scripts/robot.py check-clearance"
+check-nav = "python scripts/robot.py check-nav"
+check-unit = "python scripts/robot.py check-unit"
+
+[feature.viewer.pypi-dependencies]
+mujoco = "==3.13.0"
+numpy = "==1.26.4"
+
+[environments]
+default = []
+viewer = ["viewer"]

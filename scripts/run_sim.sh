@@ -10,4 +10,7 @@ esac
 mkdir -p .runtime
 exec 9>.runtime/simulator.lock
 flock -n 9 || { printf 'An XLeRobot simulation is already running.\n' >&2; exit 1; }
+# Only the lock holder can claim this session. The frontend wrapper uses it
+# to avoid stopping somebody else's simulation after a rejected launch.
+printf '%s\n' "${XLEROBOT_SESSION_ID:-container-$$}" > .runtime/simulator.session
 exec ros2 launch xlerobot_sim "$launch_file" "$@"

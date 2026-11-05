@@ -1,6 +1,8 @@
 """Owned overlays and controls; upstream MJCF and meshes remain untouched."""
 from pathlib import Path
 import math
+import os
+import shutil
 import xml.etree.ElementTree as ET
 
 import mujoco
@@ -38,7 +40,12 @@ def prepare_scene(upstream, destination, world='room', world_assets=None, config
     upstream, destination = Path(upstream), Path(destination)
     destination.mkdir(parents=True, exist_ok=True)
     robot = ET.parse(upstream / 'xlerobot.xml').getroot()
-    robot.find('compiler').set('meshdir', str((upstream / 'assets').resolve()))
+    upstream_assets = (upstream / 'assets').resolve()
+    for mesh in robot.findall('asset/mesh'):
+        value = mesh.get('file')
+        if value and not os.path.isabs(value):
+            mesh.set('file', str((upstream_assets / value).resolve()))
+    robot.find('compiler').set('meshdir', '.')
     add_full_visuals(robot, upstream.parent / 'Maniskill/assets/xlerobot')
     chassis = robot.find(".//body[@name='chassis']")
     head = robot.find(".//body[@name='head_tilt_link']")
@@ -113,7 +120,41 @@ def prepare_scene(upstream, destination, world='room', world_assets=None, config
     if world == 'robocasa_home':
         from .world import add_home, default_assets
         add_home(path, world_assets or default_assets())
+    make_paths_relative(destination)
     return path
+
+
+def stage_shared_asset(value, destination):
+    """Copy ROS-install assets into the shared runtime when they live outside the repo."""
+    marker = '/share/'
+    if marker not in value:
+        return os.path.relpath(value, destination)
+    staged = destination / 'staged' / value.split(marker, 1)[1]
+    if not staged.is_file():
+        staged.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(value, staged)
+    return os.path.relpath(staged, destination)
+
+
+def make_paths_relative(destination):
+    """Store asset paths relative to the runtime so host and container share them."""
+    destination = Path(destination).resolve()
+    for name in ('scene.xml', 'robot.xml'):
+        path = destination / name
+        if not path.is_file():
+            continue
+        tree = ET.parse(path)
+        changed = False
+        for element in tree.getroot().iter():
+            for key in ('meshdir', 'texturedir'):
+                if element.get(key):
+                    element.set(key, '.')
+                    changed = True
+            value = element.get('file')
+            if value and os.path.isabs(value):
+                element.set('file', stage_shared_asset(value, destination))
+                changed = True
+        tree.write(path)
 
 
 class Robot:

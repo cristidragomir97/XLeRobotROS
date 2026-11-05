@@ -1,94 +1,107 @@
-# XLeRobot · ROS 2
+# XLeRobot ROS 2
 
-A Dockerized ROS 2 Jazzy stack for [Victor Wang's XLeRobot](https://github.com/Vector-Wangel/XLeRobot),
-built on [Aditya Kamath's LeKiwi ROS 2](https://github.com/adityakamath/lekiwi_ros2).
+ROS 2 Jazzy control, MuJoCo simulation and RGB-D mapping for
+[Victor Wang's XLeRobot](https://github.com/Vector-Wangel/XLeRobot), built on
+[Aditya Kamath's LeKiwi ROS 2](https://github.com/adityakamath/lekiwi_ros2).
 
 ![XLeRobot in MuJoCo](docs/media/full-robot.png)
 
-[Get started](#get-started) · [Choose your arms](#choose-your-arms) · [Documentation](#documentation) · [Credits](#credits)
+The Linux container runs physics, controllers, camera rendering, RTAB-Map,
+Nav2 and the dashboard. The native MuJoCo viewer displays the same state.
+Closing its window leaves simulation and cameras running.
 
-## What you get
+## Run
 
-- **MuJoCo simulation** with the full robot, white cart and furnished home.
-- **ROS control** for the omni base, both arms and pan/tilt head.
-- **RGB-D mapping and navigation** with RTAB-Map, Nav2, a depth camera and base IMU.
-- **Browser controls** for driving, joints, camera feeds and the map.
-
-## Get started
-
-You'll need Docker Engine and Docker Compose. From the repository root:
+Install [Pixi](https://pixi.sh), Git, and a container runtime: Docker with Compose
+on macOS/Linux, or Microsoft's `wslc.exe` on Windows. macOS acceleration uses
+lighter. Windows is ready for its first runtime test; see the procedure below.
 
 ```bash
-./scripts/manage.sh start
-./scripts/manage.sh sim
+git clone --recurse-submodules https://github.com/cristidragomir97/XLeRobotROS.git
+cd XLeRobotROS
+pixi install --locked
+pixi run doctor
+pixi run up
+pixi run sim
 ```
 
-The first start builds the image and fetches the required upstream sources and world assets.
-The simulation opens a MuJoCo window and starts mapping, navigation and both browser views.
-
-| Open | What it's for |
-|---|---|
-| [localhost:8889](http://localhost:8889) | Dashboard: drive, arms, cameras and map |
-| [localhost:8082](http://localhost:8082) | Live 3D simulation viewer |
-
-Ctrl+C or closing the MuJoCo window stops the simulation and saves the map.
-For a machine without a display:
+In another terminal:
 
 ```bash
-./scripts/manage.sh sim headless:=true
+pixi run view
 ```
 
-![Robocore Viz dashboard](docs/media/dashboard.png)
+The dashboard is at http://localhost:8889. `up` initializes the pinned source
+modules and builds the shared rendering image and robot image. The first build
+can take a while. The normal host environment contains no ROS packages.
 
-## Choose your arms
+Stop the simulation with Ctrl+C or `pixi run sim-stop`. Stop the container with
+`pixi run down`; it saves the map and preserves volumes. Use `pixi run build`
+after editing ROS source, or `pixi run images` after changing image dependencies.
 
-| Configuration | Arms |
-|---|---|
-| `standard` | Original XLeRobot arms |
-| `mod101` | Two Mod101 arms, 7DOF option, 140/140 mm links and PG grippers |
+The shared runner is pinned at `tools/multiros`. Host tasks and runtime setup
+are described in `multiros.json`.
+
+## Arm configurations
 
 ```bash
-./scripts/manage.sh sim standard
-
-# Stop before switching
-./scripts/manage.sh sim-stop
-./scripts/manage.sh sim mod101
+pixi run sim standard
+pixi run sim-stop
+pixi run sim mod101
 ```
 
-Mod101's 7DOF option is six arm axes plus the gripper motor.
-Each configuration gets its own map database and matching dashboard controls.
-See [Mod101 mounting and clearance](docs/mod101.md) for the mechanical details.
+The Mod101 configuration has two 7DOF arms with PG grippers and the same base,
+head, cameras and home world. Both configurations use the same controllers and
+topic contract. See [Mod101 details](docs/mod101.md).
 
-## Everyday commands
+## Windows test
 
-| Command | Action |
-|---|---|
-| `./scripts/manage.sh teleop` | Keyboard drive; Shift+J/L strafes |
-| `./scripts/manage.sh rviz` | Open RViz; use Nav2's goal tool to navigate |
-| `./scripts/manage.sh sim-stop` | Stop the simulation, keep Docker running |
-| `./scripts/manage.sh stop` | Stop the container too |
-| `./scripts/manage.sh help` | All commands |
+Use PowerShell on Windows with WSL 2.9.3 or newer:
 
-Maps live in `.runtime/` and survive container restarts.
-Copy [.env.example](.env.example) to `.env` to change ports or the default arm configuration.
+```powershell
+wsl --update
+wslc version
+wslc run --rm hello-world
+```
+
+After cloning as above:
+
+```powershell
+pixi install --locked
+pixi run doctor
+pixi run up
+pixi run check-rendering --require-accelerated
+pixi run test
+pixi run sim
+# In another PowerShell window:
+pixi run view
+```
+
+Windows automatically selects WSLC. Start with the rendering check: GPU device
+access alone does not prove EGL works. [Windows troubleshooting](docs/windows.md)
+explains logs, software fallback and container recreation. These commands have
+been planned and tested on macOS; the actual WSLC/GPU run is still unvalidated.
+
+## Validation
+
+Apple Silicon/lighter has passed textured RGB-D rendering, model/control checks,
+dashboard checks and a short navigation goal. Long-run mapping/navigation,
+Linux GPU backends and Windows runtime behavior need further testing. See
+[validation](docs/validation.md) for evidence and limits.
 
 ## Documentation
 
-| Guide | What's inside |
-|---|---|
-| [Running the simulation](docs/running.md) | Headless mode, worlds, saved maps and localization |
-| [ROS stack](docs/ros-stack.md) | Packages, controllers, topics and TF |
-| [Mod101 arms](docs/mod101.md) | Mounting, joint names and collision clearance |
-| [Dashboard profiles](src/robocore_viz/README.md) | Configure or reuse Robocore Viz |
-| [Development](docs/development.md) | Builds, checks and container workflow |
-| [Validation](docs/validation.md) | Tested behavior and simulation limits |
+- [Running, maps and launch options](docs/running.md)
+- [Builds and checks](docs/development.md)
+- [Container graphics](docs/container-rendering.md)
+- [Windows](docs/windows.md)
+- [ROS packages, controllers and topics](docs/ros-stack.md)
+- [Mod101 arms](docs/mod101.md)
+- [Robocore Viz profiles](src/robocore_viz/README.md)
 
 ## Credits
 
-Thanks to **Victor and Aditya** for sharing their work and making this possible.
-
-- **[Victor Wang](https://github.com/Vector-Wangel)** — XLeRobot's robot design, meshes and original simulation.
-- **[Aditya Kamath](https://github.com/adityakamath)** — LeKiwi ROS 2's control packages, omniwheel model and STS driver.
-
-Victor's and Aditya's repositories are kept as pinned submodules, with their history and licenses intact.
-This integration is [Apache-2.0](LICENSE); see [full credits](docs/credits.md) and [NOTICE](NOTICE) for upstream licenses and asset attribution.
+Victor Wang and the XLeRobot contributors supplied the robot design and assets.
+Aditya Kamath supplied the LeKiwi ROS packages and STS hardware integration.
+Their repositories remain pinned submodules with their history and licenses.
+See [credits](docs/credits.md), [NOTICE](NOTICE) and [Apache-2.0](LICENSE).

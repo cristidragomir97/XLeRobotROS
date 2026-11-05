@@ -1,107 +1,68 @@
-# Running the simulation
+# Running
 
-[← Back to the README](../README.md)
-
-Run commands from the repository root. `start` initializes the required submodules and prepares the world assets.
-
-From the repository root, with Docker Engine and Compose available:
+Run commands from the repository root. `pixi run up` initializes pinned
+submodules, builds the images and starts the runtime. `pixi run sim` launches
+the standard robot in the furnished home with RTAB-Map and Nav2 enabled.
 
 ```bash
-git submodule update --init
-./scripts/manage.sh start
-./scripts/manage.sh sim
+pixi run sim
+# Separate terminal:
+pixi run view
 ```
 
-`sim` starts with: **native MuJoCo window on,
-RoboCasa home, RGB-D mapping and navigation on, browser viewer on, RViz off**.
-The native viewer shows the full upstream robot meshes, including the cart and
-casters, printed drive base, arm mounts, head support/housing, and wrist cameras.
-Visual geometry is enabled and collision proxies are hidden. Closing the native
-window shuts down the launch and saves the map.
+The viewer mirrors physics state and renders its own window. Cameras render
+inside the container. Close the viewer freely; stop the simulation using Ctrl+C
+or `pixi run sim-stop`. `pixi run down` and `restart` first stop the simulator
+so RTAB-Map can save its database.
 
-Open **http://localhost:8082** for the live browser simulation. The viewer mirrors
-the ROS simulator, including the upstream camera meshes and green IMU cube; it never
-steps another physics instance. Expand its head RGB-D panel to see RGB and depth
-previews. The terminal running `sim` owns the launch;
-Ctrl+C shuts down the stack and lets RTAB-Map save its database.
-Use `./scripts/manage.sh sim-stop` to stop a launch from another terminal while
-keeping the development container running. `stop`, `restart`, `start` and
-`recreate` also shut down any existing simulation gracefully before changing
-the container, so the map database can be saved.
+The dashboard runs at http://localhost:8889. For the optional browser 3D
+frontend at http://localhost:8082, add `mjviser:=true` to `sim`.
 
-In another terminal:
+## Driving
 
 ```bash
-./scripts/manage.sh teleop
+pixi run teleop
 ```
 
-Use `i`/`,` for forward/backward, `j`/`l` for rotation. Hold Shift for holonomic
-movement, including `J`/`L` for left/right strafe. Space or `k` stops. Base commands
-are clamped to 0.4 m/s and 0.8 rad/s, and stop after 0.5 seconds without a command.
+Use `i`/`,` for forward/backward and `j`/`l` for rotation. Shift+`J`/`L` strafes.
+Space or `k` stops. Base commands are clamped to 0.4 m/s and 0.8 rad/s and expire
+after 0.5 seconds. The simulation uses one controller/physics owner.
 
-Optional desktop visualization:
+## Worlds and maps
+
+`world:=robocasa_home` is the default furnished home. `world:=room` selects a
+smaller textured diagnostic room; `world:=empty` selects the empty plane.
+
+RTAB-Map stores databases in `.runtime`, separately by world. Stop mapping
+before reopening its database in localization mode:
 
 ```bash
-./scripts/manage.sh rviz
+pixi run sim-stop
+pixi run sim mode:=localization
 ```
 
-The native MuJoCo window and RViz use your desktop's X display and authorization.
-For a headless run with the browser viewer, use:
+Use `database:=/workspace/xlerobot/.runtime/new-room.db` for a new database.
+`nav:=false` disables Nav2. The camera has a forward field of view; explore
+surrounding free space before asking the planner to traverse it.
 
-```bash
-./scripts/manage.sh sim headless:=true
-```
+Mapping uses RGB-D visual odometry, supported by the base IMU and wheel prior.
+Ground-truth odometry is published for comparisons and is not fed into SLAM.
+For physics diagnostics use `mode:=none nav:=false odometry:=ground_truth`;
+mapping/localization reject that ground-truth option.
 
-`XLEROBOT_HEADLESS=true` in `.env` also changes that default. Camera rendering uses
-EGL in both modes. Compose adds graphics devices when
-available; Mesa software rendering also works. On NVIDIA, configure the NVIDIA
-Container Toolkit and a suitable Compose device reservation for your host.
+Useful launch arguments include `camera_rate:=15.0`, `depth_cloud:=false`,
+`world:=room`, `mode:=mapping|localization|none` and `mjviser:=true`.
+Pass them after the configuration, e.g. `pixi run sim mod101 world:=room`.
 
-Robocore Viz starts with the sim at [http://localhost:8889](http://localhost:8889),
-with camera, map, drive and arm controls. See the [dashboard profile guide](../src/robocore_viz/README.md).
+## Configuration
 
-## Worlds, maps and navigation
+Copy `.env.example` to `.env` to change ports, ROS domain, default configuration
+or camera quality. The shared runner reads it as data. Explicit environment
+variables override that file.
 
-The default launch uses **RGB-D visual odometry and RTAB-Map**, with base IMU
-orientation supporting odometry and feedback-based wheel motion as its prior.
-No laser scanner or SLAM Toolbox is launched.
-The default `robocasa_home` is the same three-room world as Mr Handy: an open
-test room, kitchen/dining area, and furnished living area, with attributed
-RoboCasa/Lightwheel objects. `world:=room` selects the smaller textured diagnostic
-room; `world:=empty` selects the original empty plane.
+The default backend follows the selected runtime/context. Linux DRM users can
+set `MULTIROS_BACKEND=dri`; CPU fallback uses `cpu`. See
+[graphics](container-rendering.md) and [Windows](windows.md).
 
-RTAB-Map stores a separate database per world, outside the container: the home
-uses `.runtime/robocasa_home.db`, and the diagnostic room uses `.runtime/room.db`.
-An explicit `database:=` overrides that selection. Stop the
-mapping run before reopening that database in localization mode:
-
-```bash
-./scripts/manage.sh sim mode:=localization
-```
-
-Start a separate map without deleting the previous database:
-
-```bash
-./scripts/manage.sh sim database:=/workspace/xlerobot/.runtime/new-room.db
-```
-
-Nav2 starts by default on the depth-built occupancy map. To disable it:
-
-```bash
-./scripts/manage.sh sim nav:=false
-```
-
-The global map comes from RTAB-Map; obstacle observations come from the RGB-D
-point cloud. The local planner and velocity smoother permit lateral motion.
-Use RViz's Nav2 goal tool or the `/navigate_to_pose` action after mapping enough
-free space. The camera has a forward field of view, so explore the surrounding
-area before asking the planner to traverse it.
-
-Launch options include `headless:=true`, `mjviser:=false`, `mjviser_port:=8080`,
-`camera_rate:=15.0`, `world:=robocasa_home|room|empty`,
-`mode:=mapping|localization|none`, and `rviz:=true`.
-The earlier `viewer:=false` spelling remains an alias for `mjviser:=false`.
-For physics diagnostics only, use `mode:=none nav:=false odometry:=ground_truth`.
-Mapping/localization require estimated RGB-D odometry and reject that diagnostic
-option. The simulator always publishes `/ground_truth/odom` for comparisons;
-it does not feed that pose to SLAM.
+The host has no ROS installation. Native RViz is not part of this recipe;
+use the dashboard or a separately configured ROS visualization workstation.

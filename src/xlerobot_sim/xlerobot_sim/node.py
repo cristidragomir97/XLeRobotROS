@@ -4,8 +4,6 @@ import os
 from pathlib import Path
 import threading
 import time
-from contextlib import nullcontext
-
 import mujoco
 import numpy as np
 import rclpy
@@ -43,6 +41,7 @@ class Simulator(Node):
         self.declare_parameter('world_assets', '')
         self.declare_parameter('headless', False)
         self.declare_parameter('camera_rate', 15.0)
+        self.declare_parameter('viewer_rate', 50.0)
         self.declare_parameter('camera_width', 640)
         self.declare_parameter('camera_height', 480)
         self.declare_parameter('command_timeout', 0.5)
@@ -61,6 +60,10 @@ class Simulator(Node):
         if self.camera_rate <= 0:
             raise ValueError('camera_rate must be positive')
         self.camera_period = 1 / self.camera_rate
+        self.viewer_rate = float(self.get_parameter('viewer_rate').value)
+        if self.viewer_rate <= 0:
+            raise ValueError('viewer_rate must be positive')
+        self.viewer_period = 1 / self.viewer_rate
         self.clock_pub = self.create_publisher(Clock, '/clock', 10)
         self.odom_pub = self.create_publisher(Odometry, '/ground_truth/odom', 10)
         self.imu_pub = self.create_publisher(Imu, '/imu/data', qos_profile_sensor_data)
@@ -108,48 +111,43 @@ class Simulator(Node):
         imu.linear_acceleration_covariance = [1e-4, 0., 0., 0., 1e-4, 0., 0., 0., 1e-4]
         self.imu_pub.publish(imu)
 
+    def snapshot(self, name):
+        temp = self.runtime / f'{name}.tmp'
+        data = self.robot.data
+        with temp.open('wb') as stream:
+            np.savez(stream, time=data.time, qpos=data.qpos, qvel=data.qvel, ctrl=data.ctrl)
+        os.replace(temp, self.runtime / f'{name}.npz')
+
 
 def main(args=None):
     rclpy.init(args=args)
     node = Simulator()
-    native = None
-    if not node.get_parameter('headless').value:
-        import mujoco.viewer
-        native = mujoco.viewer.launch_passive(node.robot.model, node.robot.data)
-        with native.lock():
-            native.cam.type = mujoco.mjtCamera.mjCAMERA_TRACKING
-            native.cam.trackbodyid = node.robot.base
-            native.cam.distance = 3.0
-            native.cam.azimuth = 120.
-            native.cam.elevation = -20.
-            native.opt.geomgroup[2] = 1
-            native.opt.geomgroup[3] = 0
+    node.get_logger().info(
+        'Physics and RGB-D sensors run in Docker; pixi run viewer-native opens the host frontend.')
     executor = MultiThreadedExecutor(num_threads=5)
     executor.add_node(node)
     thread = threading.Thread(target=executor.spin, daemon=True)
     thread.start()
-    next_snapshot = .2
+    next_camera = .2
+    next_viewer = 0.
     deadline = time.monotonic()
     ticks = 5
     period = ticks * node.robot.model.opt.timestep
     try:
-        while rclpy.ok() and (native is None or native.is_running()):
+        while rclpy.ok():
             with node.lock:
-                with native.lock() if native is not None else nullcontext():
-                    command = node.exchange.apply()
-                    node.robot.step(command, ticks)
-                    if not np.isfinite(node.robot.data.qpos).all():
-                        raise RuntimeError('Non-finite simulation state')
-                    node.publish_state()
-                    if node.robot.data.time >= next_snapshot:
-                        temp = node.runtime / 'physics.tmp'
-                        with temp.open('wb') as stream:
-                            np.savez(stream, time=node.robot.data.time, qpos=node.robot.data.qpos,
-                                     qvel=node.robot.data.qvel, ctrl=node.robot.data.ctrl)
-                        os.replace(temp, node.runtime / 'physics.npz')
-                        next_snapshot = node.robot.data.time + node.camera_period
-            if native is not None:
-                native.sync()
+                command = node.exchange.apply()
+                node.robot.step(command, ticks)
+                if not np.isfinite(node.robot.data.qpos).all():
+                    raise RuntimeError('Non-finite simulation state')
+                node.publish_state()
+                sim_time = node.robot.data.time
+                if sim_time >= next_camera:
+                    node.snapshot('physics')
+                    next_camera = sim_time + node.camera_period
+                if sim_time >= next_viewer:
+                    node.snapshot('viewer')
+                    next_viewer = sim_time + node.viewer_period
             deadline += period
             delay = deadline-time.monotonic()
             if delay > 0:
@@ -164,6 +162,4 @@ def main(args=None):
         executor.shutdown(timeout_sec=5.)
         thread.join(timeout=5.)
         node.exchange.close()
-        if native is not None:
-            native.close()
         node.destroy_node()

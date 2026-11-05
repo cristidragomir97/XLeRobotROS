@@ -1,0 +1,12 @@
+.pixi/
+.env
+.runtime/
+build/
+install/
+log/
+__pycache__/
+*.pyc
+*.egg-info/
+MUJOCO_LOG.TXT
+.DS_Store
+assets/robocasa/.downloads/

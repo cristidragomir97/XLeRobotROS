@@ -63,7 +63,7 @@ target limits before sending and derives duration from URDF velocity limits.
 Example:
 
 ```bash
-./scripts/manage.sh exec ros2 action send_goal \
+pixi run exec ros2 action send_goal \
   /left_arm_controller/follow_joint_trajectory control_msgs/action/FollowJointTrajectory \
   '{trajectory: {joint_names: [Rotation_L], points: [{positions: [0.2], time_from_start: {sec: 2}}]}}'
 ```
@@ -90,8 +90,8 @@ for left arm, right arm, and head. It owns 17 hardware command interfaces and
 34 position/velocity state interfaces with original arms, or 19/38 with Mod101. The standard controllers own trajectory actions and joint-state publication.
 
 ```bash
-./scripts/manage.sh exec ros2 control list_controllers
-./scripts/manage.sh exec ros2 control list_hardware_interfaces
+pixi run exec ros2 control list_controllers
+pixi run exec ros2 control list_hardware_interfaces
 ```
 
 `/cmd_vel` enters LeKiwi's `twist_switch_node`; its default channel converts to
@@ -114,4 +114,4 @@ The base now moves through wheel/ground contacts, using the physical adaptation
 described in the [validation notes](validation.md). The STS driver
 is available, but a physical configuration still needs actual bus ports, motor
 IDs, direction/zero calibration and limits. No physical servo bus is opened by
-`manage.sh sim`.
+`pixi run sim`.
