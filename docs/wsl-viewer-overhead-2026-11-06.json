@@ -1,0 +1,39 @@
+{
+  "host": "WSL2 / Docker Desktop / Intel UHD 770 / Mesa D3D12",
+  "scene": "standard XLeRobot / robocasa_home / fast",
+  "conditions": "Same running physics/camera/mapping/dashboard; open-closed-closed-open; 10-second ROS sampling windows. Other foreground GPU workload not independently verified. Measured before compatibility image archive removal took effect.",
+  "runs": [
+    {
+      "viewer": "open",
+      "camera_samples": 72,
+      "camera_hz": 7.21,
+      "camera_source_age_ms_median": 160.0,
+      "camera_source_age_ms_p95": 210.0,
+      "physics_real_time_factor": 1.0
+    },
+    {
+      "viewer": "closed",
+      "camera_samples": 72,
+      "camera_hz": 10.04,
+      "camera_source_age_ms_median": 120.0,
+      "camera_source_age_ms_p95": 150.0,
+      "physics_real_time_factor": 1.0
+    },
+    {
+      "viewer": "closed",
+      "camera_samples": 89,
+      "camera_hz": 8.92,
+      "camera_source_age_ms_median": 130.0,
+      "camera_source_age_ms_p95": 170.0,
+      "physics_real_time_factor": 1.0
+    },
+    {
+      "viewer": "open",
+      "camera_samples": 72,
+      "camera_hz": 7.23,
+      "camera_source_age_ms_median": 160.0,
+      "camera_source_age_ms_p95": 190.0,
+      "physics_real_time_factor": 1.0
+    }
+  ]
+}

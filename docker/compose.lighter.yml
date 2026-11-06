@@ -1,0 +1,7 @@
+# Robot image selection; platform devices and drivers belong to multiROS.
+services:
+  ros-dev:
+    image: xlerobot:jazzy-lighter
+    build:
+      args:
+        ROS_RENDERING_IMAGE: multiros:jazzy-lighter

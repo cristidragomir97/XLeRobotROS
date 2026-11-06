@@ -2,7 +2,7 @@ name: XLeRobot
 id: xlerobot
 tagline: RGB-D mapping · Dual arms · Omni base
 cameras:
-  - {topic: /camera/color/image_raw, label: 'Head · RGB'}
+  - {topic: /camera/color/image_raw/compressed, label: 'Head · RGB'}
   - {topic: /camera/aligned_depth_to_color/image_raw, label: 'Head · Depth'}
   - {topic: /camera/depth_filtered/image_raw, label: 'Head · Filtered depth'}
 maps:
@@ -12,7 +12,6 @@ maps:
 topics:
   joints: /joint_states
   odom: /odom
-  tracking: /odom_info_lite
   pose: /localization_pose
   plan: /plan
 drive:

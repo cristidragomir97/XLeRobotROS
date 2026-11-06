@@ -1,0 +1,146 @@
+{
+  "visible_triangles": {
+    "full": 999513,
+    "simplified": 552087
+  },
+  "physics": "Collision/inertia/control/calibration arrays identical; qpos/qvel identical after 300 steps from frozen state.",
+  "native": {
+    "conditions": "40 paired samples, alternating order, 10 warmup pairs, 1280x720, fast, same frozen state, cameras/native viewer paused",
+    "results": {
+      "full": {
+        "median_ms": 41.77431799871556,
+        "p95_ms": 45.51007495138036
+      },
+      "simplified": {
+        "median_ms": 37.90593250050733,
+        "p95_ms": 42.460661800760136
+      }
+    }
+  },
+  "camera": {
+    "conditions": "12 paired two-pass RGB/depth/self-filter samples after 3 warmups; 640x480; frozen same state; camera/native viewer paused; fast effects",
+    "results": {
+      "full": {
+        "median_ms": 82.27021550192148,
+        "p95_ms": 84.71624390131183
+      },
+      "lod": {
+        "median_ms": 76.3844089997292,
+        "p95_ms": 80.51603970088763
+      }
+    }
+  },
+  "exploratory_separate_process_native": [
+    {
+      "case": "full-1",
+      "host": "Linux",
+      "mujoco": "3.13.0",
+      "renderer": "D3D12 (Intel(R) UHD Graphics 770)",
+      "gl_version": "4.1 (Compatibility Profile) Mesa 26.0.8-1ubuntu0.3",
+      "viewport": [
+        1280,
+        720
+      ],
+      "effects": false,
+      "mesh_triangles": 990907,
+      "frames": 40,
+      "snapshot": {
+        "median_ms": 0.171,
+        "p95_ms": 0.25
+      },
+      "render": {
+        "median_ms": 40.556,
+        "p95_ms": 42.61
+      }
+    },
+    {
+      "case": "lod-1",
+      "host": "Linux",
+      "mujoco": "3.13.0",
+      "renderer": "D3D12 (Intel(R) UHD Graphics 770)",
+      "gl_version": "4.1 (Compatibility Profile) Mesa 26.0.8-1ubuntu0.3",
+      "viewport": [
+        1280,
+        720
+      ],
+      "effects": false,
+      "mesh_triangles": 1219759,
+      "frames": 40,
+      "snapshot": {
+        "median_ms": 0.172,
+        "p95_ms": 0.254
+      },
+      "render": {
+        "median_ms": 34.051,
+        "p95_ms": 38.735
+      }
+    },
+    {
+      "case": "lod-2",
+      "host": "Linux",
+      "mujoco": "3.13.0",
+      "renderer": "D3D12 (Intel(R) UHD Graphics 770)",
+      "gl_version": "4.1 (Compatibility Profile) Mesa 26.0.8-1ubuntu0.3",
+      "viewport": [
+        1280,
+        720
+      ],
+      "effects": false,
+      "mesh_triangles": 1219759,
+      "frames": 40,
+      "snapshot": {
+        "median_ms": 0.172,
+        "p95_ms": 0.327
+      },
+      "render": {
+        "median_ms": 35.853,
+        "p95_ms": 65.404
+      }
+    },
+    {
+      "case": "full-2",
+      "host": "Linux",
+      "mujoco": "3.13.0",
+      "renderer": "D3D12 (Intel(R) UHD Graphics 770)",
+      "gl_version": "4.1 (Compatibility Profile) Mesa 26.0.8-1ubuntu0.3",
+      "viewport": [
+        1280,
+        720
+      ],
+      "effects": false,
+      "mesh_triangles": 990907,
+      "frames": 40,
+      "snapshot": {
+        "median_ms": 0.175,
+        "p95_ms": 0.302
+      },
+      "render": {
+        "median_ms": 32.363,
+        "p95_ms": 40.132
+      }
+    }
+  ],
+  "live_after_restart": {
+    "conditions": "Sequential live samples; no isolated before/after mesh comparison; viewer frame observed at 1782x978.",
+    "viewer_open": [
+      {
+        "camera_hz": 4.74,
+        "median_age_ms": 230,
+        "p95_age_ms": 267,
+        "physics_real_time_factor": 1.0
+      },
+      {
+        "camera_hz": 4.66,
+        "median_age_ms": 220,
+        "p95_age_ms": 270,
+        "physics_real_time_factor": 1.001
+      }
+    ],
+    "viewer_closed": {
+      "camera_hz": 9.91,
+      "median_age_ms": 120,
+      "p95_age_ms": 150,
+      "physics_real_time_factor": 1.0
+    }
+  }
+}

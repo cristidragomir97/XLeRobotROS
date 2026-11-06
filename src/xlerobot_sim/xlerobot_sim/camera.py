@@ -5,9 +5,10 @@ from pathlib import Path
 import rclpy
 from builtin_interfaces.msg import Time
 from rclpy.node import Node
-from sensor_msgs.msg import CameraInfo, Image
+from sensor_msgs.msg import CameraInfo, CompressedImage, Image
 
 from .renderer import Renderer
+from .camera_streams import encode_rgb_jpeg
 
 
 def stamp(seconds):
@@ -22,13 +23,19 @@ class CameraPublisher(Node):
         self.declare_parameter('width', 640)
         self.declare_parameter('height', 480)
         self.declare_parameter('rate', 15.0)
+        self.declare_parameter('jpeg_quality', 75)
+        self.jpeg_quality = int(self.get_parameter('jpeg_quality').value)
+        if not 1 <= self.jpeg_quality <= 100:
+            raise ValueError('jpeg_quality must be between 1 and 100')
         self.runtime = Path(self.get_parameter('runtime').value)
         self.width = int(self.get_parameter('width').value)
         self.height = int(self.get_parameter('height').value)
-        self.rgb_pub = self.create_publisher(Image, '/camera/color/image_raw', 10)
-        self.depth_pub = self.create_publisher(Image, '/camera/aligned_depth_to_color/image_raw', 10)
-        self.filtered_pub = self.create_publisher(Image, '/camera/depth_filtered/image_raw', 10)
-        self.info_pub = self.create_publisher(CameraInfo, '/camera/color/camera_info', 10)
+        self.rgb_pub = self.create_publisher(Image, '/camera/color/image_raw', 1)
+        self.rgb_compressed_pub = self.create_publisher(
+            CompressedImage, '/camera/color/image_raw/compressed', 1)
+        self.depth_pub = self.create_publisher(Image, '/camera/aligned_depth_to_color/image_raw', 1)
+        self.filtered_pub = self.create_publisher(Image, '/camera/depth_filtered/image_raw', 1)
+        self.info_pub = self.create_publisher(CameraInfo, '/camera/color/camera_info', 1)
         rate = float(self.get_parameter('rate').value)
         self.sensor = Renderer(self.runtime, rate=rate, width=self.width, height=self.height)
         self.get_logger().info('RGB-D rendering and ROS publication run in the container.')
@@ -42,12 +49,21 @@ class CameraPublisher(Node):
         for pub, pixels, encoding, bpp in [(self.rgb_pub, rgb, 'rgb8', 3),
                                            (self.depth_pub, depth, '32FC1', 4),
                                            (self.filtered_pub, filtered, '32FC1', 4)]:
+            if not pub.get_subscription_count():
+                continue
             image = Image()
             image.header.stamp, image.header.frame_id = header, 'head_camera_rgb_optical_frame'
             image.height, image.width = self.height, self.width
             image.encoding, image.is_bigendian, image.step = encoding, 0, self.width * bpp
             image.data = pixels.tobytes()
             pub.publish(image)
+        if self.rgb_compressed_pub.get_subscription_count():
+            preview = CompressedImage()
+            preview.header.stamp = header
+            preview.header.frame_id = 'head_camera_rgb_optical_frame'
+            preview.format = 'rgb8; jpeg compressed bgr8'
+            preview.data = encode_rgb_jpeg(rgb, self.jpeg_quality)
+            self.rgb_compressed_pub.publish(preview)
         info = CameraInfo()
         info.header.stamp, info.header.frame_id = header, 'head_camera_rgb_optical_frame'
         info.height, info.width = self.height, self.width

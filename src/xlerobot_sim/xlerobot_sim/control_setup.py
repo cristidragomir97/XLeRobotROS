@@ -8,7 +8,7 @@ from .model import HEAD_JOINTS, base_configuration
 from .configuration import WHEEL_JOINTS, arm_joints
 
 
-def controller_parameters(configuration='standard', wheel_tf=True):
+def controller_parameters(configuration='standard', wheel_tf=True, odom_frame='odom'):
     arms = arm_joints(configuration)
     upstream = Path(get_package_share_directory('lekiwi_control')) / 'config/control.yaml'
     config = yaml.safe_load(upstream.read_text())
@@ -18,7 +18,7 @@ def controller_parameters(configuration='standard', wheel_tf=True):
     base = config['base_controller']['ros__parameters']
     geometry = base_configuration()
     base.update(wheel_names=WHEEL_JOINTS, **{k: geometry[k] for k in ('wheel_radius', 'robot_radius', 'wheel_offset')}, enable_odom_tf=wheel_tf,
-                odom_frame_id="wheel_odom", base_frame_id="base_footprint",
+                odom_frame_id=odom_frame, base_frame_id="base_footprint",
                 position_feedback=False, use_sim_time=True)
     config.pop('imu_sensor_broadcaster', None)
     config['joint_state_broadcaster'] = {'ros__parameters': {'use_sim_time': True}}
@@ -35,9 +35,9 @@ def controller_parameters(configuration='standard', wheel_tf=True):
     return config
 
 
-def controller_file(configuration='standard', wheel_tf=True):
+def controller_file(configuration='standard', wheel_tf=True, odom_frame='odom'):
     with tempfile.NamedTemporaryFile(mode='w', prefix='xlerobot-controllers-', suffix='.yaml', delete=False) as output:
-        yaml.safe_dump(controller_parameters(configuration, wheel_tf), output)
+        yaml.safe_dump(controller_parameters(configuration, wheel_tf, odom_frame), output)
         return output.name
 
 

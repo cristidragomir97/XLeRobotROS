@@ -1,0 +1,164 @@
+{
+  "order": "passive, glfw15, glfw15, passive",
+  "conditions": "Same active camera/mapping/dashboard; compressed RGB subscribed during every ROS sample; passive retains full UI/default window, GLFW uses 1280x720 without sidebars. This compares complete frontend configurations, not one isolated optimization.",
+  "runs": [
+    {
+      "case": "passive",
+      "camera": {
+        "compressed_samples": 80,
+        "jpeg_bytes_median": 15431.5,
+        "raw_rgb_bytes": 921600,
+        "camera_samples": 79,
+        "camera_hz": 7.94,
+        "camera_source_age_ms_median": 140.0,
+        "camera_source_age_ms_p95": 170.0,
+        "physics_real_time_factor": 1.001
+      },
+      "viewer": {
+        "frontend": "passive",
+        "rate_limit": 60.0,
+        "seconds": 10.861431334997178,
+        "cpu_percent_one_core": 56.840056218995585,
+        "sync_count": 416,
+        "draw_count": null,
+        "idle_redraws_skipped": null,
+        "snapshot_ms": {
+          "median": 0.4180779978923965,
+          "p95": 0.640007098991191
+        },
+        "transforms_ms": {
+          "median": 0.3609830000641523,
+          "p95": 0.5102180992253125
+        },
+        "sync_ms": {
+          "median": 8.44928200058348,
+          "p95": 10.247801002151391
+        },
+        "frame_ms": {
+          "median": 9.2803384995932,
+          "p95": 11.249779251556902
+        }
+      }
+    },
+    {
+      "case": "glfw",
+      "camera": {
+        "compressed_samples": 89,
+        "jpeg_bytes_median": 15348.0,
+        "raw_rgb_bytes": 921600,
+        "camera_samples": 89,
+        "camera_hz": 8.87,
+        "camera_source_age_ms_median": 130.0,
+        "camera_source_age_ms_p95": 160.0,
+        "physics_real_time_factor": 1.0
+      },
+      "viewer": {
+        "frontend": "glfw",
+        "rate_limit": 15.0,
+        "seconds": 10.940351419001672,
+        "cpu_percent_one_core": 15.018295199789225,
+        "sync_count": 163,
+        "draw_count": 163,
+        "idle_redraws_skipped": 0,
+        "snapshot_ms": {
+          "median": 0.4222569987177849,
+          "p95": 0.6417454995244043
+        },
+        "transforms_ms": {
+          "median": 0.02769699858617969,
+          "p95": 0.048118601262103766
+        },
+        "sync_ms": {
+          "median": 44.92457399828709,
+          "p95": 51.024102302471874
+        },
+        "frame_ms": {
+          "median": 45.55814100240241,
+          "p95": 51.51089939936355
+        }
+      }
+    },
+    {
+      "case": "glfw",
+      "camera": {
+        "compressed_samples": 90,
+        "jpeg_bytes_median": 15341.0,
+        "raw_rgb_bytes": 921600,
+        "camera_samples": 90,
+        "camera_hz": 9.01,
+        "camera_source_age_ms_median": 130.0,
+        "camera_source_age_ms_p95": 160.0,
+        "physics_real_time_factor": 1.0
+      },
+      "viewer": {
+        "frontend": "glfw",
+        "rate_limit": 15.0,
+        "seconds": 10.953481822998583,
+        "cpu_percent_one_core": 14.543591140628733,
+        "sync_count": 163,
+        "draw_count": 163,
+        "idle_redraws_skipped": 0,
+        "snapshot_ms": {
+          "median": 0.40991900095832534,
+          "p95": 0.6149848002678483
+        },
+        "transforms_ms": {
+          "median": 0.028249000024516135,
+          "p95": 0.04716379808087368
+        },
+        "sync_ms": {
+          "median": 45.55244999937713,
+          "p95": 53.707747899898095
+        },
+        "frame_ms": {
+          "median": 46.06234400125686,
+          "p95": 54.17891540200799
+        }
+      }
+    },
+    {
+      "case": "passive",
+      "camera": {
+        "compressed_samples": 80,
+        "jpeg_bytes_median": 15343.5,
+        "raw_rgb_bytes": 921600,
+        "camera_samples": 79,
+        "camera_hz": 7.91,
+        "camera_source_age_ms_median": 140.0,
+        "camera_source_age_ms_p95": 180.0,
+        "physics_real_time_factor": 1.0
+      },
+      "viewer": {
+        "frontend": "passive",
+        "rate_limit": 60.0,
+        "seconds": 10.852976673999365,
+        "cpu_percent_one_core": 58.563707090856795,
+        "sync_count": 410,
+        "draw_count": null,
+        "idle_redraws_skipped": null,
+        "snapshot_ms": {
+          "median": 0.41404349940421525,
+          "p95": 0.6341108504784642
+        },
+        "transforms_ms": {
+          "median": 0.35839550037053414,
+          "p95": 0.46500845292030135
+        },
+        "sync_ms": {
+          "median": 8.782711998719606,
+          "p95": 10.874579400115179
+        },
+        "frame_ms": {
+          "median": 9.624633499697666,
+          "p95": 11.745665449234366
+        }
+      }
+    }
+  ],
+  "phase_notes": {
+    "passive_sync_ms": "Synchronization only; rendering runs independently on another thread.",
+    "glfw_sync_ms": "Event handling and actual draw/submit/wait in one thread.",
+    "cpu": "Percentage of one CPU core, measured with process CPU time / wall time.",
+    "idle": "Final live samples drew every capped frame because visible poses changed above tolerance; frozen/hidden-motion reuse is validated separately."
+  }
+}

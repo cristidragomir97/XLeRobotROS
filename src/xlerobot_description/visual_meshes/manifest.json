@@ -1,0 +1,146 @@
+{
+  "schema": 1,
+  "generator": {
+    "trimesh": "5.2.0",
+    "fast_simplification": "0.1.13",
+    "aggressiveness": 7.0
+  },
+  "meshes": [
+    {
+      "name": "cart_connector",
+      "source": "src/xlerobot_description/cart_meshes/cart_connector.stl",
+      "source_sha256": "e8c1fd4d30823a076c9a6265b853c44a2cf1c6b38bcfe64e2b6b6dd2f85b5727",
+      "file": "cart_connector.stl",
+      "sha256": "9386b20cc1a031c524edf7b66ef0abee020036fc4abde394f80cc1cc864be922",
+      "original_triangles": 146866,
+      "target_triangles": 6000,
+      "triangles": 60284,
+      "original_bounds": [
+        [
+          -0.02485489286482334,
+          -0.015902934595942497,
+          0.0
+        ],
+        [
+          0.02485489286482334,
+          0.015902934595942497,
+          0.05466729775071144
+        ]
+      ],
+      "bounds": [
+        [
+          -0.02485489286482334,
+          -0.015902934595942497,
+          -0.00010184690734830679
+        ],
+        [
+          0.02485489286482334,
+          0.01589758022485042,
+          0.05466927944475
+        ]
+      ]
+    },
+    {
+      "name": "4-Omni-Directional-Wheel_Single_Body-v1",
+      "source": "upstream/simulation/mujoco/assets/simplify_4-Omni-Directional-Wheel_Single_Body-v1.stl",
+      "source_sha256": "24ea4d76e20b8eb2b5d4a30328988007aa3be29936285f3cc254ddac6c6f5bb7",
+      "file": "4-Omni-Directional-Wheel_Single_Body-v1.stl",
+      "sha256": "31ccd25945a8fa23a9cbd09e175e1b7b4dff70f47ba2316ad56bbc610b813122",
+      "original_triangles": 78560,
+      "target_triangles": 16000,
+      "triangles": 16000,
+      "original_bounds": [
+        [
+          -50.78595733642578,
+          -50.78595733642578,
+          -19.415700912475586
+        ],
+        [
+          50.78595733642578,
+          50.78595733642578,
+          19.414180755615234
+        ]
+      ],
+      "bounds": [
+        [
+          -51.23037234982529,
+          -50.84329764538885,
+          -19.809170470787258
+        ],
+        [
+          51.29439385720899,
+          51.04260671419702,
+          19.7752300760218
+        ]
+      ]
+    },
+    {
+      "name": "4-Omni-Directional-Wheel_Single_Body-v1-1",
+      "source": "upstream/simulation/mujoco/assets/simplify_4-Omni-Directional-Wheel_Single_Body-v1-1.stl",
+      "source_sha256": "24ea4d76e20b8eb2b5d4a30328988007aa3be29936285f3cc254ddac6c6f5bb7",
+      "file": "4-Omni-Directional-Wheel_Single_Body-v1-1.stl",
+      "sha256": "31ccd25945a8fa23a9cbd09e175e1b7b4dff70f47ba2316ad56bbc610b813122",
+      "original_triangles": 78560,
+      "target_triangles": 16000,
+      "triangles": 16000,
+      "original_bounds": [
+        [
+          -50.78595733642578,
+          -50.78595733642578,
+          -19.415700912475586
+        ],
+        [
+          50.78595733642578,
+          50.78595733642578,
+          19.414180755615234
+        ]
+      ],
+      "bounds": [
+        [
+          -51.23037234982529,
+          -50.84329764538885,
+          -19.809170470787258
+        ],
+        [
+          51.29439385720899,
+          51.04260671419702,
+          19.7752300760218
+        ]
+      ]
+    },
+    {
+      "name": "4-Omni-Directional-Wheel_Single_Body-v1-2",
+      "source": "upstream/simulation/mujoco/assets/simplify_4-Omni-Directional-Wheel_Single_Body-v1-2.stl",
+      "source_sha256": "24ea4d76e20b8eb2b5d4a30328988007aa3be29936285f3cc254ddac6c6f5bb7",
+      "file": "4-Omni-Directional-Wheel_Single_Body-v1-2.stl",
+      "sha256": "31ccd25945a8fa23a9cbd09e175e1b7b4dff70f47ba2316ad56bbc610b813122",
+      "original_triangles": 78560,
+      "target_triangles": 16000,
+      "triangles": 16000,
+      "original_bounds": [
+        [
+          -50.78595733642578,
+          -50.78595733642578,
+          -19.415700912475586
+        ],
+        [
+          50.78595733642578,
+          50.78595733642578,
+          19.414180755615234
+        ]
+      ],
+      "bounds": [
+        [
+          -51.23037234982529,
+          -50.84329764538885,
+          -19.809170470787258
+        ],
+        [
+          51.29439385720899,
+          51.04260671419702,
+          19.7752300760218
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,485 @@
+{
+  "conditions": "WSL / Docker Desktop / Intel UHD 770; standard robot, furnished home, wheel odometry, RTAB-Map, Nav2, dashboard, 1280x720 capped GLFW viewer. Separate fresh maps before/after preserve prior databases. ROS caches warmed and motion/dashboard checks ran before the final sample; snapshots are not at identical uptimes.",
+  "definitions": "Linux process PSS apportions shared resident pages. Simulation includes physics/camera processes and their ROS bindings. Native viewer is separate. ROS group includes mapping/navigation/controllers/dashboard/launch. Windows GPU allocations and WSL VM filesystem cache are excluded. Not a peak-memory or fixed memory-cap claim.",
+  "before": {
+    "processes": [
+      {
+        "pid": 1201,
+        "name": "camera",
+        "rss_kib": 1316504,
+        "pss_kib": 1170779,
+        "private_kib": 1109604
+      },
+      {
+        "pid": 806,
+        "name": "sim",
+        "rss_kib": 1137728,
+        "pss_kib": 1070513,
+        "private_kib": 1042812
+      },
+      {
+        "pid": 811,
+        "name": "rtabmap",
+        "rss_kib": 509480,
+        "pss_kib": 431972,
+        "private_kib": 396324
+      },
+      {
+        "pid": 810,
+        "name": "robocore_viz_no",
+        "rss_kib": 170740,
+        "pss_kib": 96994,
+        "private_kib": 69616
+      },
+      {
+        "pid": 800,
+        "name": "ros2",
+        "rss_kib": 146896,
+        "pss_kib": 87045,
+        "private_kib": 63148
+      },
+      {
+        "pid": 812,
+        "name": "point_cloud_xyz",
+        "rss_kib": 161496,
+        "pss_kib": 85712,
+        "private_kib": 50552
+      },
+      {
+        "pid": 809,
+        "name": "twist_switch_no",
+        "rss_kib": 61772,
+        "pss_kib": 38895,
+        "private_kib": 35032
+      },
+      {
+        "pid": 819,
+        "name": "bt_navigator",
+        "rss_kib": 51800,
+        "pss_kib": 32945,
+        "private_kib": 30680
+      },
+      {
+        "pid": 807,
+        "name": "ros2_control_no",
+        "rss_kib": 46928,
+        "pss_kib": 31788,
+        "private_kib": 30260
+      },
+      {
+        "pid": 813,
+        "name": "controller_serv",
+        "rss_kib": 47324,
+        "pss_kib": 27238,
+        "private_kib": 23808
+      },
+      {
+        "pid": 814,
+        "name": "planner_server",
+        "rss_kib": 39604,
+        "pss_kib": 19830,
+        "private_kib": 16556
+      },
+      {
+        "pid": 816,
+        "name": "behavior_server",
+        "rss_kib": 32392,
+        "pss_kib": 13906,
+        "private_kib": 11428
+      },
+      {
+        "pid": 815,
+        "name": "smoother_server",
+        "rss_kib": 31728,
+        "pss_kib": 13314,
+        "private_kib": 10912
+      },
+      {
+        "pid": 821,
+        "name": "lifecycle_manag",
+        "rss_kib": 27248,
+        "pss_kib": 10899,
+        "private_kib": 9220
+      },
+      {
+        "pid": 805,
+        "name": "robot_state_pub",
+        "rss_kib": 24536,
+        "pss_kib": 10355,
+        "private_kib": 9000
+      },
+      {
+        "pid": 820,
+        "name": "velocity_smooth",
+        "rss_kib": 23772,
+        "pss_kib": 9601,
+        "private_kib": 8396
+      },
+      {
+        "pid": 776,
+        "name": "bash",
+        "rss_kib": 3624,
+        "pss_kib": 1610,
+        "private_kib": 1380
+      },
+      {
+        "pid": 1,
+        "name": "docker-init",
+        "rss_kib": 700,
+        "pss_kib": 696,
+        "private_kib": 696
+      },
+      {
+        "pid": 7,
+        "name": "sleep",
+        "rss_kib": 1880,
+        "pss_kib": 277,
+        "private_kib": 148
+      }
+    ],
+    "cgroup_current_bytes": 3263627264,
+    "inactive_file_bytes": 248963072,
+    "docker_working_bytes": 3014664192,
+    "native_viewers": [
+      {
+        "pid": 159590,
+        "rss_kib": 1178080,
+        "pss_kib": 1139730,
+        "private_kib": 1122604
+      }
+    ],
+    "application_pss_kib": 4294099,
+    "definitions": "PSS is proportionally shared Linux application memory; GPU/Windows VM allocations are not included. Docker working bytes subtract inactive file cache.",
+    "groups_pss_kib": {
+      "simulation_physics_and_camera": 2241292,
+      "ros_mapping_navigation_controllers_dashboard": 910494,
+      "native_viewer": 1139730,
+      "container_runtime_overhead": 2583
+    }
+  },
+  "after_startup": {
+    "processes": [
+      {
+        "pid": 3347,
+        "name": "rtabmap",
+        "rss_kib": 661072,
+        "pss_kib": 583602,
+        "private_kib": 548348
+      },
+      {
+        "pid": 3733,
+        "name": "camera",
+        "rss_kib": 566536,
+        "pss_kib": 426466,
+        "private_kib": 367676
+      },
+      {
+        "pid": 3338,
+        "name": "sim",
+        "rss_kib": 360088,
+        "pss_kib": 302326,
+        "private_kib": 280852
+      },
+      {
+        "pid": 3344,
+        "name": "robocore_viz_no",
+        "rss_kib": 170676,
+        "pss_kib": 97163,
+        "private_kib": 70032
+      },
+      {
+        "pid": 3348,
+        "name": "point_cloud_xyz",
+        "rss_kib": 159612,
+        "pss_kib": 84003,
+        "private_kib": 49256
+      },
+      {
+        "pid": 3332,
+        "name": "ros2",
+        "rss_kib": 130164,
+        "pss_kib": 75164,
+        "private_kib": 52716
+      },
+      {
+        "pid": 3341,
+        "name": "twist_switch_no",
+        "rss_kib": 62196,
+        "pss_kib": 39164,
+        "private_kib": 35252
+      },
+      {
+        "pid": 3364,
+        "name": "bt_navigator",
+        "rss_kib": 51300,
+        "pss_kib": 32380,
+        "private_kib": 30064
+      },
+      {
+        "pid": 3339,
+        "name": "ros2_control_no",
+        "rss_kib": 46132,
+        "pss_kib": 31000,
+        "private_kib": 29464
+      },
+      {
+        "pid": 3351,
+        "name": "controller_serv",
+        "rss_kib": 50040,
+        "pss_kib": 30118,
+        "private_kib": 26692
+      },
+      {
+        "pid": 3360,
+        "name": "planner_server",
+        "rss_kib": 42428,
+        "pss_kib": 22626,
+        "private_kib": 19336
+      },
+      {
+        "pid": 3361,
+        "name": "smoother_server",
+        "rss_kib": 33716,
+        "pss_kib": 15178,
+        "private_kib": 12764
+      },
+      {
+        "pid": 3362,
+        "name": "behavior_server",
+        "rss_kib": 32968,
+        "pss_kib": 14325,
+        "private_kib": 11840
+      },
+      {
+        "pid": 3368,
+        "name": "lifecycle_manag",
+        "rss_kib": 28276,
+        "pss_kib": 11990,
+        "private_kib": 10316
+      },
+      {
+        "pid": 3337,
+        "name": "robot_state_pub",
+        "rss_kib": 24748,
+        "pss_kib": 10511,
+        "private_kib": 9148
+      },
+      {
+        "pid": 3365,
+        "name": "velocity_smooth",
+        "rss_kib": 24112,
+        "pss_kib": 9898,
+        "private_kib": 8692
+      },
+      {
+        "pid": 3308,
+        "name": "bash",
+        "rss_kib": 3620,
+        "pss_kib": 1692,
+        "private_kib": 1484
+      },
+      {
+        "pid": 1,
+        "name": "docker-init",
+        "rss_kib": 700,
+        "pss_kib": 696,
+        "private_kib": 696
+      },
+      {
+        "pid": 7,
+        "name": "sleep",
+        "rss_kib": 1880,
+        "pss_kib": 278,
+        "private_kib": 148
+      }
+    ],
+    "cgroup_current_bytes": 2482958336,
+    "inactive_file_bytes": 617508864,
+    "docker_working_bytes": 1865449472,
+    "native_viewers": [
+      {
+        "pid": 160068,
+        "rss_kib": 441692,
+        "pss_kib": 403200,
+        "private_kib": 386084
+      }
+    ],
+    "groups_pss_kib": {
+      "simulation_physics_and_camera": 728792,
+      "ros_mapping_navigation_controllers_dashboard": 1057122,
+      "native_viewer": 403200,
+      "container_runtime_overhead": 2666
+    },
+    "application_pss_kib": 2191780,
+    "definitions": "PSS is proportionally shared Linux application memory; GPU/Windows VM allocations are not included. Docker working bytes subtract inactive file cache. Groups are process-based; ROS bindings inside the sim/camera process are included with simulation."
+  },
+  "after_validation": {
+    "processes": [
+      {
+        "pid": 3347,
+        "name": "rtabmap",
+        "rss_kib": 681624,
+        "pss_kib": 599463,
+        "private_kib": 561572
+      },
+      {
+        "pid": 3733,
+        "name": "camera",
+        "rss_kib": 576996,
+        "pss_kib": 431476,
+        "private_kib": 369484
+      },
+      {
+        "pid": 3338,
+        "name": "sim",
+        "rss_kib": 362000,
+        "pss_kib": 304018,
+        "private_kib": 282524
+      },
+      {
+        "pid": 3344,
+        "name": "robocore_viz_no",
+        "rss_kib": 191228,
+        "pss_kib": 111452,
+        "private_kib": 80688
+      },
+      {
+        "pid": 3348,
+        "name": "point_cloud_xyz",
+        "rss_kib": 160000,
+        "pss_kib": 84357,
+        "private_kib": 49644
+      },
+      {
+        "pid": 3332,
+        "name": "ros2",
+        "rss_kib": 130168,
+        "pss_kib": 75164,
+        "private_kib": 52720
+      },
+      {
+        "pid": 3341,
+        "name": "twist_switch_no",
+        "rss_kib": 63980,
+        "pss_kib": 40886,
+        "private_kib": 36952
+      },
+      {
+        "pid": 3364,
+        "name": "bt_navigator",
+        "rss_kib": 52920,
+        "pss_kib": 33996,
+        "private_kib": 31684
+      },
+      {
+        "pid": 3339,
+        "name": "ros2_control_no",
+        "rss_kib": 47992,
+        "pss_kib": 32586,
+        "private_kib": 30796
+      },
+      {
+        "pid": 3351,
+        "name": "controller_serv",
+        "rss_kib": 50764,
+        "pss_kib": 30840,
+        "private_kib": 27416
+      },
+      {
+        "pid": 3360,
+        "name": "planner_server",
+        "rss_kib": 43980,
+        "pss_kib": 24177,
+        "private_kib": 20888
+      },
+      {
+        "pid": 3361,
+        "name": "smoother_server",
+        "rss_kib": 35348,
+        "pss_kib": 16804,
+        "private_kib": 14392
+      },
+      {
+        "pid": 3362,
+        "name": "behavior_server",
+        "rss_kib": 34884,
+        "pss_kib": 16237,
+        "private_kib": 13756
+      },
+      {
+        "pid": 3368,
+        "name": "lifecycle_manag",
+        "rss_kib": 29300,
+        "pss_kib": 13010,
+        "private_kib": 11340
+      },
+      {
+        "pid": 3337,
+        "name": "robot_state_pub",
+        "rss_kib": 26340,
+        "pss_kib": 12099,
+        "private_kib": 10740
+      },
+      {
+        "pid": 3365,
+        "name": "velocity_smooth",
+        "rss_kib": 26016,
+        "pss_kib": 11798,
+        "private_kib": 10596
+      },
+      {
+        "pid": 3308,
+        "name": "bash",
+        "rss_kib": 3620,
+        "pss_kib": 1692,
+        "private_kib": 1484
+      },
+      {
+        "pid": 1,
+        "name": "docker-init",
+        "rss_kib": 700,
+        "pss_kib": 696,
+        "private_kib": 696
+      },
+      {
+        "pid": 7,
+        "name": "sleep",
+        "rss_kib": 1880,
+        "pss_kib": 282,
+        "private_kib": 148
+      }
+    ],
+    "cgroup_current_bytes": 3011354624,
+    "inactive_file_bytes": 1083240448,
+    "docker_working_bytes": 1928114176,
+    "native_viewers": [
+      {
+        "pid": 160068,
+        "rss_kib": 441804,
+        "pss_kib": 403321,
+        "private_kib": 386132
+      }
+    ],
+    "groups_pss_kib": {
+      "simulation_physics_and_camera": 735494,
+      "ros_mapping_navigation_controllers_dashboard": 1102869,
+      "native_viewer": 403321,
+      "container_runtime_overhead": 2670
+    },
+    "application_pss_kib": 2244354,
+    "definitions": "PSS is proportionally shared Linux application memory; GPU/Windows VM allocations are not included. Docker working bytes subtract inactive file cache. Groups are process-based; ROS bindings inside the sim/camera process are included with simulation."
+  },
+  "model_buffer_mib": 206.69511795043945,
+  "isolated_model_load": {
+    "xml_rss_kib": 1021972,
+    "binary_rss_kib": 273548,
+    "asset_cache_mib": 231.34121704101562
+  },
+  "validation": {
+    "physics": "bitwise identical qpos/qvel after 300 steps",
+    "images": "RGB/depth/filtered depth bitwise identical",
+    "robot_tests": 7,
+    "shared_tests": 28,
+    "mod101_worker": "passed"
+  }
+}

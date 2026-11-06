@@ -25,8 +25,12 @@ async def main():
     assert any(n['name'] == 'xlerobot_sim' for n in graph['nodes'])
     ws = await websocket_connect('ws://127.0.0.1:8888/robocore_viz/v1', connect_timeout=10)
     samples = {}
-    targets = ['/joint_states', '/camera/color/image_raw', '/camera/aligned_depth_to_color/image_raw',
-               '/map', '/imu/data', '/ground_truth/odom', '_robot_pose', '/odom_info_lite']
+    rgb_topic = config['cameras'][0]['topic']
+    targets = ['/joint_states', rgb_topic, '/camera/aligned_depth_to_color/image_raw',
+               '/map', '/imu/data', '/ground_truth/odom', '_robot_pose']
+    tracking = config.get('topics', {}).get('tracking')
+    if tracking:
+        targets.append(tracking)
     def send(op, payload):
         ws.write_message(json.dumps([op, payload], allow_nan=False))
     async def wait(predicate, timeout=25):
@@ -69,15 +73,16 @@ async def main():
         finally:
             late.close()
         assert len(samples['/joint_states']['name']) == count
-        assert samples['/camera/color/image_raw']['_data_jpeg']
+        assert samples[rgb_topic]['_data_jpeg']
         depth = samples['/camera/aligned_depth_to_color/image_raw']
         assert depth['_data_jpeg'] and depth['_depth_range'][1] > 1
         assert samples['/map']['_data_jpeg']
         pose=samples['_robot_pose']
         assert pose['header']['frame_id']=='map'
         assert pose['_ros_time']-pose['header']['stamp']['sec']-pose['header']['stamp']['nanosec']*1e-9<1
-        assert not samples['/odom_info_lite']['lost']
-        print('PASS: current map-frame TF pose and visual tracking status over websocket')
+        if tracking:
+            assert not samples[tracking]['lost']
+        print('PASS: current map-frame TF pose over websocket')
         print(f'PASS: configured dashboard, ROS graph, {count} joints, RGB/metric-depth previews, map and IMU')
         group = next(g for g in groups if g['title'] == 'Head')
         names = [j['name'] for j in group['joints']]

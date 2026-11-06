@@ -1,6 +1,6 @@
 # XLeRobot ROS 2
 
-ROS 2 Jazzy control, MuJoCo simulation and RGB-D mapping for
+ROS 2 Jazzy control, MuJoCo simulation and RGB-D mapping with wheel odometry for
 [Victor Wang's XLeRobot](https://github.com/Vector-Wangel/XLeRobot), built on
 [Aditya Kamath's LeKiwi ROS 2](https://github.com/adityakamath/lekiwi_ros2).
 
@@ -12,9 +12,10 @@ Closing its window leaves simulation and cameras running.
 
 ## Run
 
-Install [Pixi](https://pixi.sh), Git, and a container runtime: Docker with Compose
-on macOS/Linux, or Microsoft's `wslc.exe` on Windows. macOS acceleration uses
-lighter. Windows is ready for its first runtime test; see the procedure below.
+Install [Pixi](https://pixi.sh), Git and Docker with Compose. On WSL, use
+Docker Desktop with WSL integration enabled; the launcher selects the WSL GPU
+configuration automatically. macOS acceleration uses lighter. Native Windows
+WSLC remains an unvalidated alternative; see [Windows](docs/windows.md).
 
 ```bash
 git clone --recurse-submodules https://github.com/cristidragomir97/XLeRobotROS.git
@@ -40,7 +41,7 @@ Stop the simulation with Ctrl+C or `pixi run sim-stop`. Stop the container with
 after editing ROS source, or `pixi run images` after changing image dependencies.
 
 The shared runner is pinned at `tools/multiros`. Host tasks and runtime setup
-are described in `multiros.json`.
+are described in `pixi.toml`.
 
 ## Arm configurations
 
@@ -54,40 +55,13 @@ The Mod101 configuration has two 7DOF arms with PG grippers and the same base,
 head, cameras and home world. Both configurations use the same controllers and
 topic contract. See [Mod101 details](docs/mod101.md).
 
-## Windows test
-
-Use PowerShell on Windows with WSL 2.9.3 or newer:
-
-```powershell
-wsl --update
-wslc version
-wslc run --rm hello-world
-```
-
-After cloning as above:
-
-```powershell
-pixi install --locked
-pixi run doctor
-pixi run up
-pixi run check-rendering --require-accelerated
-pixi run test
-pixi run sim
-# In another PowerShell window:
-pixi run view
-```
-
-Windows automatically selects WSLC. Start with the rendering check: GPU device
-access alone does not prove EGL works. [Windows troubleshooting](docs/windows.md)
-explains logs, software fallback and container recreation. These commands have
-been planned and tested on macOS; the actual WSLC/GPU run is still unvalidated.
-
 ## Validation
 
-Apple Silicon/lighter has passed textured RGB-D rendering, model/control checks,
-dashboard checks and a short navigation goal. Long-run mapping/navigation,
-Linux GPU backends and Windows runtime behavior need further testing. See
-[validation](docs/validation.md) for evidence and limits.
+WSL/Docker Desktop with Intel UHD 770 has passed live RGB-D, IMU, TF, mapping,
+arm trajectory, controller ownership, base motion and watchdog checks. Earlier
+Apple Silicon/lighter validation and current limits are recorded in
+[validation](docs/validation.md). See [WSL performance](docs/wsl-performance.md)
+for measured rendering costs and camera freshness.
 
 ## Documentation
 

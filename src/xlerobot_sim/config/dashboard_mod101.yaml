@@ -2,7 +2,7 @@ name: XLeRobot
 id: xlerobot
 tagline: "Mod101 7DOF \xB7 140/140 mm \xB7 RGB-D mapping \xB7 Omni base"
 cameras:
-- topic: /camera/color/image_raw
+- topic: /camera/color/image_raw/compressed
   label: "Head \xB7 RGB"
 - topic: /camera/aligned_depth_to_color/image_raw
   label: "Head \xB7 Depth"
@@ -18,7 +18,6 @@ maps:
 topics:
   joints: /joint_states
   odom: /odom
-  tracking: /odom_info_lite
   pose: /localization_pose
   plan: /plan
 drive:

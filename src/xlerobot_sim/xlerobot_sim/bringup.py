@@ -1,4 +1,4 @@
-"""Head RGB-D + base IMU; RTAB-Map owns estimated odometry and map transforms."""
+"""Head RGB-D + base IMU; wheel feedback supplies odometry; RTAB-Map owns map transforms."""
 import sys
 from pathlib import Path
 
@@ -24,18 +24,20 @@ def setup(context):
     # I/O from the previous session; preserve every map database and asset.
     runtime = Path(value('runtime'))
     runtime.mkdir(parents=True, exist_ok=True)
-    for filename in ('control.bin', 'physics.npz', 'state.npz', 'viewer.npz'):
+    for filename in ('control.bin', 'physics.npz', 'state.npz', 'viewer.npz', 'scene.mjb', 'model.json'):
         (runtime / filename).unlink(missing_ok=True)
     mode, odometry, slam = value('mode'), value('odometry'), value('slam')
-    database = value('database') or str(Path(value('runtime')) / f"{value('world')}{'_mod101' if configuration == 'mod101' else ''}.db")
+    # Keep wheel and visual odometry sessions in separate map databases.
+    suffix = ('_mod101' if configuration == 'mod101' else '') + ('_wheel' if odometry == 'wheel' else '')
+    database = value('database') or str(Path(value('runtime')) / f"{value('world')}{suffix}.db")
     if mode not in ('mapping', 'localization', 'none'):
         raise ValueError('mode must be mapping, localization, or none')
-    if odometry not in ('rgbd', 'ground_truth'):
-        raise ValueError('odometry must be rgbd or ground_truth')
+    if odometry not in ('wheel', 'rgbd', 'ground_truth'):
+        raise ValueError('odometry must be wheel, rgbd or ground_truth')
     if slam not in ('toolbox', 'rtabmap', 'none'):
         raise ValueError('slam must be toolbox, rtabmap, or none')
-    if mode != 'none' and slam == 'rtabmap' and odometry != 'rgbd':
-        raise ValueError('RTAB-Map modes require RGB-D odometry')
+    if mode != 'none' and slam == 'rtabmap' and odometry not in ('wheel', 'rgbd'):
+        raise ValueError('RTAB-Map modes require wheel or RGB-D odometry')
     if mode != 'none' and slam == 'toolbox' and odometry != 'ground_truth':
         raise ValueError('slam_toolbox requires ground_truth odometry in this stack')
     if mode == 'localization' and slam == 'rtabmap' and not Path(database).is_file():
@@ -83,13 +85,16 @@ def setup(context):
         if libpython.is_file():
             manager_env['additional_env'] = {'DYLD_INSERT_LIBRARIES': str(libpython)}
     manager = Node(package='controller_manager', executable='ros2_control_node',
-                   name='controller_manager', output='screen', parameters=[controller_file(configuration, wheel_tf=odometry == "rgbd"),
+                   name='controller_manager', output='screen', parameters=[controller_file(configuration, wheel_tf=odometry != 'ground_truth',
+                       odom_frame='wheel_odom' if odometry == 'rgbd' else 'odom'),
                        {'use_sim_time': True}], **manager_env,
                    remappings=[('~/robot_description', '/robot_description')])
     spawner = Node(package='controller_manager', executable='spawner', output='screen',
                    arguments=['joint_state_broadcaster', 'base_controller', 'left_arm_controller',
                               'right_arm_controller', 'head_controller', '--activate-as-group',
-                              '--controller-manager-timeout', '60'])
+                              '--controller-manager-timeout', '60',
+                              *(['--controller-ros-args=--remap /base_controller/odom:=/odom']
+                                if odometry == 'wheel' else [])])
     actions += [manager, spawner,
         RegisterEventHandler(OnProcessExit(target_action=spawner,
             on_exit=lambda event, context: [EmitEvent(event=Shutdown(reason='Controller activation failed'))] if event.returncode else [])),
@@ -110,10 +115,6 @@ def setup(context):
                                 'config_file': value('dashboard_config') or str(share / 'config' /
                                     ('dashboard_mod101.yaml' if configuration == 'mod101' else 'dashboard.yaml')),
                                 'robot_description_file': str(description), 'use_sim_time': True}]))
-    if value('mjviser') == 'true':
-        actions.append(TimerAction(period=3., actions=[Node(
-            package='xlerobot_sim', executable='viewer', output='screen',
-            arguments=['--runtime', value('runtime'), '--port', value('mjviser_port')])]))
     if slam == 'rtabmap' and odometry == 'rgbd':
         actions.append(Node(package='rtabmap_odom', executable='rgbd_odometry',
                             name='rgbd_odometry', parameters=[rgbd_params],
@@ -121,7 +122,9 @@ def setup(context):
     if mode != 'none' and slam == 'rtabmap':
         params = {'use_sim_time': True, 'frame_id': 'base_footprint',
                   'map_frame_id': 'map', 'subscribe_depth': True,
-                  'subscribe_odom_info': True, 'approx_sync': False,
+                  'subscribe_odom_info': odometry == 'rgbd', 'approx_sync': False,
+                  # Camera planes are synchronized; wheel pose is interpolated from TF.
+                  'odom_frame_id': 'odom' if odometry == 'wheel' else '',
                   'qos': 2, 'qos_odom': 2, 'qos_imu': 2,
                   'database_path': database,
                   'Reg/Force3DoF': 'true', 'Grid/Sensor': '1',
@@ -192,16 +195,13 @@ def generate_launch_description(configuration='standard'):
     defaults = {'configuration': configuration, 'upstream': '/workspace/xlerobot/upstream/simulation/mujoco',
                 'runtime': '/workspace/xlerobot/.runtime', 'world': 'robocasa_home',
                 'world_assets': default_assets(), 'headless': 'false',
-                'mode': 'mapping', 'odometry': 'rgbd', 'mjviser': 'true',
+                'mode': 'mapping', 'odometry': 'wheel',
                 'slam': 'rtabmap', 'map_file': '',
-                'viewer': 'true', 'mjviser_port': '8080',
                 'robocore_viz': 'true', 'robocore_viz_port': '8888',
                 'dashboard_config': '',
                 'camera_rate': '15.0', 'nav': 'true', 'rviz': 'false',
                 'depth_cloud': 'true',
                 'database': ''}
-    # Keep the old viewer argument as an alias; mjviser is the neighboring stacks' name.
     return LaunchDescription([*[DeclareLaunchArgument(k, default_value=v)
-                               for k, v in defaults.items() if k != 'mjviser'],
-                               DeclareLaunchArgument('mjviser', default_value=LaunchConfiguration('viewer')),
+                               for k, v in defaults.items()],
                                OpaqueFunction(function=setup)])

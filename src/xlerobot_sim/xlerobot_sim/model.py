@@ -8,8 +8,6 @@ import xml.etree.ElementTree as ET
 import mujoco
 import numpy as np
 import yaml
-from .visuals import add_full_visuals
-from .contact_base import add_contact_base
 from lekiwi_mujoco.simulation import RobotControl, WHEELS
 
 from .configuration import arm_joints, control_joints, HEAD_JOINTS, description_path
@@ -35,6 +33,8 @@ def base_configuration():
 
 def prepare_scene(upstream, destination, world='room', world_assets=None, configuration='standard', description=None):
     """Copy XML into runtime storage, reference pinned assets, add owned sensors/world."""
+    from .visuals import add_full_visuals
+    from .contact_base import add_contact_base
     if world not in ('room', 'empty', 'robocasa_home'):
         raise ValueError(f'Unknown world: {world}')
     upstream, destination = Path(upstream), Path(destination)
@@ -121,6 +121,9 @@ def prepare_scene(upstream, destination, world='room', world_assets=None, config
         from .world import add_home, default_assets
         add_home(path, world_assets or default_assets())
     make_paths_relative(destination)
+    from .visual_meshes import apply_visual_meshes
+    apply_visual_meshes(destination / 'robot.xml')
+    make_paths_relative(destination)
     return path
 
 
@@ -159,7 +162,9 @@ def make_paths_relative(destination):
 
 class Robot:
     def __init__(self, path):
-        self.model = mujoco.MjModel.from_xml_path(str(path))
+        path = Path(path)
+        self.model = (mujoco.MjModel.from_binary_path(str(path)) if path.suffix == '.mjb'
+                      else mujoco.MjModel.from_xml_path(str(path)))
         self.data = mujoco.MjData(self.model)
         mujoco.mj_forward(self.model, self.data)
         self.base = self.model.body('chassis').id

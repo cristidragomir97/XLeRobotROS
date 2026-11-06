@@ -1,6 +1,8 @@
 """One physics owner, ROS commands/actions, synchronized RGB-D and an ideal base IMU."""
 import math
 import os
+import subprocess
+import sys
 from pathlib import Path
 import threading
 import time
@@ -17,7 +19,7 @@ from rosgraph_msgs.msg import Clock
 from sensor_msgs.msg import Imu
 from tf2_ros import TransformBroadcaster
 
-from .model import Robot, prepare_scene
+from .model import Robot
 from .control_io import ControlExchange
 
 
@@ -47,11 +49,13 @@ class Simulator(Node):
         self.declare_parameter('command_timeout', 0.5)
         self.declare_parameter('ground_truth_tf', False)
         self.runtime = Path(self.get_parameter('runtime').value)
-        self.path = prepare_scene(self.get_parameter('upstream').value, self.runtime,
-                                  self.get_parameter('world').value,
-                                  self.get_parameter('world_assets').value or None,
-                                  self.get_parameter('configuration').value,
-                                  self.get_parameter('description').value or None)
+        # The compiler retains large mesh/texture caches. Isolate preparation
+        # from the long-lived physics owner and reuse the exact compiled model.
+        command = [sys.executable, '-m', 'xlerobot_sim.prepare_model']
+        for parameter in ('upstream', 'runtime', 'world', 'world_assets', 'configuration', 'description'):
+            command.extend(['--'+parameter.replace('_', '-'), str(self.get_parameter(parameter).value)])
+        subprocess.run(command, check=True)
+        self.path = self.runtime / 'scene.mjb'
         self.robot = Robot(self.path)
         self.lock = threading.RLock()
         self.width = int(self.get_parameter('camera_width').value)

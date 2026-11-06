@@ -3,7 +3,7 @@ ARG ROS_RENDERING_IMAGE=multiros:jazzy-rendering
 FROM ${ROS_RENDERING_IMAGE} AS runtime
 SHELL ["/bin/bash", "-c"]
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3-tornado python3-pil python3-psutil python3-colcon-common-extensions python3-venv python3-numpy python3-scipy python3-yaml \
+    python3-tornado python3-opencv python3-pil python3-psutil python3-colcon-common-extensions python3-venv python3-numpy python3-scipy python3-yaml \
     ros-jazzy-robot-state-publisher ros-jazzy-control-msgs ros-jazzy-rmw-cyclonedds-cpp \
     ros-jazzy-rtabmap-ros ros-jazzy-navigation2 ros-jazzy-nav2-rviz-plugins \
     ros-jazzy-rviz2 ros-jazzy-teleop-twist-keyboard \
@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-jazzy-xacro ros-jazzy-joy-teleop \
     && rm -rf /var/lib/apt/lists/*
 RUN python3 -m venv --system-site-packages /opt/xlerobot-python \
-    && /opt/xlerobot-python/bin/pip install --no-cache-dir numpy==1.26.4 mujoco==3.13.0 python-fcl==0.7.0.11 mjviser==0.0.14
+    && /opt/xlerobot-python/bin/pip install --no-cache-dir numpy==1.26.4 mujoco==3.13.0 python-fcl==0.7.0.11
 ENV PATH=/opt/xlerobot-python/bin:$PATH
 # ament_python scripts use the ROS interpreter; expose the isolated simulator modules to it.
 ENV PYTHONPATH=/opt/xlerobot-python/lib/python3.12/site-packages

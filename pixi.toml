@@ -35,6 +35,7 @@ check-tracking = "python scripts/robot.py check-tracking"
 check-clearance = "python scripts/robot.py check-clearance"
 check-nav = "python scripts/robot.py check-nav"
 check-unit = "python scripts/robot.py check-unit"
+measure-memory = "python checks/measure_memory.py"
 
 [feature.viewer.pypi-dependencies]
 mujoco = "==3.13.0"
@@ -43,3 +44,120 @@ numpy = "==1.26.4"
 [environments]
 default = []
 viewer = ["viewer"]
+
+[tool.multiros]
+schema = 1
+project = "xlerobot"
+compose = ["docker-compose.yml"]
+service = "ros-dev"
+entrypoint = ["/usr/local/bin/xlerobot-entrypoint"]
+rendering_base = true
+submodules = ["upstream", "dependencies/lekiwi_ros2", "dependencies/mod101", "tools/multiros"]
+configuration_env = "XLEROBOT_CONFIGURATION"
+default_configuration = "standard"
+configurations = ["standard", "mod101"]
+
+[tool.multiros.backends]
+lighter = ["{multiros}/docker/compose/lighter.yml", "docker/compose.lighter.yml"]
+dri = ["{multiros}/docker/compose/dri.yml"]
+cpu = ["{multiros}/docker/compose/cpu.yml"]
+wsl = ["{multiros}/docker/compose/wsl.yml"]
+
+[tool.multiros.viewer]
+runtime = ".runtime"
+args = ["--track-body", "chassis", "--show-group", "2", "--hide-group", "3", "--legacy-snapshots"]
+
+[tool.multiros.viewer.backend_args]
+wsl = ["--model", ".runtime/scene.mjb", "--frontend", "glfw", "--rate", "15", "--kinematics-only"]
+
+[tool.multiros.container]
+dockerfile = "docker/Dockerfile"
+workdir = "/workspace/xlerobot"
+gpu = true
+mounts = [{"source" = "{root}", "target" = "/workspace/xlerobot"}, {"type" = "volume", "source" = "xlerobot-build", "target" = "/workspace/xlerobot/build"}, {"type" = "volume", "source" = "xlerobot-install", "target" = "/workspace/xlerobot/install"}, {"type" = "volume", "source" = "xlerobot-log", "target" = "/workspace/xlerobot/log"}]
+ports = ["127.0.0.1:${XLEROBOT_DASHBOARD_PORT:-8889}:8888"]
+
+[tool.multiros.container.image]
+default = "xlerobot:jazzy"
+lighter = "xlerobot:jazzy-lighter"
+
+[tool.multiros.container.environment]
+ROS_DOMAIN_ID = "${XLEROBOT_ROS_DOMAIN_ID:-185}"
+RMW_IMPLEMENTATION = "rmw_cyclonedds_cpp"
+MUJOCO_GL = "${XLEROBOT_MUJOCO_GL:-egl}"
+PYOPENGL_PLATFORM = "${XLEROBOT_MUJOCO_GL:-egl}"
+EGL_PLATFORM = "surfaceless"
+GALLIUM_DRIVER = "${XLEROBOT_GALLIUM_DRIVER:-d3d12}"
+LD_LIBRARY_PATH = "/usr/lib/wsl/lib"
+XLEROBOT_VISUAL_MESHES = "${XLEROBOT_VISUAL_MESHES:-simplified}"
+XLEROBOT_RENDER_QUALITY = "${XLEROBOT_RENDER_QUALITY:-fast}"
+XLEROBOT_WORLD_ASSETS = "/workspace/xlerobot/assets/robocasa"
+PYTHONPATH = "/workspace/xlerobot/src/xlerobot_sim:/opt/xlerobot-python/lib/python3.12/site-packages"
+
+[tool.multiros.container.backend_environment.cpu]
+MUJOCO_GL = "osmesa"
+PYOPENGL_PLATFORM = "osmesa"
+GALLIUM_DRIVER = "llvmpipe"
+
+[tool.multiros.workspace]
+paths = ["src", "dependencies/lekiwi_ros2/lekiwi_description", "dependencies/lekiwi_ros2/lekiwi_mujoco", "dependencies/lekiwi_ros2/lekiwi_control", "dependencies/lekiwi_ros2/modules/sts_hardware_interface", "dependencies/mod101/src/mod101_description", "dependencies/mod101/src/mod101_tool_parallel", "dependencies/mod101/src/mod101_tool_pggripper", "dependencies/mod101/src/mod101_tool_pincopen", "dependencies/mod101/src/mod101_tool_jaws", "dependencies/mod101/src/mod101_tool_none", "dependencies/mod101/src/mod101_tool_camera"]
+packages = ["lekiwi_description", "lekiwi_mujoco", "lekiwi_control", "sts_hardware_interface", "mod101_description", "mod101_tool_parallel", "mod101_tool_pggripper", "mod101_tool_pincopen", "mod101_tool_jaws", "mod101_tool_none", "mod101_tool_camera", "robocore_viz", "xlerobot_description", "xlerobot_control", "xlerobot_sim"]
+workers = 2
+cmake_args = ["-DPython3_EXECUTABLE=/usr/bin/python3", "-DBUILD_TESTING=OFF"]
+
+[tool.multiros.commands.sim]
+where = "container"
+argv = ["bash", "scripts/run_sim.sh", "{configuration}", "headless:=true", "rviz:=false"]
+
+[tool.multiros.commands.sim-stop]
+where = "container"
+argv = ["python3", "scripts/stop_sim.py"]
+
+[tool.multiros.commands.dashboard]
+where = "container"
+argv = ["python3", "-m", "xlerobot_sim.dashboard", "{configuration}"]
+
+[tool.multiros.commands.world-assets]
+where = "container"
+argv = ["python3", "tools/prepare_world_assets.py"]
+
+[tool.multiros.commands.test]
+where = "container"
+argv = ["python3", "checks/check_model.py", "--configuration", "{configuration}"]
+
+[tool.multiros.commands.check-rendering]
+where = "container"
+argv = ["python3", "/workspace/xlerobot/tools/multiros/checks/check_rendering.py"]
+
+[tool.multiros.commands.check-control]
+where = "container"
+argv = ["python3", "checks/check_control_stack.py"]
+
+[tool.multiros.commands.check-runtime]
+where = "container"
+argv = ["python3", "checks/check_runtime.py"]
+
+[tool.multiros.commands.check-dashboard]
+where = "container"
+argv = ["python3", "checks/check_dashboard.py"]
+
+[tool.multiros.commands.check-tracking]
+where = "container"
+argv = ["python3", "checks/check_tracking_recovery.py"]
+
+[tool.multiros.commands.check-clearance]
+where = "container"
+argv = ["python3", "checks/check_tower_clearance.py"]
+
+[tool.multiros.commands.check-nav]
+where = "container"
+argv = ["python3", "checks/check_navigation.py"]
+
+[tool.multiros.commands.check-unit]
+where = "container"
+argv = ["python3", "-m", "unittest", "discover", "-s", "checks", "-p", "test_*.py", "-v"]
+
+[tool.multiros.commands.teleop]
+where = "container"
+argv = ["ros2", "run", "teleop_twist_keyboard", "teleop_twist_keyboard", "--ros-args", "-p", "speed:=0.2", "-p", "turn:=0.4"]
+interactive = true

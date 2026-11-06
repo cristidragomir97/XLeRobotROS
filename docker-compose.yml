@@ -11,13 +11,14 @@ services:
     tty: true
     stdin_open: true
     ports:
-      - "127.0.0.1:${XLEROBOT_VIEWER_PORT:-8082}:8080"
       - "127.0.0.1:${XLEROBOT_DASHBOARD_PORT:-8889}:8888"
     environment:
       ROS_DOMAIN_ID: ${XLEROBOT_ROS_DOMAIN_ID:-185}
       RMW_IMPLEMENTATION: rmw_cyclonedds_cpp
       # Offscreen sensor rendering; interactive windows stay on the host.
       MUJOCO_GL: ${XLEROBOT_MUJOCO_GL:-egl}
+      XLEROBOT_VISUAL_MESHES: ${XLEROBOT_VISUAL_MESHES:-simplified}
+      XLEROBOT_RENDER_QUALITY: ${XLEROBOT_RENDER_QUALITY:-fast}
       EGL_PLATFORM: surfaceless
       # Keep generated MJCF paths resolvable from the shared runtime on the host.
       XLEROBOT_WORLD_ASSETS: /workspace/xlerobot/assets/robocasa

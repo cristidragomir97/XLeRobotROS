@@ -25,30 +25,32 @@ Upstream repositories stay as pinned submodules; the integration lives in `src/`
 | `/camera/color/image_raw` | Rectified simulated `rgb8` |
 | `/camera/aligned_depth_to_color/image_raw` | Registered `32FC1` depth in metres, zero for invalid/out-of-range pixels |
 | `/camera/depth_filtered/image_raw` | Same depth with robot pixels masked; used for SLAM and obstacle clouds |
+| `/camera/color/image_raw/compressed` | JPEG RGB for display, encoded only with subscribers |
 | `/camera/color/camera_info` | Shared RGB/depth pinhole calibration |
 | `/camera/points` | Registered RGB-D point cloud |
 | `/imu/data` | Ideal base IMU orientation, angular velocity and specific force |
-| `/odom`, `/odom_info` | RTAB-Map RGB-D odometry and diagnostics |
-| `/base_controller/odom` | Feedback-based wheel odometry and visual motion prior |
+| `/odom` | Measured wheel-velocity odometry from the omni controller |
+| `/base_controller/odom` | Wheel prior when optional `odometry:=rgbd` is selected |
 | `/map` | RTAB-Map depth-built occupancy grid |
 | `/ground_truth/odom` | MuJoCo pose diagnostic, never the default TF owner |
 | `/clock` | Simulation clock; all ROS consumers use simulation time |
 
-TF ownership is `map -> odom` from RTAB-Map, `odom -> wheel_odom` from
-RGB-D odometry, `wheel_odom -> base_footprint` from the omni wheel controller,
-and the robot/sensor tree from `robot_state_publisher`.
-The IMU supplies orientation, angular velocity and specific force; wheel odometry
-uses measured wheel velocities with `open_loop: false`. Wheel odometry is
-used as the RGB-D motion prior, with no EKF fusing wheel, IMU and visual
-odometry. After ten failed visual updates, odometry resets its reference using
-the accumulated wheel guess. Invalid null poses are suppressed. Tracking can
-still fail against featureless walls; the wheel prior helps recovery, while
-visual mapping pauses until tracking recovers. The cart body uses a white finish in ROS and MuJoCo.
+TF ownership is `map -> odom` from RTAB-Map and `odom -> base_footprint` from
+the omni wheel controller, with the robot/sensor tree from `robot_state_publisher`.
+Wheel odometry integrates measured wheel velocities (`open_loop: false`,
+`position_feedback: false`). It does not use commanded velocities or MuJoCo
+base pose. The IMU is published but not fused through an EKF.
 
-The dashboard derives its map marker from current TF instead of sparse
-localization messages. It displays the map update age separately from pose
-freshness and reports `/odom_info_lite` tracking loss explicitly. An unchanged
-map can have an older timestamp while the robot pose remains live.
+RTAB-Map looks up wheel poses at camera timestamps through TF, keeping exact
+synchronization between RGB, depth and camera info without requiring camera
+stamps to match the controller's 50 Hz output. It does not wait for visual
+odometry diagnostics. RGB-D feature processing still runs for mapping and loop
+closure; removing visual odometry does not remove camera rendering.
+
+Optional `odometry:=rgbd` restores the visual estimator and wheel prior for
+comparisons. Visual tracking recovery checks apply only in that mode. The
+default dashboard displays current TF pose without a visual-tracking indicator.
+An unchanged map can have an older timestamp while robot pose remains live.
 
 Original arm joint names are `Rotation_L`, `Pitch_L`, `Elbow_L`, `Wrist_Pitch_L`,
 `Wrist_Roll_L`, `Jaw_L`, with `_R` for the other arm. Head joint names are

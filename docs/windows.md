@@ -1,4 +1,11 @@
-# First Windows run
+# Windows and WSL
+
+The tested setup uses a WSL shell, Docker Desktop and the native WSL MuJoCo
+viewer. Run the [README workflow](../README.md) from WSL; the bootstrap selects
+the shared multiROS WSL profile and Mesa D3D12 automatically. Performance and remaining
+limits are in [WSL performance](wsl-performance.md).
+
+## Native PowerShell / WSLC (unvalidated)
 
 Use native PowerShell, Git and Pixi on 64-bit Windows. WSL 2.9.3 or newer must
 provide `wslc.exe`; Docker Desktop is not required. See

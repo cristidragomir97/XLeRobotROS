@@ -5,7 +5,7 @@
   <maintainer email="dev@robocore.ai">Robocore</maintainer>
   <license>Apache-2.0</license>
   <buildtool_depend>ament_python</buildtool_depend>
-  <exec_depend>rclpy</exec_depend><exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>python3-opencv</exec_depend><exec_depend>rclpy</exec_depend><exec_depend>sensor_msgs</exec_depend>
   <exec_depend>geometry_msgs</exec_depend><exec_depend>nav_msgs</exec_depend>
   <exec_depend>rosgraph_msgs</exec_depend><exec_depend>trajectory_msgs</exec_depend>
   <exec_depend>control_msgs</exec_depend><exec_depend>tf2_ros</exec_depend>

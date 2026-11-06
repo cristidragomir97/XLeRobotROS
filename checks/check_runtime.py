@@ -157,7 +157,7 @@ def main():
         node.wait(lambda: abs(node.messages['truth'].twist.twist.linear.y) < .01, 30)
         node.drive(-.15, 1.5)
         node.publisher.publish(Twist())
-        print(f'PASS: lateral RGB-D odometry tracks motion (truth {truth1-truth0:.3f} m, estimate {estimated1-estimated0:.3f} m), command watchdog stops base')
+        print(f'PASS: lateral odometry tracks motion (truth {truth1-truth0:.3f} m, estimate {estimated1-estimated0:.3f} m), command watchdog stops base')
         print('All live checks passed.')
     finally:
         node.publisher.publish(Twist())
